@@ -1,0 +1,39 @@
+Prefix(:=<http://www.semanticweb.org/work/ontologies/2017/5/untitled-ontology-7#>)
+Prefix(owl:=<http://www.w3.org/2002/07/owl#>)
+Prefix(rdf:=<http://www.w3.org/1999/02/22-rdf-syntax-ns#>)
+Prefix(xml:=<http://www.w3.org/XML/1998/namespace>)
+Prefix(xsd:=<http://www.w3.org/2001/XMLSchema#>)
+Prefix(rdfs:=<http://www.w3.org/2000/01/rdf-schema#>)
+
+
+Ontology(<http://www.semanticweb.org/work/ontologies/2017/5/untitled-ontology-7>
+
+Declaration(Class(:GrandParent))
+Declaration(Class(:Parent))
+Declaration(ObjectProperty(:hasChild))
+Declaration(NamedIndividual(:John))
+Declaration(NamedIndividual(:Mary))
+
+############################
+#   Classes
+############################
+
+# Class: :GrandParent (:GrandParent)
+
+EquivalentClasses(:GrandParent ObjectSomeValuesFrom(:hasChild :Parent))
+
+# Class: :Parent (:Parent)
+
+EquivalentClasses(:Parent ObjectSomeValuesFrom(:hasChild owl:Thing))
+
+
+############################
+#   Named Individuals
+############################
+
+# Individual: :John (:John)
+
+ObjectPropertyAssertion(:hasChild :John :Mary)
+
+
+)
