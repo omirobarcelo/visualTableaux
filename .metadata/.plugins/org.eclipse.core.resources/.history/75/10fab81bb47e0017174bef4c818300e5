@@ -19,36 +19,36 @@ import ver1.Node;
 public class Test {
 
 	public static void main(String[] args) {
-//		Node first = new Node("a", "test#a");
-//		Node secondA = new Node("b1", "test#b1");
-//		Node secondB = new Node("b2", "test#b2");
-//		Node third = new Node("c", "test#c");
-//		
-//		first.addSuccessor(secondA);
-//		//secondA.setPredecessor(first);
-//		first.addSuccessor(secondB);
-//		//secondB.setPredecessor(first);
-//		secondA.addSuccessor(third);
-//		//third.setPredecessor(secondA);
-//		
-//		System.out.println(first);
-//		System.out.println(secondA);
-//		System.out.println(secondB);
-//		System.out.println(third);
-//		System.out.println();
-//		
-//		Node c = first.clone();
-//		c.setId("clone");
-//		System.out.println(c);
-//		for (Node n : c.getSuccessors())
-//			n.setId("changed");
-//		System.out.println(c);
-//		System.out.println(first);
-//		//Node secondC = new Node("b3", "test#b3");
-//		//c.addSuccessor(secondC);
-//		//System.out.println(first);
-//		//System.out.println(c);
-//		//System.out.println(secondC);
+		Node first = new Node("a", "test#a");
+		Node secondA = new Node("b1", "test#b1");
+		Node secondB = new Node("b2", "test#b2");
+		Node third = new Node("c", "test#c");
+		
+		first.addSuccessor(secondA);
+		//secondA.setPredecessor(first);
+		first.addSuccessor(secondB);
+		//secondB.setPredecessor(first);
+		secondA.addSuccessor(third);
+		//third.setPredecessor(secondA);
+		
+		System.out.println(first);
+		System.out.println(secondA);
+		System.out.println(secondB);
+		System.out.println(third);
+		System.out.println();
+		
+		Node c = first.clone();
+		c.setId("clone");
+		System.out.println(c);
+		for (Node n : c.getSuccessors())
+			n.setId("changed");
+		System.out.println(c);
+		System.out.println(first);
+		//Node secondC = new Node("b3", "test#b3");
+		//c.addSuccessor(secondC);
+		//System.out.println(first);
+		//System.out.println(c);
+		//System.out.println(secondC);
 		
 //		OWLOntologyManager man = OWLManager.createOWLOntologyManager();
 //		//IRI ontologyIRI = IRI.create("http://protege.stanford.edu/ontologies/pizza/pizza.owl");
