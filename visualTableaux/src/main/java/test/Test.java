@@ -1,7 +1,7 @@
 package test;
 
 import java.io.File;
-
+import java.util.HashSet;
 import java.util.Set;
 
 import org.semanticweb.owlapi.apibinding.OWLManager;
@@ -19,10 +19,31 @@ import uk.ac.manchester.cs.owl.owlapi.OWLSubClassOfAxiomImpl;
 
 import ver1.*;
 import ownapi.*;
+import ownapi.OWNAxiom.AXIOM_TYPE;
 
 public class Test {
 
 	public static void main(String[] args) {
+		OWNLiteral litA = new OWNLiteral("test#A");
+		OWNLiteral litB = new OWNLiteral("test#B");
+		OWNLiteral litR = new OWNLiteral("test#R");
+		OWNUnion un = new OWNUnion(litA, litB);
+		OWNExistential ex = new OWNExistential(litR, litB);
+		HashSet<OWNAxiom> set = new HashSet();
+		set.add(litA);
+		set.add(litB);
+		set.add(un);
+		set.add(ex);
+		for (OWNAxiom ax : set) {
+			if (ax.isLiteral()) {
+				OWNLiteral lit = (OWNLiteral)ax;
+				System.out.println(lit.getId());
+			} else if (ax.isOfType(AXIOM_TYPE.EXISTENTIAL)) {
+				OWNExistential exr = (OWNExistential)ax;
+				System.out.println(exr.getRelation().getId());
+			}
+		}
+		
 //		OWNLiteral lit = new OWNLiteral("a", "test#a");
 //		OWNAxiom ax = (OWNAxiom)lit;
 //		System.out.println(ax.isLiteral());

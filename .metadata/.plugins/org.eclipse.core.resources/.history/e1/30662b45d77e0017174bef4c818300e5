@@ -1,0 +1,10 @@
+package ownapi;
+
+public class OWNLiteral extends OWNAxiom {
+	
+	public OWNLiteral(String fullName) {
+		super(fullName);
+		super.type = AXIOM_TYPE.LITERAL;
+	}
+
+}

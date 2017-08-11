@@ -7,4 +7,11 @@ public class OWNUnion extends OWNAxiom {
 		super.type = AXIOM_TYPE.UNION;
 	}
 
+	public OWNAxiom getOperand1() {
+		return operand1;
+	}
+
+	public OWNAxiom getOperand2() {
+		return operand2;
+	}
 }

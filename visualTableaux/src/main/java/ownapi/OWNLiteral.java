@@ -1,20 +1,17 @@
 package ownapi;
 
 public class OWNLiteral extends OWNAxiom {
-	private String id;
-	private String fullName;
 	
-	public OWNLiteral(String id, String fullName) {
-		super(null, null);
+	public OWNLiteral(String fullName) {
+		super(fullName);
 		super.type = AXIOM_TYPE.LITERAL;
 	}
-	
+
 	public String getId() {
-		return id;
+		return fullName.split("#")[1];
 	}
 	
 	public String getFullName() {
 		return fullName;
 	}
-
 }
