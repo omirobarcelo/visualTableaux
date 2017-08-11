@@ -1,0 +1,77 @@
+package ver1;
+
+import java.util.HashSet;
+
+public class Node {
+	private String id;
+	private String fullName;
+	private Node predecessor;
+	private HashSet<Node> successors;
+	
+	public Node(String id, String fullName) {
+		super();
+		this.id = id;
+		this.fullName = fullName;
+		this.predecessor = null;
+		this.successors = new HashSet<Node>();
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public String getFullName() {
+		return fullName;
+	}
+
+	public void setFullName(String fullName) {
+		this.fullName = fullName;
+	}
+
+	public Node getPredecessor() {
+		return predecessor;
+	}
+
+	public void setPredecessor(Node predecessor) {
+		this.predecessor = predecessor;
+	}
+
+	public HashSet<Node> getSuccessors() {
+		return successors;
+	}
+
+	public void setSuccessors(HashSet<Node> successors) {
+		this.successors = successors;
+	}
+	
+	public void addSuccessor(Node successor) {
+		this.successors.add(successor);
+		successor.predecessor = this;
+	}
+
+	@Override
+	public String toString() {
+		String pre = predecessor == null ? "" : predecessor.id;
+		String suc = "{";
+		for (Node n : successors)
+			suc += (n.id + ",");
+		suc = suc.substring(0, suc.length()-1);
+		suc = suc.length() == 0 ? "" : suc + "}";
+		return "Node [id=" + id + ", fullName=" + fullName + ", predecessor=" + pre + ", successors="
+				+ suc + "]";
+	}
+	
+	@Override
+	public Node clone() {
+		Node c = new Node(this.id, this.fullName);
+		if (this.predecessor != null) 
+			c.setPredecessor(this.predecessor.clone());
+		c.setSuccessors((HashSet<Node>)this.successors.clone());
+		
+		return c;
+	}
+}

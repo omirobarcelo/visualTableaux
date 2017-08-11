@@ -1,0 +1,7 @@
+package ver1;
+
+public class Interpreter {
+	public static Pair<OWLAxiom, HashSet<OWLAxiom>> read() {
+		
+	}
+}

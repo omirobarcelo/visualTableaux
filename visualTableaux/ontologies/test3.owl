@@ -1,0 +1,63 @@
+Prefix(:=<http://www.semanticweb.org/work/ontologies/2017/6/test3#>)
+Prefix(owl:=<http://www.w3.org/2002/07/owl#>)
+Prefix(rdf:=<http://www.w3.org/1999/02/22-rdf-syntax-ns#>)
+Prefix(xml:=<http://www.w3.org/XML/1998/namespace>)
+Prefix(xsd:=<http://www.w3.org/2001/XMLSchema#>)
+Prefix(rdfs:=<http://www.w3.org/2000/01/rdf-schema#>)
+
+
+Ontology(<http://www.semanticweb.org/work/ontologies/2017/6/test3>
+
+Declaration(Class(:A))
+Declaration(Class(:B))
+Declaration(Class(:C))
+Declaration(Class(:D))
+Declaration(Class(:E))
+Declaration(Class(:F))
+Declaration(Class(:M))
+Declaration(Class(:N))
+Declaration(Class(:X))
+Declaration(Class(:Y))
+Declaration(Class(:Z))
+Declaration(ObjectProperty(:R))
+Declaration(NamedIndividual(:a))
+Declaration(NamedIndividual(:b))
+
+############################
+#   Classes
+############################
+
+# Class: :A (:A)
+
+SubClassOf(:A ObjectSomeValuesFrom(:R :A))
+
+# Class: :B (:B)
+
+SubClassOf(:B ObjectAllValuesFrom(:R :C))
+
+# Class: :D (:D)
+
+SubClassOf(:D ObjectIntersectionOf(:E :F))
+
+# Class: :M (:M)
+
+EquivalentClasses(:M :N)
+
+# Class: :X (:X)
+
+SubClassOf(:X ObjectUnionOf(:Y :Z))
+
+
+############################
+#   Named Individuals
+############################
+
+# Individual: :a (:a)
+
+ClassAssertion(:C :a)
+ClassAssertion(ObjectComplementOf(ObjectSomeValuesFrom(:R :B)) :a)
+ObjectPropertyAssertion(:R :a :b)
+
+
+SubClassOf(ObjectIntersectionOf(:A ObjectAllValuesFrom(:R :B)) ObjectSomeValuesFrom(:R :A))
+)
