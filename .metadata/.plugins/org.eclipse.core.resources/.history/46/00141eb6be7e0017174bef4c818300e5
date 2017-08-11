@@ -1,0 +1,15 @@
+package ver1;
+
+public class OWNUnion implements OWNAxiom {
+
+	public OWNAxiom getOperand1() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public OWNAxiom getOperand2() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

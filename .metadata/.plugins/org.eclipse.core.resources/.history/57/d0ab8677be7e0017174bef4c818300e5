@@ -1,0 +1,12 @@
+package ver1;
+
+public interface OWNAxiom {
+	public enum AXIOM_TYPES {UNION, INTERSECTION, EXISTENTIAL, UNIVERSAL}
+	
+	public AXIOM_TYPES type = null;
+	public OWNAxiom operand1 = null;
+	public OWNAxiom operand2 = null;
+	
+	public OWNAxiom getOperand1();
+	public OWNAxiom getOperand2();
+}

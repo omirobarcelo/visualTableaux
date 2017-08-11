@@ -1,0 +1,22 @@
+package ver1;
+
+public class OWNUnion implements OWNAxiom {
+	
+	private AXIOM_TYPE type;
+	private OWNAxiom operand1;
+	private OWNAxiom operand2;
+	
+	public OWNUnion(OWNAxiom op1, OWNAxiom op2) {
+		this.operand1 = op1;
+		this.operand2 = op2;
+	}
+
+	public OWNAxiom getOperand1() {
+		return this.operand1;
+	}
+
+	public OWNAxiom getOperand2() {
+		return this.operand2;
+	}
+
+}

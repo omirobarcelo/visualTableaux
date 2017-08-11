@@ -1,0 +1,12 @@
+package ver1;
+
+public class OWNLiteral extends OWNAxiom {
+	private String id;
+	private String fullName;
+	
+	public OWNLiteral(String id, String fullName) {
+		super(null, null);
+		super.type = AXIOM_TYPE.LITERAL;
+	}
+
+}
