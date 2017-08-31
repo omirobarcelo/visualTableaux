@@ -1,7 +1,20 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
 <fullyQualifiedTypeName name="java.util.Set"/>
-<fullyQualifiedTypeName name="org.semanticweb.owlapi.model.OWLAxiom"/>
 <fullyQualifiedTypeName name="org.semanticweb.owlapi.model.AxiomType"/>
 <fullyQualifiedTypeName name="uk.ac.manchester.cs.owl.owlapi.OWLDeclarationAxiomImpl"/>
+<fullyQualifiedTypeName name="org.semanticweb.owlapi.model.OWLAxiom"/>
+<fullyQualifiedTypeName name="org.semanticweb.owlapi.model.OWLOntology"/>
+<fullyQualifiedTypeName name="ver1.Node"/>
+<fullyQualifiedTypeName name="uk.ac.manchester.cs.owl.owlapi.OWLSubClassOfAxiomImpl"/>
+<fullyQualifiedTypeName name="uk.ac.manchester.cs.owl.owlapi.OWLObjectIntersectionOfImpl"/>
+<fullyQualifiedTypeName name="uk.ac.manchester.cs.owl.owlapi.OWLObjectUnionOfImpl"/>
+<fullyQualifiedTypeName name="org.semanticweb.owlapi.model.OWLClassExpression"/>
+<fullyQualifiedTypeName name="ver1.OWNAxiom"/>
+<fullyQualifiedTypeName name="ver1.OWNAxiom.AXIOM_TYPE"/>
+<fullyQualifiedTypeName name="ownapi.OWNAxiom.AXIOM_TYPE"/>
+<fullyQualifiedTypeName name="java.util.HashSet"/>
+<fullyQualifiedTypeName name="java.util.HashMap"/>
+<fullyQualifiedTypeName name="ownapi.OWNAxiom"/>
+<fullyQualifiedTypeName name="java.util.ArrayList"/>
 </qualifiedTypeNameHistroy>

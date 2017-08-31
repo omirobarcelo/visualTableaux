@@ -1,13 +1,14 @@
 package ownapi;
 
 public class OWNAxiom {
-	public enum AXIOM_TYPE {LITERAL, UNION, INTERSECTION, EXISTENTIAL, UNIVERSAL}
+	public enum AXIOM_TYPE {LITERAL, UNION, INTERSECTION, EXISTENTIAL, UNIVERSAL, COMPLEMENT}
 	
 	protected AXIOM_TYPE type;
 	protected OWNAxiom operand1;
 	protected OWNAxiom operand2;
 	protected String fullName;
 	protected OWNLiteral relation;
+	protected OWNLiteral operand;
 	
 	public OWNAxiom(String fullName) {
 		this.fullName = fullName;
@@ -22,6 +23,10 @@ public class OWNAxiom {
 		this.relation = relation;
 		this.operand1 = op;
 		this.operand2 = op;
+	}
+	
+	public OWNAxiom(OWNLiteral op) {
+		this.operand = op;
 	}
 		
 	public AXIOM_TYPE getType() {

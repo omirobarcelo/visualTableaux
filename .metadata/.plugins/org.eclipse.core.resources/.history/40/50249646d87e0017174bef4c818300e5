@@ -1,7 +1,0 @@
-package ver1;
-
-public class Operation {
-	public enum OPERATORS {AND, OR, SOME, ONLY, TOP, BOTTOM}
-	
-	
-}
