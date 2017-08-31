@@ -1,0 +1,24 @@
+package ver1;
+
+import java.util.HashSet;
+
+import org.semanticweb.owlapi.model.AxiomType;
+import org.semanticweb.owlapi.model.OWLAxiom;
+import org.semanticweb.owlapi.model.OWLOntology;
+
+import ownapi.*;
+
+public class Interpreter {
+	public static Pair<OWNAxiom, HashSet<OWNAxiom>> read(OWLOntology oConcept, OWLOntology oTbox) {
+		OWNAxiom concept = null;
+		HashSet<OWNAxiom> k = new HashSet<OWNAxiom>();
+		
+		for (OWLAxiom axiom : oConcept.getAxioms()) {
+			if (axiom.isOfType(AxiomType.SUBCLASS_OF)) {
+				
+			}
+		}
+		
+		return new Pair<OWNAxiom, HashSet<OWNAxiom>>(concept, k);
+	}
+}

@@ -14,4 +14,9 @@ public class OWNIntersection extends OWNAxiom {
 	public OWNAxiom getOperand2() {
 		return operand2;
 	}
+
+	@Override
+	public String toString() {
+		return "OWNIntersection [operand1=(" + operand1 + "), operand2=(" + operand2 + ")]";
+	}
 }

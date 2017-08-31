@@ -14,4 +14,9 @@ public class OWNExistential extends OWNAxiom{
 	public OWNAxiom getOperand() {
 		return operand1;
 	}
+
+	@Override
+	public String toString() {
+		return "OWNExistential [relation=(" + relation + "), operand=(" + operand1 + ")]";
+	}
 }

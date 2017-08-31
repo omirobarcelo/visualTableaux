@@ -21,6 +21,7 @@ Declaration(ObjectProperty(:R))
 
 SubClassOf(owl:Thing ObjectIntersectionOf(:C :D))
 SubClassOf(owl:Thing ObjectUnionOf(ObjectSomeValuesFrom(:R :B) ObjectSomeValuesFrom(:R ObjectUnionOf(ObjectComplementOf(:C) ObjectComplementOf(:D)))))
+SubClassOf(owl:Thing ObjectComplementOf(:B))
 
 
 )

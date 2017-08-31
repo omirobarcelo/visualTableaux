@@ -1,0 +1,36 @@
+package ver1;
+
+import java.io.File;
+
+import org.semanticweb.owlapi.apibinding.OWLManager;
+import org.semanticweb.owlapi.model.IRI;
+import org.semanticweb.owlapi.model.OWLOntology;
+import org.semanticweb.owlapi.model.OWLOntologyCreationException;
+import org.semanticweb.owlapi.model.OWLOntologyManager;
+
+public class TUI {
+
+	public static void main(String[] args) {
+		// Load files
+		OWLOntologyManager man = OWLManager.createOWLOntologyManager();
+		IRI conceptIRI = IRI.create(new File("ontologies/testConcept.owl"));
+		IRI tboxIRI = IRI.create(new File("ontologies/testTBox.owl"));
+		
+		try {
+			OWLOntology concept = man.loadOntology(conceptIRI);
+			OWLOntology tbox = man.loadOntology(tboxIRI);
+		} catch (OWLOntologyCreationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		// Interpreter.read
+		
+		// Tableau.init
+		
+		// draw
+		
+		// show possible operations
+	}
+
+}

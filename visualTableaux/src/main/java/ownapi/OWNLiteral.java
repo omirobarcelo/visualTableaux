@@ -14,4 +14,9 @@ public class OWNLiteral extends OWNAxiom {
 	public String getFullName() {
 		return fullName;
 	}
+
+	@Override
+	public String toString() {
+		return "OWNLiteral [Id=" + getId() + "]";
+	}
 }

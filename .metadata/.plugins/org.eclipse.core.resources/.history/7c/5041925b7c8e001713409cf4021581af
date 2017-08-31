@@ -1,0 +1,22 @@
+package ownapi;
+
+public class OWNUniversal extends OWNAxiom{
+	
+	public OWNUniversal(OWNLiteral relation, OWNAxiom op) {
+		super(relation, op);
+		super.type = AXIOM_TYPE.UNIVERSAL;
+	}
+	
+	public OWNLiteral getRelation() {
+		return relation;
+	}
+	
+	public OWNAxiom getOperand() {
+		return operand1;
+	}
+	
+	@Override
+	public String toString() {
+		return "OWNUniversal [relation=" + relation + ", operand=" + operand1 + "]";
+	}
+}

@@ -14,4 +14,9 @@ public class OWNUniversal extends OWNAxiom{
 	public OWNAxiom getOperand() {
 		return operand1;
 	}
+	
+	@Override
+	public String toString() {
+		return "OWNUniversal [relation=(" + relation + "), operand=(" + operand1 + ")]";
+	}
 }

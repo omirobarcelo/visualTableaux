@@ -10,4 +10,10 @@ public class OWNComplement extends OWNAxiom{
 	public OWNLiteral getOperand() {
 		return this.operand;
 	}
+
+	@Override
+	public String toString() {
+		return "OWNComplement [operand=(" + operand + ")]";
+	}
+
 }

@@ -1,0 +1,15 @@
+package ver1;
+
+import java.util.HashSet;
+
+import org.semanticweb.owlapi.model.OWLOntology;
+
+import ownapi.*;
+
+public class Interpreter {
+	public static Pair<OWNAxiom, HashSet<OWNAxiom>> read(OWLOntology concept, OWLOntology tbox) {
+		
+		
+		return null;
+	}
+}

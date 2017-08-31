@@ -13,7 +13,10 @@ import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 import org.semanticweb.owlapi.model.OWLOntologyManager;
 
+import uk.ac.manchester.cs.owl.owlapi.OWLClassExpressionImpl;
+import uk.ac.manchester.cs.owl.owlapi.OWLObjectComplementOfImpl;
 import uk.ac.manchester.cs.owl.owlapi.OWLObjectIntersectionOfImpl;
+import uk.ac.manchester.cs.owl.owlapi.OWLObjectSomeValuesFromImpl;
 import uk.ac.manchester.cs.owl.owlapi.OWLObjectUnionOfImpl;
 import uk.ac.manchester.cs.owl.owlapi.OWLSubClassOfAxiomImpl;
 
@@ -24,25 +27,25 @@ import ownapi.OWNAxiom.AXIOM_TYPE;
 public class Test {
 
 	public static void main(String[] args) {
-		OWNLiteral litA = new OWNLiteral("test#A");
-		OWNLiteral litB = new OWNLiteral("test#B");
-		OWNLiteral litR = new OWNLiteral("test#R");
-		OWNUnion un = new OWNUnion(litA, litB);
-		OWNExistential ex = new OWNExistential(litR, litB);
-		HashSet<OWNAxiom> set = new HashSet();
-		set.add(litA);
-		set.add(litB);
-		set.add(un);
-		set.add(ex);
-		for (OWNAxiom ax : set) {
-			if (ax.isLiteral()) {
-				OWNLiteral lit = (OWNLiteral)ax;
-				System.out.println(lit.getId());
-			} else if (ax.isOfType(AXIOM_TYPE.EXISTENTIAL)) {
-				OWNExistential exr = (OWNExistential)ax;
-				System.out.println(exr.getRelation().getId());
-			}
-		}
+//		OWNLiteral litA = new OWNLiteral("test#A");
+//		OWNLiteral litB = new OWNLiteral("test#B");
+//		OWNLiteral litR = new OWNLiteral("test#R");
+//		OWNUnion un = new OWNUnion(litA, litB);
+//		OWNExistential ex = new OWNExistential(litR, litB);
+//		HashSet<OWNAxiom> set = new HashSet();
+//		set.add(litA);
+//		set.add(litB);
+//		set.add(un);
+//		set.add(ex);
+//		for (OWNAxiom ax : set) {
+//			if (ax.isLiteral()) {
+//				OWNLiteral lit = (OWNLiteral)ax;
+//				System.out.println(lit.getId());
+//			} else if (ax.isOfType(AXIOM_TYPE.EXISTENTIAL)) {
+//				OWNExistential exr = (OWNExistential)ax;
+//				System.out.println(exr.getRelation().getId());
+//			}
+//		}
 		
 //		OWNLiteral lit = new OWNLiteral("a", "test#a");
 //		OWNAxiom ax = (OWNAxiom)lit;
@@ -107,6 +110,7 @@ public class Test {
 					OWLSubClassOfAxiomImpl subclass = (OWLSubClassOfAxiomImpl)axiom;
 					System.out.println(subclass.getSuperClass());
 					System.out.println((subclass.getSuperClass()).getClass());
+					System.out.println((OWLClassExpressionImpl)subclass.getSuperClass());
 					
 					if ((subclass.getSuperClass()).getClass() == OWLObjectIntersectionOfImpl.class) {
 						OWLObjectIntersectionOfImpl intersection = (OWLObjectIntersectionOfImpl)subclass.getSuperClass();
@@ -115,6 +119,11 @@ public class Test {
 						System.out.println(intersection.getOperands());
 						for (OWLClassExpression operand : intersection.getOperands()) {
 							System.out.println(operand.isClassExpressionLiteral());
+							
+							if (operand.isClassExpressionLiteral()) {
+								String lit = operand.toString();
+								System.out.println(lit.substring(1, lit.length()-1));
+							}
 						}
 					}
 					
@@ -125,7 +134,27 @@ public class Test {
 						System.out.println(union.getOperands());
 						for (OWLClassExpression operand : union.getOperands()) {
 							System.out.println(operand.isClassExpressionLiteral());
+							
+							if (!operand.isClassExpressionLiteral()) {
+								System.out.println(operand.getClass());
+								OWLClassExpressionImpl cexpZ = (OWLClassExpressionImpl)operand;
+								System.out.println(cexpZ);
+								System.out.println(cexpZ.isClassExpressionLiteral());
+								System.out.println(cexpZ.getClass());
+								
+								OWLObjectSomeValuesFromImpl existential = (OWLObjectSomeValuesFromImpl)operand;
+								System.out.println(existential.isClassExpressionLiteral());
+								System.out.println("filler-" + existential.getFiller());
+								System.out.println("filler-" + existential.getFiller().isClassExpressionLiteral());
+								System.out.println("property-" + existential.getProperty());
+							}
 						}
+					}
+					
+					if (subclass.getSuperClass().getClass() == OWLObjectComplementOfImpl.class) {
+						OWLObjectComplementOfImpl complement = (OWLObjectComplementOfImpl)subclass.getSuperClass();
+						System.out.println(complement.isClassExpressionLiteral());
+						System.out.println(complement.getComplementNNF());
 					}
 					
 					System.out.println("------");
