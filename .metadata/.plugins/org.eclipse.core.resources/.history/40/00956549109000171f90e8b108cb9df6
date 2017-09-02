@@ -3,8 +3,7 @@ package ownapi;
 public class OWNAxiom {
 	public enum AXIOM_TYPE {TOP, BOTTOM, LITERAL, UNION, INTERSECTION, EXISTENTIAL, UNIVERSAL, COMPLEMENT}
 	
-	public static final OWNAxiom TOP = new OWNAxiom(true);
-	public static final OWNAxiom BOTTOM = new OWNAxiom(false);
+	public static final OWNAxiom TOP = new OWNAxiom(this.type = AXIOM_TYPE.TOP);
 	
 	protected AXIOM_TYPE type;
 	protected OWNAxiom operand1;
