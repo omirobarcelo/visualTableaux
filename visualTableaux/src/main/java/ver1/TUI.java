@@ -28,19 +28,23 @@ public class TUI {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		// DEBUG
 		if (concept == null || tbox == null)
 			System.out.println("Something is null");
+		// DEBUG
 		
 		// Interpreter.read
 		Pair<OWNAxiom, HashSet<OWNAxiom>> pairCon_K = Interpreter.read(concept, tbox);
+		// DEBUG
 		System.out.println(pairCon_K.getFirst());
 		System.out.println(pairCon_K.getSecond());
+		// DEBUG
 		
-		// Tableau.init
-		
-		// draw
-		
-		// show possible operations
+		// Create and initialize tableau
+		Tableau tableau = new Tableau(pairCon_K.getSecond());
+		tableau.init(pairCon_K.getFirst());
+				
+		// Loop (show status, execute operation, get new status)
 	}
 
 }

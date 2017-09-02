@@ -1,0 +1,27 @@
+package ver1;
+
+public class Node {
+	private String fullName;
+	
+	public Node(String fullName) {
+		this.fullName = fullName;
+	}
+
+	public String getId() {
+		return this.fullName.split("#")[1];
+	}
+
+	public String getFullName() {
+		return fullName;
+	}
+
+	public void setFullName(String fullName) {
+		this.fullName = fullName;
+	}
+
+	@Override
+	public String toString() {
+		return "Node [id=" + getId() + "]";
+	}
+	
+}
