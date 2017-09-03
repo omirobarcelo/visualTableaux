@@ -27,24 +27,65 @@ import ownapi.OWNAxiom.AXIOM_TYPE;
 public class Test {
 
 	public static void main(String[] args) {
-		OWNLiteral litA = new OWNLiteral("test#A");
-		OWNLiteral litB = new OWNLiteral("test#B");
-		OWNLiteral litR = new OWNLiteral("test#R");
-		OWNLiteral litS = new OWNLiteral("test#S");
+		OWLOntologyManager man = OWLManager.createOWLOntologyManager();
+		IRI conceptIRI = IRI.create(new File("ontologies/testConcept.owl"));
+		IRI tboxIRI = IRI.create(new File("ontologies/testTBox.owl"));
 		
-		OWNComplement cA = new OWNComplement(litA);
+		OWLOntology oConcept = null;
+		OWLOntology oTbox = null;
+		try {
+			oConcept = man.loadOntology(conceptIRI);
+			oTbox = man.loadOntology(tboxIRI);
+		} catch (OWLOntologyCreationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
-		OWNUnion union1 = new OWNUnion(cA, litB);
-		OWNIntersection inter1 = new OWNIntersection(litB, cA);
+		OWNAxiom concept = null;
+		HashSet<OWNAxiom> K = new HashSet<OWNAxiom>();
 		
-		OWNExistential exists1 = new OWNExistential(litR, union1);
-		OWNUniversal univers1 = new OWNUniversal(litS, exists1);
+		for (OWLAxiom axiom : oConcept.getAxioms()) {
+			if (axiom.isOfType(AxiomType.SUBCLASS_OF)) {
+				// Cast to SubClassOf to get the superclass, which is of ClassExpression
+				OWLSubClassOfAxiomImpl subclass = (OWLSubClassOfAxiomImpl)axiom.getNNF();
+				OWLClassExpressionCastVisitor visitor = new OWLClassExpressionCastVisitor();
+				(subclass.getSuperClass()).accept(visitor);
+				concept = visitor.getAxiom();
+			}
+		}
+		K.add(concept);
 		
-		System.out.println(cA);
-		System.out.println(union1);
-		System.out.println(inter1);
-		System.out.println(exists1);
-		System.out.println(univers1);
+		for (OWLAxiom axiom : oTbox.getAxioms()) {
+			if (axiom.isOfType(AxiomType.SUBCLASS_OF)) {
+				// Cast to SubClassOf to get the superclass, which is of ClassExpression
+				OWLSubClassOfAxiomImpl subclass = (OWLSubClassOfAxiomImpl)axiom.getNNF();
+				OWLClassExpressionCastVisitor visitor = new OWLClassExpressionCastVisitor();
+				(subclass.getSuperClass()).accept(visitor);
+				K.add(visitor.getAxiom());
+			}
+		}
+		
+		System.out.println(concept);
+		System.out.println(K);
+		
+//		OWNLiteral litA = new OWNLiteral("test#A");
+//		OWNLiteral litB = new OWNLiteral("test#B");
+//		OWNLiteral litR = new OWNLiteral("test#R");
+//		OWNLiteral litS = new OWNLiteral("test#S");
+//		
+//		OWNComplement cA = new OWNComplement(litA);
+//		
+//		OWNUnion union1 = new OWNUnion(cA, litB);
+//		OWNIntersection inter1 = new OWNIntersection(litB, cA);
+//		
+//		OWNExistential exists1 = new OWNExistential(litR, union1);
+//		OWNUniversal univers1 = new OWNUniversal(litS, exists1);
+//		
+//		System.out.println(cA);
+//		System.out.println(union1);
+//		System.out.println(inter1);
+//		System.out.println(exists1);
+//		System.out.println(univers1);
 		
 //		OWNLiteral litA = new OWNLiteral("test#A");
 //		OWNLiteral litB = new OWNLiteral("test#B");
