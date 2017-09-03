@@ -17,6 +17,9 @@ public class OWNIntersection extends OWNAxiom {
 
 	@Override
 	public String toString() {
-		return "OWNIntersection [operand1=(" + operand1 + "), operand2=(" + operand2 + ")]";
+		return (operand1.isLiteral() ? operand1 : "("+operand1+")")
+				+ "\u2A05" + 
+				(operand2.isLiteral() ? operand2 : "("+operand2+")");
+		//return "OWNIntersection [operand1=(" + operand1 + "), operand2=(" + operand2 + ")]";
 	}
 }

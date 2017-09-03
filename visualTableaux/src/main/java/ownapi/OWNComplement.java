@@ -13,7 +13,8 @@ public class OWNComplement extends OWNAxiom{
 
 	@Override
 	public String toString() {
-		return "OWNComplement [operand=(" + operand + ")]";
+		return "¬" + operand;
+		//return "OWNComplement [operand=(" + operand + ")]";
 	}
 
 }

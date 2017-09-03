@@ -27,6 +27,25 @@ import ownapi.OWNAxiom.AXIOM_TYPE;
 public class Test {
 
 	public static void main(String[] args) {
+		OWNLiteral litA = new OWNLiteral("test#A");
+		OWNLiteral litB = new OWNLiteral("test#B");
+		OWNLiteral litR = new OWNLiteral("test#R");
+		OWNLiteral litS = new OWNLiteral("test#S");
+		
+		OWNComplement cA = new OWNComplement(litA);
+		
+		OWNUnion union1 = new OWNUnion(cA, litB);
+		OWNIntersection inter1 = new OWNIntersection(litB, cA);
+		
+		OWNExistential exists1 = new OWNExistential(litR, union1);
+		OWNUniversal univers1 = new OWNUniversal(litS, exists1);
+		
+		System.out.println(cA);
+		System.out.println(union1);
+		System.out.println(inter1);
+		System.out.println(exists1);
+		System.out.println(univers1);
+		
 //		OWNLiteral litA = new OWNLiteral("test#A");
 //		OWNLiteral litB = new OWNLiteral("test#B");
 //		OWNLiteral litR = new OWNLiteral("test#R");
@@ -85,85 +104,85 @@ public class Test {
 //		//System.out.println(c);
 //		//System.out.println(secondC);
 		
-		OWLOntologyManager man = OWLManager.createOWLOntologyManager();
-		//IRI ontologyIRI = IRI.create("http://protege.stanford.edu/ontologies/pizza/pizza.owl");
-		IRI ontologyIRI = IRI.create(new File("ontologies/testTBox.owl"));
-		
-		try {
-			OWLOntology ontology = man.loadOntology(ontologyIRI);
-			System.out.println(ontologyIRI.toString());
-			System.out.println(ontology.getLogicalAxiomCount() + "\n");
-			
-			Set<OWLAxiom> axioms = ontology.getAxioms();
-			for (OWLAxiom axiom : axioms) {
-//				System.out.println(axiom);
-//				System.out.println(axiom.getNNF());
-//				System.out.println(axiom.getAxiomType());
-//				if (axiom.isOfType(AxiomType.DECLARATION)) {
-//					OWLDeclarationAxiomImpl declaration = (OWLDeclarationAxiomImpl)axiom;
-//					System.out.println(declaration.getIndividualsInSignature());
-//					System.out.println(declaration.getEntity());
-//					System.out.println(declaration.getSignature());
+//		OWLOntologyManager man = OWLManager.createOWLOntologyManager();
+//		//IRI ontologyIRI = IRI.create("http://protege.stanford.edu/ontologies/pizza/pizza.owl");
+//		IRI ontologyIRI = IRI.create(new File("ontologies/testTBox.owl"));
+//		
+//		try {
+//			OWLOntology ontology = man.loadOntology(ontologyIRI);
+//			System.out.println(ontologyIRI.toString());
+//			System.out.println(ontology.getLogicalAxiomCount() + "\n");
+//			
+//			Set<OWLAxiom> axioms = ontology.getAxioms();
+//			for (OWLAxiom axiom : axioms) {
+////				System.out.println(axiom);
+////				System.out.println(axiom.getNNF());
+////				System.out.println(axiom.getAxiomType());
+////				if (axiom.isOfType(AxiomType.DECLARATION)) {
+////					OWLDeclarationAxiomImpl declaration = (OWLDeclarationAxiomImpl)axiom;
+////					System.out.println(declaration.getIndividualsInSignature());
+////					System.out.println(declaration.getEntity());
+////					System.out.println(declaration.getSignature());
+////				}
+//				if (axiom.isOfType(AxiomType.SUBCLASS_OF)) {
+//					System.out.println(axiom.getNNF());
+//					OWLSubClassOfAxiomImpl subclass = (OWLSubClassOfAxiomImpl)axiom;
+//					System.out.println(subclass.getSuperClass());
+//					System.out.println((subclass.getSuperClass()).getClass());
+//					System.out.println((OWLClassExpressionImpl)subclass.getSuperClass());
+//					
+//					if ((subclass.getSuperClass()).getClass() == OWLObjectIntersectionOfImpl.class) {
+//						OWLObjectIntersectionOfImpl intersection = (OWLObjectIntersectionOfImpl)subclass.getSuperClass();
+//						System.out.println(intersection);
+//						
+//						System.out.println(intersection.getOperands());
+//						for (OWLClassExpression operand : intersection.getOperands()) {
+//							System.out.println(operand.isClassExpressionLiteral());
+//							
+//							if (operand.isClassExpressionLiteral()) {
+//								String lit = operand.toString();
+//								System.out.println(lit.substring(1, lit.length()-1));
+//							}
+//						}
+//					}
+//					
+//					if ((subclass.getSuperClass()).getClass() == OWLObjectUnionOfImpl.class) {
+//						OWLObjectUnionOfImpl union = (OWLObjectUnionOfImpl)subclass.getSuperClass();
+//						System.out.println(union);
+//						
+//						System.out.println(union.getOperands());
+//						for (OWLClassExpression operand : union.getOperands()) {
+//							System.out.println(operand.isClassExpressionLiteral());
+//							
+//							if (!operand.isClassExpressionLiteral()) {
+//								System.out.println(operand.getClass());
+//								OWLClassExpressionImpl cexpZ = (OWLClassExpressionImpl)operand;
+//								System.out.println(cexpZ);
+//								System.out.println(cexpZ.isClassExpressionLiteral());
+//								System.out.println(cexpZ.getClass());
+//								
+//								OWLObjectSomeValuesFromImpl existential = (OWLObjectSomeValuesFromImpl)operand;
+//								System.out.println(existential.isClassExpressionLiteral());
+//								System.out.println("filler-" + existential.getFiller());
+//								System.out.println("filler-" + existential.getFiller().isClassExpressionLiteral());
+//								System.out.println("property-" + existential.getProperty());
+//							}
+//						}
+//					}
+//					
+//					if (subclass.getSuperClass().getClass() == OWLObjectComplementOfImpl.class) {
+//						OWLObjectComplementOfImpl complement = (OWLObjectComplementOfImpl)subclass.getSuperClass();
+//						System.out.println(complement.isClassExpressionLiteral());
+//						System.out.println(complement.getComplementNNF());
+//					}
+//					
+//					System.out.println("------");
 //				}
-				if (axiom.isOfType(AxiomType.SUBCLASS_OF)) {
-					System.out.println(axiom.getNNF());
-					OWLSubClassOfAxiomImpl subclass = (OWLSubClassOfAxiomImpl)axiom;
-					System.out.println(subclass.getSuperClass());
-					System.out.println((subclass.getSuperClass()).getClass());
-					System.out.println((OWLClassExpressionImpl)subclass.getSuperClass());
-					
-					if ((subclass.getSuperClass()).getClass() == OWLObjectIntersectionOfImpl.class) {
-						OWLObjectIntersectionOfImpl intersection = (OWLObjectIntersectionOfImpl)subclass.getSuperClass();
-						System.out.println(intersection);
-						
-						System.out.println(intersection.getOperands());
-						for (OWLClassExpression operand : intersection.getOperands()) {
-							System.out.println(operand.isClassExpressionLiteral());
-							
-							if (operand.isClassExpressionLiteral()) {
-								String lit = operand.toString();
-								System.out.println(lit.substring(1, lit.length()-1));
-							}
-						}
-					}
-					
-					if ((subclass.getSuperClass()).getClass() == OWLObjectUnionOfImpl.class) {
-						OWLObjectUnionOfImpl union = (OWLObjectUnionOfImpl)subclass.getSuperClass();
-						System.out.println(union);
-						
-						System.out.println(union.getOperands());
-						for (OWLClassExpression operand : union.getOperands()) {
-							System.out.println(operand.isClassExpressionLiteral());
-							
-							if (!operand.isClassExpressionLiteral()) {
-								System.out.println(operand.getClass());
-								OWLClassExpressionImpl cexpZ = (OWLClassExpressionImpl)operand;
-								System.out.println(cexpZ);
-								System.out.println(cexpZ.isClassExpressionLiteral());
-								System.out.println(cexpZ.getClass());
-								
-								OWLObjectSomeValuesFromImpl existential = (OWLObjectSomeValuesFromImpl)operand;
-								System.out.println(existential.isClassExpressionLiteral());
-								System.out.println("filler-" + existential.getFiller());
-								System.out.println("filler-" + existential.getFiller().isClassExpressionLiteral());
-								System.out.println("property-" + existential.getProperty());
-							}
-						}
-					}
-					
-					if (subclass.getSuperClass().getClass() == OWLObjectComplementOfImpl.class) {
-						OWLObjectComplementOfImpl complement = (OWLObjectComplementOfImpl)subclass.getSuperClass();
-						System.out.println(complement.isClassExpressionLiteral());
-						System.out.println(complement.getComplementNNF());
-					}
-					
-					System.out.println("------");
-				}
-			}
-			
-		} catch (OWLOntologyCreationException e) {
-			e.printStackTrace();
-		}
+//			}
+//			
+//		} catch (OWLOntologyCreationException e) {
+//			e.printStackTrace();
+//		}
 	}
 
 }

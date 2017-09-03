@@ -17,6 +17,9 @@ public class OWNUnion extends OWNAxiom {
 	
 	@Override
 	public String toString() {
-		return "OWNUnion [operand1=(" + operand1 + "), operand2=(" + operand2 + ")]";
+		return (operand1.isLiteral() ? operand1 : "("+operand1+")")
+				+ "\u2A06" + 
+				(operand2.isLiteral() ? operand2 : "("+operand2+")");
+		//return "OWNUnion [operand1=(" + operand1 + "), operand2=(" + operand2 + ")]";
 	}
 }

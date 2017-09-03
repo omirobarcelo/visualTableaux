@@ -17,6 +17,7 @@ public class OWNExistential extends OWNAxiom{
 
 	@Override
 	public String toString() {
-		return "OWNExistential [relation=(" + relation + "), operand=(" + operand1 + ")]";
+		return "\u2203" + relation + "." + (operand1.isLiteral() ? operand1 : "("+operand1+")");
+		//return "OWNExistential [relation=(" + relation + "), operand=(" + operand1 + ")]";
 	}
 }

@@ -17,6 +17,7 @@ public class OWNUniversal extends OWNAxiom{
 	
 	@Override
 	public String toString() {
-		return "OWNUniversal [relation=(" + relation + "), operand=(" + operand1 + ")]";
+		return "\u2200" + relation + "." + (operand1.isLiteral() ? operand1 : "("+operand1+")");
+		//return "OWNUniversal [relation=(" + relation + "), operand=(" + operand1 + ")]";
 	}
 }
