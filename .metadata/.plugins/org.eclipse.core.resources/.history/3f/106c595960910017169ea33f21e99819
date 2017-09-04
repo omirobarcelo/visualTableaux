@@ -14,7 +14,6 @@ public class Operation {
 	public Operation(OPERATOR operator, OWNAxiom operand1) {
 		this.operator = operator;
 		this.operand1 = operand1;
-		this.operand2 = operand1;
 	}
 	
 	// Only for BOTTOM operation
@@ -49,14 +48,8 @@ public class Operation {
 		return operator.hashCode() ^ operand1.hashCode() ^ operand2.hashCode();
 	}
 	
-	@Override
-	public boolean equals(Object other) {
-		if (other instanceof Operation) {
-			Operation op = (Operation)other;
-			boolean sameOperands = (this.operand1.equals(op.operand1) && this.operand2.equals(op.operand2))
-					|| (this.operand1.equals(op.operand2) && this.operand2.equals(op.operand1));
-			return this.operator == op.operator && sameOperands;
-		}
-		return false;
-	}
+//	@Override
+//	public boolean equals(Object other) {
+//		return true;
+//	}
 }

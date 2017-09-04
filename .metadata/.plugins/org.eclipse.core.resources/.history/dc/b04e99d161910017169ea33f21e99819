@@ -77,9 +77,9 @@ public class Test {
 		HashSet<Operation> operations = new HashSet<Operation>();
 		OWNLiteral lit = new OWNLiteral("test#A");
 		OWNComplement comp = new OWNComplement(lit);
-		Operation opA = new Operation(OPERATOR.BOTTOM, lit);
+		Operation opA = new Operation(OPERATOR.BOTTOM, lit, comp);
 		operations.add(opA);
-		Operation opB = new Operation(OPERATOR.BOTTOM, lit);
+		Operation opB = new Operation(OPERATOR.BOTTOM, lit, comp);
 		operations.add(opB);
 
 		if (opB.equals(opA))

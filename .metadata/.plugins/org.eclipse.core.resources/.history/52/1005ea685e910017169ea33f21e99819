@@ -21,71 +21,57 @@ import uk.ac.manchester.cs.owl.owlapi.OWLObjectUnionOfImpl;
 import uk.ac.manchester.cs.owl.owlapi.OWLSubClassOfAxiomImpl;
 
 import ver1.*;
-import ver1.Operation.OPERATOR;
 import ownapi.*;
 import ownapi.OWNAxiom.AXIOM_TYPE;
 
 public class Test {
 
 	public static void main(String[] args) {
-//		OWLOntologyManager man = OWLManager.createOWLOntologyManager();
-//		IRI conceptIRI = IRI.create(new File("ontologies/testConcept.owl"));
-//		IRI tboxIRI = IRI.create(new File("ontologies/testTBox.owl"));
-//		
-//		OWLOntology oConcept = null;
-//		OWLOntology oTbox = null;
-//		try {
-//			oConcept = man.loadOntology(conceptIRI);
-//			oTbox = man.loadOntology(tboxIRI);
-//		} catch (OWLOntologyCreationException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		
-//		OWNAxiom concept = null;
-//		HashSet<OWNAxiom> K = new HashSet<OWNAxiom>();
-//		
-//		for (OWLAxiom axiom : oConcept.getAxioms()) {
-//			if (axiom.isOfType(AxiomType.SUBCLASS_OF)) {
-//				// Cast to SubClassOf to get the superclass, which is of ClassExpression
-//				OWLSubClassOfAxiomImpl subclass = (OWLSubClassOfAxiomImpl)axiom.getNNF();
-//				OWLClassExpressionCastVisitor visitor = new OWLClassExpressionCastVisitor();
-//				(subclass.getSuperClass()).accept(visitor);
-//				concept = visitor.getAxiom();
-//			}
-//		}
-//		K.add(concept);
-//		
-//		for (OWLAxiom axiom : oTbox.getAxioms()) {
-//			if (axiom.isOfType(AxiomType.SUBCLASS_OF)) {
-//				// Cast to SubClassOf to get the superclass, which is of ClassExpression
-//				OWLSubClassOfAxiomImpl subclass = (OWLSubClassOfAxiomImpl)axiom.getNNF();
-//				OWLClassExpressionCastVisitor visitor = new OWLClassExpressionCastVisitor();
-//				(subclass.getSuperClass()).accept(visitor);
-//				K.add(visitor.getAxiom());
-//			}
-//		}
-//		
-//		System.out.println(concept);
-//		System.out.println(K);
-//		
-//		for (OWNAxiom axiom : K) {
-//			if (axiom.equals(concept))
-//				System.out.println(concept + " == " + axiom);
-//		}
+		OWLOntologyManager man = OWLManager.createOWLOntologyManager();
+		IRI conceptIRI = IRI.create(new File("ontologies/testConcept.owl"));
+		IRI tboxIRI = IRI.create(new File("ontologies/testTBox.owl"));
 		
-		HashSet<Operation> operations = new HashSet<Operation>();
-		OWNLiteral lit = new OWNLiteral("test#A");
-		OWNComplement comp = new OWNComplement(lit);
-		Operation opA = new Operation(OPERATOR.BOTTOM, lit);
-		operations.add(opA);
-		Operation opB = new Operation(OPERATOR.BOTTOM, lit);
-		operations.add(opB);
-
-		if (opB.equals(opA))
-			System.out.println("Equals");
-		System.out.println(operations.size());
+		OWLOntology oConcept = null;
+		OWLOntology oTbox = null;
+		try {
+			oConcept = man.loadOntology(conceptIRI);
+			oTbox = man.loadOntology(tboxIRI);
+		} catch (OWLOntologyCreationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
+		OWNAxiom concept = null;
+		HashSet<OWNAxiom> K = new HashSet<OWNAxiom>();
+		
+		for (OWLAxiom axiom : oConcept.getAxioms()) {
+			if (axiom.isOfType(AxiomType.SUBCLASS_OF)) {
+				// Cast to SubClassOf to get the superclass, which is of ClassExpression
+				OWLSubClassOfAxiomImpl subclass = (OWLSubClassOfAxiomImpl)axiom.getNNF();
+				OWLClassExpressionCastVisitor visitor = new OWLClassExpressionCastVisitor();
+				(subclass.getSuperClass()).accept(visitor);
+				concept = visitor.getAxiom();
+			}
+		}
+		K.add(concept);
+		
+		for (OWLAxiom axiom : oTbox.getAxioms()) {
+			if (axiom.isOfType(AxiomType.SUBCLASS_OF)) {
+				// Cast to SubClassOf to get the superclass, which is of ClassExpression
+				OWLSubClassOfAxiomImpl subclass = (OWLSubClassOfAxiomImpl)axiom.getNNF();
+				OWLClassExpressionCastVisitor visitor = new OWLClassExpressionCastVisitor();
+				(subclass.getSuperClass()).accept(visitor);
+				K.add(visitor.getAxiom());
+			}
+		}
+		
+		System.out.println(concept);
+		System.out.println(K);
+		
+		for (OWNAxiom axiom : K) {
+			if (axiom.equals(concept))
+				System.out.println(concept + " == " + axiom);
+		}
 		
 //		OWNLiteral litA = new OWNLiteral("test#A");
 //		OWNLiteral litB = new OWNLiteral("test#B");

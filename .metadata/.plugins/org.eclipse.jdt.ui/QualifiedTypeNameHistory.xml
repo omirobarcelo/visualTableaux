@@ -25,4 +25,5 @@
 <fullyQualifiedTypeName name="ownapi.OWNLiteral"/>
 <fullyQualifiedTypeName name="ownapi.OWNIntersection"/>
 <fullyQualifiedTypeName name="ownapi.OWNUniversal"/>
+<fullyQualifiedTypeName name="ver1.Operation.OPERATOR"/>
 </qualifiedTypeNameHistroy>
