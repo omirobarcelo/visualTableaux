@@ -1,14 +1,14 @@
 package ownapi;
 
-public class OWNExistential extends OWNAxiom{
+public class OWNUniversal extends OWNAxiom{
 	private OWNLiteral relation;
 	private OWNAxiom operand;
 	
-	public OWNExistential(OWNLiteral relation, OWNAxiom op) {
+	public OWNUniversal(OWNLiteral relation, OWNAxiom op) {
 		super();
 		this.relation = relation;
 		this.operand = op;
-		super.type = AXIOM_TYPE.EXISTENTIAL;
+		super.type = AXIOM_TYPE.UNIVERSAL;
 	}
 	
 	public OWNLiteral getRelation() {
@@ -16,13 +16,13 @@ public class OWNExistential extends OWNAxiom{
 	}
 	
 	public OWNAxiom getOperand() {
-		return operand;
+		return operand1;
 	}
-
+	
 	@Override
 	public String toString() {
-		return "\u2203" + relation + "." + (operand.isLiteral() ? operand : "("+operand+")");
-		//return "OWNExistential [relation=(" + relation + "), operand=(" + operand1 + ")]";
+		return "\u2200" + relation + "." + (operand1.isLiteral() ? operand1 : "("+operand1+")");
+		//return "OWNUniversal [relation=(" + relation + "), operand=(" + operand1 + ")]";
 	}
 	
 	public void accept(OWNAxiomVisitor visitor) {

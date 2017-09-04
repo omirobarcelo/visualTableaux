@@ -1,13 +1,9 @@
 package ownapi;
 
 public class OWNExistential extends OWNAxiom{
-	private OWNLiteral relation;
-	private OWNAxiom operand;
 	
 	public OWNExistential(OWNLiteral relation, OWNAxiom op) {
-		super();
-		this.relation = relation;
-		this.operand = op;
+		super(relation, op);
 		super.type = AXIOM_TYPE.EXISTENTIAL;
 	}
 	
@@ -16,12 +12,12 @@ public class OWNExistential extends OWNAxiom{
 	}
 	
 	public OWNAxiom getOperand() {
-		return operand;
+		return operand1;
 	}
 
 	@Override
 	public String toString() {
-		return "\u2203" + relation + "." + (operand.isLiteral() ? operand : "("+operand+")");
+		return "\u2203" + relation + "." + (operand1.isLiteral() ? operand1 : "("+operand1+")");
 		//return "OWNExistential [relation=(" + relation + "), operand=(" + operand1 + ")]";
 	}
 	

@@ -1,11 +1,9 @@
 package ownapi;
 
 public class OWNLiteral extends OWNAxiom {
-	private String fullName;
 	
 	public OWNLiteral(String fullName) {
-		super();
-		this.fullName = fullName;
+		super(fullName);
 		super.type = AXIOM_TYPE.LITERAL;
 	}
 

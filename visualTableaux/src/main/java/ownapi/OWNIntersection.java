@@ -1,9 +1,13 @@
 package ownapi;
 
 public class OWNIntersection extends OWNAxiom {
+	private OWNAxiom operand1;
+	private OWNAxiom operand2;
 	
 	public OWNIntersection(OWNAxiom op1, OWNAxiom op2) {
-		super(op1, op2);
+		super();
+		this.operand1 = op1;
+		this.operand2 = op2;
 		super.type = AXIOM_TYPE.INTERSECTION;
 	}
 

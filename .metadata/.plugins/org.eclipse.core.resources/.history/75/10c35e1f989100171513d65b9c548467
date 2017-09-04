@@ -5,7 +5,6 @@ public class OWNComplement extends OWNAxiom{
 	
 	public OWNComplement(OWNLiteral op) {
 		super();
-		this.operand = op;
 		this.type = AXIOM_TYPE.COMPLEMENT;
 	}
 	

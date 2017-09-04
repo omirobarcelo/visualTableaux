@@ -1,13 +1,9 @@
 package ownapi;
 
 public class OWNUnion extends OWNAxiom {
-	private OWNAxiom operand1;
-	private OWNAxiom operand2;
 
 	public OWNUnion(OWNAxiom op1, OWNAxiom op2) {
 		super();
-		this.operand1 = op1;
-		this.operand2 = op2;
 		super.type = AXIOM_TYPE.UNION;
 	}
 
