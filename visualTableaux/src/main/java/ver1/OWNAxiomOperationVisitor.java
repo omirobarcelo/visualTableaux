@@ -3,13 +3,20 @@ package ver1;
 import java.util.HashSet;
 
 import ownapi.*;
+import ownapi.OWNAxiom.AXIOM_TYPE;
 import ver1.Operation.OPERATOR;
 
 public class OWNAxiomOperationVisitor implements OWNAxiomVisitor {
 	private HashSet<Operation> operations;
+	private HashSet<OWNAxiom> L;
 	
 	public OWNAxiomOperationVisitor() {
 		operations = new HashSet<Operation>();
+	}
+	
+	public OWNAxiomOperationVisitor(HashSet<OWNAxiom> L) {
+		operations = new HashSet<Operation>();
+		this.L = L;
 	}
 	
 	public HashSet<Operation> getOperations() {
@@ -22,14 +29,16 @@ public class OWNAxiomOperationVisitor implements OWNAxiomVisitor {
 
 	public void visit(OWNLiteral axiom) {
 		// TODO Auto-generated method stub
-		// The operations related to OWNLiteral are BOTTOM operations
-		// Since it's necessary to check L for it, not obtained from visitor
 	}
 
 	public void visit(OWNComplement axiom) {
 		// TODO Auto-generated method stub
-		// The operations related to OWNComplement are BOTTOM operations
-		// Since it's necessary to check L for it, not obtained from visitor
+		for (OWNAxiom other : L) {
+			if (other.isOfType(AXIOM_TYPE.LITERAL) && other.equals(axiom.getOperand())) {
+				operations.add(new Operation(OPERATOR.BOTTOM, other, axiom));
+				break;
+			}
+		}
 	}
 
 	public void visit(OWNUnion axiom) {

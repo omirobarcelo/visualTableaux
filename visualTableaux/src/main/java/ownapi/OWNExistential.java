@@ -25,6 +25,20 @@ public class OWNExistential extends OWNAxiom{
 		//return "OWNExistential [relation=(" + relation + "), operand=(" + operand1 + ")]";
 	}
 	
+	@Override
+	public int hashCode() {
+		return type.hashCode() ^ relation.hashCode() ^ operand.hashCode();
+	}
+	
+	@Override
+	public boolean equals(Object other) {
+		if (other instanceof OWNExistential) {
+			OWNExistential existential = (OWNExistential)other;
+			return type == existential.type && relation.equals(existential.relation) && operand.equals(existential.operand);
+		}
+		return false;
+	}
+	
 	public void accept(OWNAxiomVisitor visitor) {
 		visitor.visit(this);
 	}

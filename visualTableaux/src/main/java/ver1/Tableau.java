@@ -61,27 +61,9 @@ public class Tableau {
 		
 		// Iterate over all axioms in node
 		for (OWNAxiom axiom : Ln.get(n)) {
-			// Check for BOTTOM rules here instead of in visitor because 
-			// is necessary to check all the other axioms in L(n)
-			if (axiom.isLiteral()) {
-				// Check only OWNComplement to avoid double checking (search
-				// the complement of a literal and search the literal of the
-				// complement) and because probably there'll be less than 
-				// OWNLiteral
-				if (axiom.isOfType(AXIOM_TYPE.COMPLEMENT)) {
-					OWNComplement complement = (OWNComplement)axiom;
-					for (OWNAxiom other : Ln.get(n)) {
-						if (other.isOfType(AXIOM_TYPE.LITERAL) && other.equals(complement.getOperand())) {
-							operations.get(n).add(new Operation(OPERATOR.BOTTOM, other, complement));
-							break;
-						}
-					}
-				}
-			} else {
-				OWNAxiomOperationVisitor visitor = new OWNAxiomOperationVisitor();
-				axiom.accept(visitor);
-				operations.get(n).addAll(visitor.getOperations());
-			}
+			OWNAxiomOperationVisitor visitor = new OWNAxiomOperationVisitor(Ln.get(n));
+			axiom.accept(visitor);
+			operations.get(n).addAll(visitor.getOperations());
 		}
 	}
 }

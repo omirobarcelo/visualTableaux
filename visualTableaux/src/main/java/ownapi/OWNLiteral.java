@@ -23,6 +23,20 @@ public class OWNLiteral extends OWNAxiom {
 		//return "OWNLiteral [Id=" + getId() + "]";
 	}
 	
+	@Override
+	public int hashCode() {
+		return type.hashCode() ^ fullName.hashCode();
+	}
+	
+	@Override
+	public boolean equals(Object other) {
+		if (other instanceof OWNLiteral) {
+			OWNLiteral literal = (OWNLiteral)other;
+			return type == literal.type && fullName.equals(literal.fullName);
+		}
+		return false;
+	}
+	
 	public void accept(OWNAxiomVisitor visitor) {
 		visitor.visit(this);
 	}

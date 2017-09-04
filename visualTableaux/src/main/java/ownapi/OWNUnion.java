@@ -27,6 +27,20 @@ public class OWNUnion extends OWNAxiom {
 		//return "OWNUnion [operand1=(" + operand1 + "), operand2=(" + operand2 + ")]";
 	}
 	
+	@Override
+	public int hashCode() {
+		return type.hashCode() ^ operand1.hashCode() ^ operand2.hashCode();
+	}
+	
+	@Override
+	public boolean equals(Object other) {
+		if (other instanceof OWNUnion) {
+			OWNUnion union = (OWNUnion)other;
+			return type == union.type && operand1.equals(union.operand1) && operand2.equals(union.operand2);
+		}
+		return false;
+	}
+	
 	public void accept(OWNAxiomVisitor visitor) {
 		visitor.visit(this);
 	}

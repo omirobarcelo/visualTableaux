@@ -28,52 +28,86 @@ import ownapi.OWNAxiom.AXIOM_TYPE;
 public class Test {
 
 	public static void main(String[] args) {
-		OWLOntologyManager man = OWLManager.createOWLOntologyManager();
-		IRI conceptIRI = IRI.create(new File("ontologies/testConcept.owl"));
-		IRI tboxIRI = IRI.create(new File("ontologies/testTBox.owl"));
+//		OWLOntologyManager man = OWLManager.createOWLOntologyManager();
+//		IRI conceptIRI = IRI.create(new File("ontologies/testConcept.owl"));
+//		IRI tboxIRI = IRI.create(new File("ontologies/testTBox.owl"));
+//		
+//		OWLOntology oConcept = null;
+//		OWLOntology oTbox = null;
+//		try {
+//			oConcept = man.loadOntology(conceptIRI);
+//			oTbox = man.loadOntology(tboxIRI);
+//		} catch (OWLOntologyCreationException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		
+//		OWNAxiom concept = null;
+//		HashSet<OWNAxiom> K = new HashSet<OWNAxiom>();
+//		
+//		for (OWLAxiom axiom : oConcept.getAxioms()) {
+//			if (axiom.isOfType(AxiomType.SUBCLASS_OF)) {
+//				// Cast to SubClassOf to get the superclass, which is of ClassExpression
+//				OWLSubClassOfAxiomImpl subclass = (OWLSubClassOfAxiomImpl)axiom.getNNF();
+//				OWLClassExpressionCastVisitor visitor = new OWLClassExpressionCastVisitor();
+//				(subclass.getSuperClass()).accept(visitor);
+//				concept = visitor.getAxiom();
+//			}
+//		}
+//		K.add(concept);
+//		
+//		for (OWLAxiom axiom : oTbox.getAxioms()) {
+//			if (axiom.isOfType(AxiomType.SUBCLASS_OF)) {
+//				// Cast to SubClassOf to get the superclass, which is of ClassExpression
+//				OWLSubClassOfAxiomImpl subclass = (OWLSubClassOfAxiomImpl)axiom.getNNF();
+//				OWLClassExpressionCastVisitor visitor = new OWLClassExpressionCastVisitor();
+//				(subclass.getSuperClass()).accept(visitor);
+//				K.add(visitor.getAxiom());
+//			}
+//		}
+//		
+//		System.out.println(concept);
+//		System.out.println(K);
+//		
+//		for (OWNAxiom axiom : K) {
+//			OWNAxiomOperationVisitor visitor = new OWNAxiomOperationVisitor();
+//			axiom.accept(visitor);
+//		}
 		
-		OWLOntology oConcept = null;
-		OWLOntology oTbox = null;
-		try {
-			oConcept = man.loadOntology(conceptIRI);
-			oTbox = man.loadOntology(tboxIRI);
-		} catch (OWLOntologyCreationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//		OWNAxiom other = new OWNLiteral("test#A");
+//		OWNComplement comp = new OWNComplement(new OWNLiteral("test#A"));
+//		System.out.println(other.equals(comp.getOperand()));
+//		
+//		OWNUnion un1 = new OWNUnion(new OWNLiteral("test#A"), new OWNLiteral("test#B"));
+//		OWNUnion un2 = new OWNUnion(new OWNLiteral("test#A"), new OWNLiteral("test#B"));
+//		System.out.println(un1.equals(un2));
+//		
+//		OWNIntersection in1 = new OWNIntersection(new OWNLiteral("test#A"), new OWNLiteral("test#B"));
+//		OWNIntersection in2 = new OWNIntersection(new OWNLiteral("test#A"), new OWNLiteral("test#B"));
+//		System.out.println(in1.equals(in2));
+//		
+//		OWNExistential ex1 = new OWNExistential(new OWNLiteral("test#R"), new OWNUnion(new OWNLiteral("test#A"), new OWNLiteral("test#B")));
+//		OWNExistential ex2 = new OWNExistential(new OWNLiteral("test#R"), new OWNUnion(new OWNLiteral("test#A"), new OWNLiteral("test#B")));
+//		System.out.println(ex1.equals(ex2));
+//		
+//		OWNUniversal ux1 = new OWNUniversal(new OWNLiteral("test#R"), new OWNIntersection(new OWNLiteral("test#A"), new OWNLiteral("test#B")));
+//		OWNUniversal ux2 = new OWNUniversal(new OWNLiteral("test#R"), new OWNIntersection(new OWNLiteral("test#A"), new OWNLiteral("test#B")));
+//		System.out.println(ux1.equals(ux2));
 		
-		OWNAxiom concept = null;
-		HashSet<OWNAxiom> K = new HashSet<OWNAxiom>();
-		
-		for (OWLAxiom axiom : oConcept.getAxioms()) {
-			if (axiom.isOfType(AxiomType.SUBCLASS_OF)) {
-				// Cast to SubClassOf to get the superclass, which is of ClassExpression
-				OWLSubClassOfAxiomImpl subclass = (OWLSubClassOfAxiomImpl)axiom.getNNF();
-				OWLClassExpressionCastVisitor visitor = new OWLClassExpressionCastVisitor();
-				(subclass.getSuperClass()).accept(visitor);
-				concept = visitor.getAxiom();
-			}
-		}
-		K.add(concept);
-		
-		for (OWLAxiom axiom : oTbox.getAxioms()) {
-			if (axiom.isOfType(AxiomType.SUBCLASS_OF)) {
-				// Cast to SubClassOf to get the superclass, which is of ClassExpression
-				OWLSubClassOfAxiomImpl subclass = (OWLSubClassOfAxiomImpl)axiom.getNNF();
-				OWLClassExpressionCastVisitor visitor = new OWLClassExpressionCastVisitor();
-				(subclass.getSuperClass()).accept(visitor);
-				K.add(visitor.getAxiom());
-			}
-		}
-		
-		System.out.println(concept);
-		System.out.println(K);
-		
-		for (OWNAxiom axiom : K) {
-			OWNAxiomOperationVisitor visitor = new OWNAxiomOperationVisitor();
+		HashSet<OWNAxiom> L = new HashSet<OWNAxiom>();
+		L.add(new OWNLiteral("test#A"));
+		L.add(new OWNUnion(new OWNLiteral("test#A"), new OWNLiteral("test#B")));
+		L.add(new OWNComplement(new OWNLiteral("test#A")));
+		L.add(new OWNExistential(new OWNLiteral("test#R"), new OWNLiteral("test#B")));
+		System.out.println(L);
+		HashSet<Operation> operations = new HashSet<Operation>();
+		for (OWNAxiom axiom : L) {
+			OWNAxiomOperationVisitor visitor = new OWNAxiomOperationVisitor(L);
 			axiom.accept(visitor);
+			operations.addAll(visitor.getOperations());
 		}
 		
+		System.out.println(operations);
 		
 //		HashSet<Operation> operations = new HashSet<Operation>();
 //		OWNLiteral lit = new OWNLiteral("test#A");

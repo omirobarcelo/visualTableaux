@@ -25,6 +25,20 @@ public class OWNUniversal extends OWNAxiom{
 		//return "OWNUniversal [relation=(" + relation + "), operand=(" + operand1 + ")]";
 	}
 	
+	@Override
+	public int hashCode() {
+		return type.hashCode() ^ relation.hashCode() ^ operand.hashCode();
+	}
+	
+	@Override
+	public boolean equals(Object other) {
+		if (other instanceof OWNUniversal) {
+			OWNUniversal universal = (OWNUniversal)other;
+			return type == universal.type && relation.equals(universal.relation) && operand.equals(universal.operand);
+		}
+		return false;
+	}
+	
 	public void accept(OWNAxiomVisitor visitor) {
 		visitor.visit(this);
 	}

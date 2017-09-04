@@ -27,6 +27,20 @@ public class OWNIntersection extends OWNAxiom {
 		//return "OWNIntersection [operand1=(" + operand1 + "), operand2=(" + operand2 + ")]";
 	}
 	
+	@Override
+	public int hashCode() {
+		return type.hashCode() ^ operand1.hashCode() ^ operand2.hashCode();
+	}
+	
+	@Override
+	public boolean equals(Object other) {
+		if (other instanceof OWNIntersection) {
+			OWNIntersection intersection = (OWNIntersection)other;
+			return type == intersection.type && operand1.equals(intersection.operand1) && operand2.equals(intersection.operand2);
+		}
+		return false;
+	}
+	
 	public void accept(OWNAxiomVisitor visitor) {
 		visitor.visit(this);
 	}
