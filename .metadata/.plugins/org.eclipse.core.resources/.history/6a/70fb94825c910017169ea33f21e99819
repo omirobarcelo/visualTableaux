@@ -22,8 +22,4 @@ public class OWNIntersection extends OWNAxiom {
 				(operand2.isLiteral() ? operand2 : "("+operand2+")");
 		//return "OWNIntersection [operand1=(" + operand1 + "), operand2=(" + operand2 + ")]";
 	}
-	
-	void accept(OWNAxiomVisitor visitor) {
-		visitor.visit(this);
-	}
 }

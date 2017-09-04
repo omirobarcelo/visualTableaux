@@ -20,8 +20,4 @@ public class OWNExistential extends OWNAxiom{
 		return "\u2203" + relation + "." + (operand1.isLiteral() ? operand1 : "("+operand1+")");
 		//return "OWNExistential [relation=(" + relation + "), operand=(" + operand1 + ")]";
 	}
-	
-	void accept(OWNAxiomVisitor visitor) {
-		visitor.visit(this);
-	}
 }

@@ -1,0 +1,5 @@
+package ownapi;
+
+public interface OWNAxiomVisitor {
+
+}

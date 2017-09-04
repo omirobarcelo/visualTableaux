@@ -9,7 +9,6 @@
 <fullyQualifiedTypeName name="ver1.OWNAxiom.AXIOM_TYPE"/>
 <fullyQualifiedTypeName name="ownapi.OWNAxiom.AXIOM_TYPE"/>
 <fullyQualifiedTypeName name="java.util.HashMap"/>
-<fullyQualifiedTypeName name="ownapi.OWNAxiom"/>
 <fullyQualifiedTypeName name="java.util.ArrayList"/>
 <fullyQualifiedTypeName name="java.util.HashSet"/>
 <fullyQualifiedTypeName name="org.semanticweb.owlapi.model.OWLAxiom"/>
@@ -21,4 +20,9 @@
 <fullyQualifiedTypeName name="uk.ac.manchester.cs.owl.owlapi.OWLObjectSomeValuesFromImpl"/>
 <fullyQualifiedTypeName name="uk.ac.manchester.cs.owl.owlapi.OWLObjectAllValuesFromImpl"/>
 <fullyQualifiedTypeName name="uk.ac.manchester.cs.owl.owlapi.OWLObjectComplementOfImpl"/>
+<fullyQualifiedTypeName name="ownapi.OWNAxiom"/>
+<fullyQualifiedTypeName name="ownapi.OWNUnion"/>
+<fullyQualifiedTypeName name="ownapi.OWNLiteral"/>
+<fullyQualifiedTypeName name="ownapi.OWNIntersection"/>
+<fullyQualifiedTypeName name="ownapi.OWNUniversal"/>
 </qualifiedTypeNameHistroy>

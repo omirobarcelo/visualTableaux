@@ -68,11 +68,6 @@ public class Test {
 		System.out.println(concept);
 		System.out.println(K);
 		
-		for (OWNAxiom axiom : K) {
-			if (axiom.equals(concept))
-				System.out.println(concept + " == " + axiom);
-		}
-		
 //		OWNLiteral litA = new OWNLiteral("test#A");
 //		OWNLiteral litB = new OWNLiteral("test#B");
 //		OWNLiteral litR = new OWNLiteral("test#R");
