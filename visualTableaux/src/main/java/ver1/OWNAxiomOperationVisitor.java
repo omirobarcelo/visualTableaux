@@ -3,6 +3,7 @@ package ver1;
 import java.util.HashSet;
 
 import ownapi.*;
+import ver1.Operation.OPERATOR;
 
 public class OWNAxiomOperationVisitor implements OWNAxiomVisitor {
 	private HashSet<Operation> operations;
@@ -33,22 +34,23 @@ public class OWNAxiomOperationVisitor implements OWNAxiomVisitor {
 
 	public void visit(OWNUnion axiom) {
 		// TODO Auto-generated method stub
-		System.out.println("union");
+		operations.add(new Operation(OPERATOR.OR, axiom, axiom.getOperand1()));
+		operations.add(new Operation(OPERATOR.OR, axiom, axiom.getOperand2()));
 	}
 
 	public void visit(OWNIntersection axiom) {
 		// TODO Auto-generated method stub
-		System.out.println("intersection");
+		operations.add(new Operation(OPERATOR.AND, axiom));
 	}
 
 	public void visit(OWNExistential axiom) {
 		// TODO Auto-generated method stub
-		System.out.println("existential");
+		operations.add(new Operation(OPERATOR.SOME, axiom));
 	}
 
 	public void visit(OWNUniversal axiom) {
 		// TODO Auto-generated method stub
-		System.out.println("universal");
+		operations.add(new Operation(OPERATOR.ONLY, axiom));
 	}
 
 }

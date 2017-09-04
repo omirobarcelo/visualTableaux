@@ -43,6 +43,11 @@ public class TUI {
 		// Create and initialize tableau
 		Tableau tableau = new Tableau(pairCon_K.getSecond());
 		tableau.init(pairCon_K.getFirst());
+		// DEBUG
+		String[] ops = tableau.printOperations();
+		for (String s : ops)
+			System.out.println(s);
+		// DEBUG
 				
 		// Loop (show status, execute operation, get new status)
 	}

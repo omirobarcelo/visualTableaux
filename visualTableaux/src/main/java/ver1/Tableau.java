@@ -43,6 +43,14 @@ public class Tableau {
 		executedOperations.put(firstNode, new HashSet<Operation>());
 	}
 	
+	public String[] printOperations() {
+		String[] strings = new String[operations.get(firstNode).size()];
+		int i = 0;
+		for (Operation op : operations.get(firstNode))
+			strings[i++] = op.toString();
+		return strings;
+	}
+	
 	// Fills operations with the possible operations applicable to node 
 	private void getPossibleOperations(Node n) {
 		// Add all applicable TOP rules

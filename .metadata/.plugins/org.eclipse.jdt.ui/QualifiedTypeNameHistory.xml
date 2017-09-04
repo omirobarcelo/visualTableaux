@@ -7,10 +7,8 @@
 <fullyQualifiedTypeName name="ver1.Node"/>
 <fullyQualifiedTypeName name="ver1.OWNAxiom"/>
 <fullyQualifiedTypeName name="ver1.OWNAxiom.AXIOM_TYPE"/>
-<fullyQualifiedTypeName name="ownapi.OWNAxiom.AXIOM_TYPE"/>
 <fullyQualifiedTypeName name="java.util.HashMap"/>
 <fullyQualifiedTypeName name="java.util.ArrayList"/>
-<fullyQualifiedTypeName name="java.util.HashSet"/>
 <fullyQualifiedTypeName name="org.semanticweb.owlapi.model.OWLAxiom"/>
 <fullyQualifiedTypeName name="uk.ac.manchester.cs.owl.owlapi.OWLSubClassOfAxiomImpl"/>
 <fullyQualifiedTypeName name="uk.ac.manchester.cs.owl.owlapi.OWLClassExpressionImpl"/>
@@ -25,5 +23,7 @@
 <fullyQualifiedTypeName name="ownapi.OWNLiteral"/>
 <fullyQualifiedTypeName name="ownapi.OWNIntersection"/>
 <fullyQualifiedTypeName name="ownapi.OWNUniversal"/>
+<fullyQualifiedTypeName name="java.util.HashSet"/>
 <fullyQualifiedTypeName name="ver1.Operation.OPERATOR"/>
+<fullyQualifiedTypeName name="ownapi.OWNAxiom.AXIOM_TYPE"/>
 </qualifiedTypeNameHistroy>
