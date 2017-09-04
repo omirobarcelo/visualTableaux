@@ -21,7 +21,7 @@ public class OWNLiteral extends OWNAxiom {
 		//return "OWNLiteral [Id=" + getId() + "]";
 	}
 	
-	void accept(OWNAxiomVisitor visitor) {
+	public void accept(OWNAxiomVisitor visitor) {
 		visitor.visit(this);
 	}
 }

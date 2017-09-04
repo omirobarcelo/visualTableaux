@@ -67,4 +67,8 @@ public class OWNAxiom {
 	public boolean isOfType(AXIOM_TYPE type) {
 		return (this.type == type);
 	}
+	
+	public void accept(OWNAxiomVisitor visitor) {
+		visitor.visit(this);
+	}
 }

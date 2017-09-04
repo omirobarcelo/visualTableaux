@@ -23,7 +23,7 @@ public class OWNUnion extends OWNAxiom {
 		//return "OWNUnion [operand1=(" + operand1 + "), operand2=(" + operand2 + ")]";
 	}
 	
-	void accept(OWNAxiomVisitor visitor) {
+	public void accept(OWNAxiomVisitor visitor) {
 		visitor.visit(this);
 	}
 }

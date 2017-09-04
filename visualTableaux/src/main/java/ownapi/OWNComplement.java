@@ -17,7 +17,7 @@ public class OWNComplement extends OWNAxiom{
 		//return "OWNComplement [operand=(" + operand + ")]";
 	}
 	
-	void accept(OWNAxiomVisitor visitor) {
+	public void accept(OWNAxiomVisitor visitor) {
 		visitor.visit(this);
 	}
 

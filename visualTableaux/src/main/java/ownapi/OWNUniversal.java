@@ -21,7 +21,7 @@ public class OWNUniversal extends OWNAxiom{
 		//return "OWNUniversal [relation=(" + relation + "), operand=(" + operand1 + ")]";
 	}
 	
-	void accept(OWNAxiomVisitor visitor) {
+	public void accept(OWNAxiomVisitor visitor) {
 		visitor.visit(this);
 	}
 }

@@ -59,4 +59,6 @@ public class Operation {
 		}
 		return false;
 	}
+	
+	// TODO override toString
 }

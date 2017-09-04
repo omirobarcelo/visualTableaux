@@ -3,7 +3,9 @@ package ver1;
 import java.util.HashMap;
 import java.util.HashSet;
 
-import ownapi.OWNAxiom;
+import ownapi.*;
+import ownapi.OWNAxiom.AXIOM_TYPE;
+import ver1.Operation.OPERATOR;
 
 public class Tableau {
 	private HashSet<OWNAxiom> K;
@@ -11,6 +13,7 @@ public class Tableau {
 	private HashMap<Node, HashSet<OWNAxiom>> Ln;
 	private HashMap<Pair<Node, Node>, HashSet<OWNAxiom>> Lr;
 	private HashMap<Node, HashSet<Operation>> operations;
+	private HashMap<Node, HashSet<Operation>> executedOperations;
 	private HashSet<NonDeterministicOperation> conflictingOperations;
 	private HashSet<Node> blockedNodes;
 	private HashMap<Node, Node> predecessor;
@@ -22,6 +25,7 @@ public class Tableau {
 		Ln = new HashMap<Node, HashSet<OWNAxiom>>();
 		Lr = new HashMap<Pair<Node, Node>, HashSet<OWNAxiom>>();
 		operations = new HashMap<Node, HashSet<Operation>>();
+		executedOperations = new HashMap<Node, HashSet<Operation>>();
 		conflictingOperations = new HashSet<NonDeterministicOperation>();
 		blockedNodes = new HashSet<Node>();
 		predecessor = new HashMap<Node, Node>();
@@ -31,8 +35,45 @@ public class Tableau {
 	public void init(OWNAxiom concept) {
 		//throw new UnsupportedOperationException();
 		// Add first node with initial concept to L
-		Ln.put(this.firstNode, new HashSet<OWNAxiom>());
-		Ln.get(this.firstNode).add(concept);
+		Ln.put(firstNode, new HashSet<OWNAxiom>());
+		Ln.get(firstNode).add(concept);
 		// get operations for firstNode
+		operations.put(firstNode, new HashSet<Operation>());
+		getPossibleOperations(firstNode);
+		executedOperations.put(firstNode, new HashSet<Operation>());
+	}
+	
+	// Fills operations with the possible operations applicable to node 
+	private void getPossibleOperations(Node n) {
+		// Add all applicable TOP rules
+		for (OWNAxiom axiom : K) {
+			if (!Ln.get(n).contains(axiom))
+				operations.get(n).add(new Operation(OPERATOR.TOP, axiom));
+		}
+		
+		// Iterate over all axioms in node
+		for (OWNAxiom axiom : Ln.get(n)) {
+			// Check for BOTTOM rules here instead of in visitor because 
+			// is necessary to check all the other axioms in L(n)
+			if (axiom.isLiteral()) {
+				// Check only OWNComplement to avoid double checking (search
+				// the complement of a literal and search the literal of the
+				// complement) and because probably there'll be less than 
+				// OWNLiteral
+				if (axiom.isOfType(AXIOM_TYPE.COMPLEMENT)) {
+					OWNComplement complement = (OWNComplement)axiom;
+					for (OWNAxiom other : Ln.get(n)) {
+						if (other.isOfType(AXIOM_TYPE.LITERAL) && other.equals(complement.getOperand())) {
+							operations.get(n).add(new Operation(OPERATOR.BOTTOM, other, complement));
+							break;
+						}
+					}
+				}
+			} else {
+				OWNAxiomOperationVisitor visitor = new OWNAxiomOperationVisitor();
+				axiom.accept(visitor);
+				operations.get(n).addAll(visitor.getOperations());
+			}
+		}
 	}
 }

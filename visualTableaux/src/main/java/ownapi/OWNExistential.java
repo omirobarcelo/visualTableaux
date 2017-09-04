@@ -21,7 +21,7 @@ public class OWNExistential extends OWNAxiom{
 		//return "OWNExistential [relation=(" + relation + "), operand=(" + operand1 + ")]";
 	}
 	
-	void accept(OWNAxiomVisitor visitor) {
+	public void accept(OWNAxiomVisitor visitor) {
 		visitor.visit(this);
 	}
 }
