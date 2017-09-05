@@ -15,7 +15,7 @@ public class Tableau {
 	private HashMap<Node, HashSet<OWNAxiom>> Ln;
 	private HashMap<Pair<Node, Node>, HashSet<OWNLiteral>> Lr;
 	private HashMap<Node, HashSet<Operation>> operations;
-//	private HashMap<Node, HashSet<Operation>> executedOperations;
+	private HashMap<Node, HashSet<Operation>> executedOperations;
 	private HashSet<NonDeterministicOperation> conflictingOperations;
 	private HashSet<Node> blockedNodes;
 //	private HashMap<Node, Node> predecessor;
@@ -28,7 +28,7 @@ public class Tableau {
 		Ln = new HashMap<Node, HashSet<OWNAxiom>>();
 		Lr = new HashMap<Pair<Node, Node>, HashSet<OWNLiteral>>();
 		operations = new HashMap<Node, HashSet<Operation>>();
-//		executedOperations = new HashMap<Node, HashSet<Operation>>();
+		executedOperations = new HashMap<Node, HashSet<Operation>>();
 		conflictingOperations = new HashSet<NonDeterministicOperation>();
 		blockedNodes = new HashSet<Node>();
 //		predecessor = new HashMap<Node, Node>();
@@ -43,7 +43,7 @@ public class Tableau {
 		// Get operations for firstNode
 		operations.put(firstNode.getData(), new HashSet<Operation>());
 		getPossibleOperations(firstNode.getData());
-//		executedOperations.put(firstNode.getData(), new HashSet<Operation>());
+		executedOperations.put(firstNode.getData(), new HashSet<Operation>());
 	}
 	
 	public String getOntology() {
@@ -59,15 +59,14 @@ public class Tableau {
 	}
 	
 	public HashMap<Node, HashSet<Operation>> getOperations() {
-//		// Return the difference between available operations and executed operations
-//		HashMap<Node, HashSet<Operation>> ops = new HashMap<Node, HashSet<Operation>>();
-//		for (Node n : operations.keySet()) {
-//			HashSet<Operation> tmpOperations = (HashSet<Operation>)operations.get(n).clone();
-//			tmpOperations.removeAll(executedOperations.get(n));
-//			ops.put(n, tmpOperations);
-//		}
-//		return ops;
-		return operations;
+		// Return the difference between available operations and executed operations
+		HashMap<Node, HashSet<Operation>> ops = new HashMap<Node, HashSet<Operation>>();
+		for (Node n : operations.keySet()) {
+			HashSet<Operation> tmpOperations = (HashSet<Operation>)operations.get(n).clone();
+			tmpOperations.removeAll(executedOperations.get(n));
+			ops.put(n, tmpOperations);
+		}
+		return ops;
 	}
 	
 //	public HashSet<Node> getSuccessors(Node n) {
