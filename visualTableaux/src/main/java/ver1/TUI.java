@@ -1,7 +1,10 @@
 package ver1;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Scanner;
 import java.util.Stack;
 
@@ -38,29 +41,31 @@ public class TUI {
 		// Interpreter.read
 		Pair<OWNAxiom, HashSet<OWNAxiom>> pairCon_K = Interpreter.read(concept, tbox);
 		// DEBUG
-		System.out.println(pairCon_K.getFirst());
-		System.out.println(pairCon_K.getSecond());
+//		System.out.println(pairCon_K.getFirst());
+//		System.out.println(pairCon_K.getSecond());
 		// DEBUG
 		
 		// Create and initialize tableau
 		Tableau tableau = new Tableau(pairCon_K.getSecond());
 		tableau.init(pairCon_K.getFirst());
 		// DEBUG
-		String[] ops = tableau.printOperations();
-		for (String s : ops)
-			System.out.println(s);
+//		String[] ops = tableau.printOperations();
+//		for (String s : ops)
+//			System.out.println(s);
 		// DEBUG
 				
 		// Loop (show status, execute operation, get new status)
 		boolean endProgram = false;
 		while (!endProgram) {
 			showStatus(tableau);
-			showOperations(tableau);
+			List<Pair<Node, Operation>> ops = showOperations(tableau);
 			int option = readIntFromStdin("\nWhich option do you select? ");
 			if (option == 0)
 				endProgram = true;
 			else {
 				// TODO apply operation
+				Pair pNode_Op = ops.get(option-1);
+				// tableau.apply(pNode_Op.getFirst(), pNode_Op.getSecond());
 			}
 		}
 	}
@@ -89,17 +94,32 @@ public class TUI {
 		System.out.println();
 	}
 
-	private static void showOperations(Tableau tableau) {
+	private static List<Pair<Node, Operation>> showOperations(Tableau tableau) {
 		// TODO Auto-generated method stub
-		
+		List<Pair<Node, Operation>> ops = new ArrayList<Pair<Node, Operation>>();
+		HashMap<Node, HashSet<Operation>> operations = tableau.getOperations();
+		System.out.println();
+		int option = 1;
+		for (Node n : operations.keySet()) {
+			System.out.println(n);
+			for (Operation op : operations.get(n)) {
+				ops.add(new Pair<Node, Operation>(n, op));
+				System.out.println("\t" + option++ + ". " + op.fullString(n, tableau.checkNextCreatedNode()));
+			}
+		}
+		System.out.println("0. Exit program");
+		System.out.println();
+		return ops;
 	}
 	
 	private static int readIntFromStdin(String msg) {
 		// TODO Auto-generated method stub
-		Scanner scanner = new Scanner(System.in);
-	    System.out.print(msg);
-	    int number = scanner.nextInt();
-	    scanner.close();
-	    return number;
+		int number = 0;
+        try {
+            java.io.BufferedReader in = new java.io.BufferedReader(new java.io.InputStreamReader(System.in));
+            System.out.print(msg);
+            number = Integer.parseInt(in.readLine());
+        } catch (Exception e) {System.err.println("\n"+e.toString());}
+        return number;
 	}
 }

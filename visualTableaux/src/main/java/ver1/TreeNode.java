@@ -50,4 +50,6 @@ public class TreeNode {
     public TreeNode getParent() {
         return parent;
     }
+    
+    // TODO probably implement copy function for Backtracker
 }

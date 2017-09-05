@@ -95,7 +95,7 @@ public class OWNAxiomOperationVisitor implements OWNAxiomVisitor {
 			// If op isn't in some L(y)
 			for (Node y : Ys) {
 				if (!Ln.get(y).contains(axiom.getOperand())) {
-					operations.add(new Operation(OPERATOR.ONLY, axiom));
+					operations.add(new Operation(OPERATOR.ONLY, axiom, y));
 					break;
 				}
 			}

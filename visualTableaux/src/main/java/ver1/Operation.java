@@ -1,6 +1,6 @@
 package ver1;
 
-import ownapi.OWNAxiom;
+import ownapi.*;
 
 public class Operation {
 	public enum OPERATOR {AND, OR, SOME, ONLY, TOP, BOTTOM}
@@ -8,8 +8,7 @@ public class Operation {
 	private OPERATOR operator;
 	private OWNAxiom operand1;
 	private OWNAxiom other; //operand2 for BOTTOM and result for OR
-//	private OWNAxiom result1;
-//	private OWNAxiom result2;
+	private Node node;
 	
 	public Operation(OPERATOR operator, OWNAxiom operand1) {
 		this.operator = operator;
@@ -24,6 +23,12 @@ public class Operation {
 		this.other = other;
 	}
 	
+	// Only for ONLY operation
+	public Operation(OPERATOR operator, OWNAxiom operand1, Node node) {
+		this.operator = operator;
+		this.operand1 = operand1;
+		this.node = node;
+	}
 
 	public OPERATOR getOperator() {
 		return operator;
@@ -40,6 +45,10 @@ public class Operation {
 	public OWNAxiom getResult() {
 		return other;
 	}
+	
+	public Node getNode() {
+		return node;
+	}
 
 //	public OWNAxiom getResult1() {
 //		return result1;
@@ -51,7 +60,7 @@ public class Operation {
 	
 	@Override
 	public int hashCode() {
-		return operator.hashCode() ^ operand1.hashCode() ^ other.hashCode();
+		return operator.hashCode() ^ operand1.hashCode() ^ other.hashCode() ^ node.hashCode();
 	}
 	
 	@Override
@@ -60,12 +69,12 @@ public class Operation {
 			Operation op = (Operation)other;
 			boolean sameOperands = (operand1.equals(op.operand1) && other.equals(op.other))
 					|| (operand1.equals(op.other) && other.equals(op.operand1));
-			return this.operator == op.operator && sameOperands;
+			boolean sameNode = (node==null && op.node==null) || node.equals(op.node);
+			return this.operator == op.operator && sameOperands && sameNode;
 		}
 		return false;
 	}
 	
-	// TODO override toString
 	@Override
 	public String toString() {
 		switch (operator) {
@@ -76,12 +85,40 @@ public class Operation {
 			case SOME:
 				return "\u2203(" + operand1 + ")";
 			case ONLY:
-				return "\u2200(" + operand1 + ")";
+				return "\u2200(" + operand1 + ", " + node.getId() + ")";
 			case TOP:
 				return "\u22A4(" + operand1 + ")";
 			case BOTTOM:
 				return "\u22A5(" + operand1 + ", " + other + ")";
 		}
 		return "";
+	}
+	
+	public String fullString(Node x, String nextCreatedNode) {
+		String base = this.toString() + " \u27F6 ";
+		switch (operator) {
+		case AND: {
+			OWNIntersection axiom = (OWNIntersection)operand1;
+			return base + "L(" + x.getId() + ") \u222A {" + 
+				axiom.getOperand1() + ", " + axiom.getOperand2() + "}";
+		}
+		case OR:
+			return base + "L(" + x.getId() + ") \u222A {" + other + "}";
+		case SOME: {
+			OWNExistential axiom = (OWNExistential)operand1;
+			return base + "L(" + x.getId() + "," + nextCreatedNode + ") \u222A {" + 
+					axiom.getRelation() + "}, L(" + nextCreatedNode + ") \u222A {" +
+					axiom.getOperand() + "}";
+		}
+		case ONLY: {
+			OWNUniversal axiom = (OWNUniversal)operand1;
+			return base + "L(" + node + ") \u222A {" + axiom.getOperand() + "}";
+		}
+		case TOP:
+			return base + "L(" + x.getId() + ") \u222A {" + operand1 + "}";
+		case BOTTOM:
+			return base + "L(" + x.getId() + ") \u222A {\u22A5}";
+	}
+	return "";
 	}
 }
