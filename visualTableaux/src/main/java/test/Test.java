@@ -1,6 +1,7 @@
 package test;
 
 import java.io.File;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -28,6 +29,45 @@ import ownapi.OWNAxiom.AXIOM_TYPE;
 public class Test {
 
 	public static void main(String[] args) {
+		Node x = new Node("x");
+		Node y = new Node("y");
+		Node z = new Node("z");
+		Pair<Node, Node> p_xy = new Pair<Node, Node>(x,y);
+		Pair<Node, Node> p_xz = new Pair<Node, Node>(x,z);
+		HashMap<Node, HashSet<OWNAxiom>> Ln = new HashMap<Node, HashSet<OWNAxiom>>();
+		Ln.put(x, new HashSet<OWNAxiom>());
+		Ln.get(x).add(new OWNExistential(
+				new OWNLiteral("test#R"), 
+				new OWNUnion(new OWNLiteral("test#B"), new OWNLiteral("test#C"))
+				)
+		);
+//		Ln.get(x).add(new OWNLiteral("test#A"));
+//		Ln.get(x).add(new OWNUnion(new OWNLiteral("test#B"), new OWNLiteral("test#C")));
+		HashMap<Pair<Node, Node>, HashSet<OWNLiteral>> Lr = new HashMap<Pair<Node, Node>, HashSet<OWNLiteral>>();
+		Lr.put(p_xy, new HashSet<OWNLiteral>());
+		Lr.get(p_xy).add(new OWNLiteral("test#S"));
+		Ln.put(y, new HashSet<OWNAxiom>());
+		Ln.get(y).add(new OWNLiteral("test#A"));
+		Ln.get(y).add(new OWNUnion(new OWNLiteral("test#B"), new OWNLiteral("test#C")));
+		Lr.put(p_xz, new HashSet<OWNLiteral>());
+		Lr.get(p_xz).add(new OWNLiteral("test#S"));
+		Ln.put(z, new HashSet<OWNAxiom>());
+		Ln.get(z).add(new OWNLiteral("test#A"));
+//		Ln.get(z).add(new OWNUnion(new OWNLiteral("test#B"), new OWNLiteral("test#C")));
+		
+		for (Node n : Ln.keySet()) {
+			System.out.println(n + " : " + Ln.get(n));
+		}
+		if (!Lr.isEmpty())
+			for (Pair<Node, Node> p : Lr.keySet())
+				System.out.println(p + " : " + Lr.get(p));
+		
+		for (OWNAxiom axiom : Ln.get(x)) {
+			OWNAxiomOperationVisitor visitor = new OWNAxiomOperationVisitor(x, Ln, Lr);
+			axiom.accept(visitor);
+			System.out.println(axiom + " : " + visitor.getOperations());
+		}
+		
 //		OWLOntologyManager man = OWLManager.createOWLOntologyManager();
 //		IRI conceptIRI = IRI.create(new File("ontologies/testConcept.owl"));
 //		IRI tboxIRI = IRI.create(new File("ontologies/testTBox.owl"));
@@ -94,20 +134,25 @@ public class Test {
 //		OWNUniversal ux2 = new OWNUniversal(new OWNLiteral("test#R"), new OWNIntersection(new OWNLiteral("test#A"), new OWNLiteral("test#B")));
 //		System.out.println(ux1.equals(ux2));
 		
-		HashSet<OWNAxiom> L = new HashSet<OWNAxiom>();
-		L.add(new OWNLiteral("test#A"));
-		L.add(new OWNUnion(new OWNLiteral("test#A"), new OWNLiteral("test#B")));
-		L.add(new OWNComplement(new OWNLiteral("test#A")));
-		L.add(new OWNExistential(new OWNLiteral("test#R"), new OWNLiteral("test#B")));
-		System.out.println(L);
-		HashSet<Operation> operations = new HashSet<Operation>();
-		for (OWNAxiom axiom : L) {
-			OWNAxiomOperationVisitor visitor = new OWNAxiomOperationVisitor(L);
-			axiom.accept(visitor);
-			operations.addAll(visitor.getOperations());
-		}
+//		HashSet<OWNAxiom> L = new HashSet<OWNAxiom>();
+//		L.add(new OWNLiteral("test#A"));
+//		L.add(new OWNLiteral("test#B"));
+//		L.add(new OWNUnion(new OWNLiteral("test#A"), new OWNLiteral("test#B")));
+//		L.add(new OWNComplement(new OWNLiteral("test#A")));
+//		L.add(new OWNExistential(new OWNLiteral("test#R"), new OWNLiteral("test#B")));
+//		System.out.println(L);
+//		HashSet<Operation> operations = new HashSet<Operation>();
+//		for (OWNAxiom axiom : L) {
+//			OWNAxiomOperationVisitor visitor = new OWNAxiomOperationVisitor(L);
+//			axiom.accept(visitor);
+//			operations.addAll(visitor.getOperations());
+//		}
+//		
+//		System.out.println(operations);
 		
-		System.out.println(operations);
+//		Node x = new Node("x");
+//		Node n = new Node("x");
+//		System.out.println(n.equals(x));
 		
 //		HashSet<Operation> operations = new HashSet<Operation>();
 //		OWNLiteral lit = new OWNLiteral("test#A");

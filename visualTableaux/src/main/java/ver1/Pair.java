@@ -24,4 +24,23 @@ public class Pair<F, S> {
     public S getSecond() {
         return second;
     }
+    
+    @Override
+    public String toString() {
+    	return "<" + first + ", " + second + ">";
+    }
+    
+    @Override
+    public int hashCode() {
+    	return first.hashCode() ^ second.hashCode();
+    }
+    
+    @Override
+    public boolean equals(Object other) {
+    	if (other instanceof Pair) {
+    		Pair<?, ?> p = (Pair<?, ?>)other;
+    		return first.equals(p.first) && second.equals(p.second);
+    	}
+    	return false;
+    }
 }

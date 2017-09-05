@@ -20,4 +20,18 @@ public class Node {
 		return "Node [id=" + id + "]";
 	}
 	
+	@Override
+	public int hashCode() {
+		return id.hashCode();
+	}
+	
+	@Override
+	public boolean equals(Object other) {
+		if (other instanceof Node) {
+			Node n = (Node)other;
+			return id.equals(n.id);
+		}
+		return false;
+	}
+	
 }

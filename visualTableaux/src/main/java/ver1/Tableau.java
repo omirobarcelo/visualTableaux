@@ -11,7 +11,7 @@ public class Tableau {
 	private HashSet<OWNAxiom> K;
 	private Node firstNode;
 	private HashMap<Node, HashSet<OWNAxiom>> Ln;
-	private HashMap<Pair<Node, Node>, HashSet<OWNAxiom>> Lr;
+	private HashMap<Pair<Node, Node>, HashSet<OWNLiteral>> Lr;
 	private HashMap<Node, HashSet<Operation>> operations;
 	private HashMap<Node, HashSet<Operation>> executedOperations;
 	private HashSet<NonDeterministicOperation> conflictingOperations;
@@ -23,7 +23,7 @@ public class Tableau {
 		this.K = K;
 		this.firstNode = new Node("x");
 		Ln = new HashMap<Node, HashSet<OWNAxiom>>();
-		Lr = new HashMap<Pair<Node, Node>, HashSet<OWNAxiom>>();
+		Lr = new HashMap<Pair<Node, Node>, HashSet<OWNLiteral>>();
 		operations = new HashMap<Node, HashSet<Operation>>();
 		executedOperations = new HashMap<Node, HashSet<Operation>>();
 		conflictingOperations = new HashSet<NonDeterministicOperation>();
@@ -61,7 +61,7 @@ public class Tableau {
 		
 		// Iterate over all axioms in node
 		for (OWNAxiom axiom : Ln.get(n)) {
-			OWNAxiomOperationVisitor visitor = new OWNAxiomOperationVisitor(Ln.get(n));
+			OWNAxiomOperationVisitor visitor = new OWNAxiomOperationVisitor(n, Ln, Lr);
 			axiom.accept(visitor);
 			operations.get(n).addAll(visitor.getOperations());
 		}
