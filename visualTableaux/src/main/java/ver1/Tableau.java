@@ -9,6 +9,7 @@ import ver1.Operation.OPERATOR;
 
 public class Tableau {
 	private HashSet<OWNAxiom> K;
+	private byte nodeCode;
 	private Node firstNode;
 	private HashMap<Node, HashSet<OWNAxiom>> Ln;
 	private HashMap<Pair<Node, Node>, HashSet<OWNLiteral>> Lr;
@@ -21,7 +22,8 @@ public class Tableau {
 	
 	public Tableau(HashSet<OWNAxiom> K) {
 		this.K = K;
-		this.firstNode = new Node("x");
+		nodeCode = 109; // ASCII m
+		this.firstNode = new Node(Character.toString((char)nodeCode++));
 		Ln = new HashMap<Node, HashSet<OWNAxiom>>();
 		Lr = new HashMap<Pair<Node, Node>, HashSet<OWNLiteral>>();
 		operations = new HashMap<Node, HashSet<Operation>>();
@@ -37,10 +39,37 @@ public class Tableau {
 		// Add first node with initial concept to L
 		Ln.put(firstNode, new HashSet<OWNAxiom>());
 		Ln.get(firstNode).add(concept);
-		// get operations for firstNode
+		// Get operations for firstNode
 		operations.put(firstNode, new HashSet<Operation>());
 		getPossibleOperations(firstNode);
 		executedOperations.put(firstNode, new HashSet<Operation>());
+	}
+	
+	public String getOntology() {
+		return K.toString();
+	}
+	
+	public Node getFirstNode() {
+		return firstNode;
+	}
+	
+	public HashSet<Node> getSuccessors(Node n) {
+		return successors.get(n);
+	}
+	
+	public String getAxioms(Node n) {
+		return Ln.get(n).toString();
+	}
+	
+	public String getRelations(Node pred, Node succ) {
+//		Pair<Node, Node> edge = new Pair<Node, Node>(pred, succ);
+//		String[] relations = new String[Lr.get(edge).size()];
+//		int i = 0;
+//		for (OWNLiteral rel : Lr.get(edge)) {
+//			relations[i++] = rel.toString();
+//		}
+//		return relations;
+		return Lr.get(new Pair<Node, Node>(pred, succ)).toString();
 	}
 	
 	public String[] printOperations() {
@@ -65,5 +94,12 @@ public class Tableau {
 			axiom.accept(visitor);
 			operations.get(n).addAll(visitor.getOperations());
 		}
+	}
+	
+	// TODO create_new_node
+	private void createNewNode() {
+		throw new UnsupportedOperationException();
+//		Node n = new Node(Character.toString((char)nodeCode++));
+//		Ln.put(n, new HashSet<OWNAxiom>());
 	}
 }
