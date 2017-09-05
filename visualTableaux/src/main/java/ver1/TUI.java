@@ -71,16 +71,17 @@ public class TUI {
 		System.out.println();
 		System.out.println("K : " + tableau.getOntology());
 		System.out.println();
-		Stack<Node> s = new Stack<Node>();
+		Stack<TreeNode> s = new Stack<TreeNode>();
 		s.push(tableau.getFirstNode());
 		while (!s.isEmpty()) {
-			Node n = s.pop();
+			TreeNode n = s.pop();
 			//visit(node)
-			System.out.println(n.getId() + " : " + tableau.getAxioms(n));
-			HashSet<Node> successors = tableau.getSuccessors(n);
-			if (successors != null) {
-				for (Node succ : successors) {
-					System.out.println(n.getId() + "--" + tableau.getRelations(n, succ) + "--" + succ.getId());
+			System.out.println(n.getData().getId() + " : " + tableau.getAxioms(n.getData()));
+			if (!n.getChildren().isEmpty()) {
+				for (TreeNode succ : n.getChildren()) {
+					System.out.println(n.getData().getId() + "--" + 
+							tableau.getRelations(n.getData(), succ.getData()) + 
+							"--" + succ.getData().getId());
 					s.push(succ);
 				}
 			}

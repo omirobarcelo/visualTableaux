@@ -31,26 +31,24 @@ import ownapi.OWNAxiom.AXIOM_TYPE;
 public class Test {
 
 	public static void main(String[] args) {
-		Node firstNode = new Node("m");
-		HashMap<Node, HashSet<Node>> successors = new HashMap<Node, HashSet<Node>>();
-		successors.put(firstNode, new HashSet<Node>());
-		successors.get(firstNode).add(new Node("n"));
-		successors.get(firstNode).add(new Node("o"));
-		successors.put(new Node("n"), new HashSet<Node>());
-		successors.get(new Node("n")).add(new Node("ñ"));
-		successors.put(new Node("o"), new HashSet<Node>());
-		successors.get(new Node("o")).add(new Node("p"));
-		successors.get(new Node("o")).add(new Node("q"));
+		TreeNode n = new TreeNode(new Node("n"));
+		n.addChild(new Node("ñ"));
+		TreeNode o = new TreeNode(new Node("o"));
+		o.addChild(new Node("p"));
+		o.addChild(new Node("q"));
+		TreeNode firstNode = new TreeNode(new Node("m"));
+		firstNode.addChild(n);
+		firstNode.addChild(o);
 		
-		Stack<Node> s = new Stack<Node>();
+		Stack<TreeNode> s = new Stack<TreeNode>();
 		s.push(firstNode);
 		while (!s.isEmpty()) {
-			Node n = s.pop();
+			TreeNode tn = s.pop();
 			//visit(node)
-			System.out.println(n.getId() + " : " + "[L]");
-			if (successors.containsKey(n)) {
-				for (Node succ : successors.get(n)) {
-					System.out.println(n.getId() + "--" + "[R]" + "--" + succ.getId());
+			System.out.println(tn.getData().getId() + " : " + "[L]");
+			if (!tn.getChildren().isEmpty()) {
+				for (TreeNode succ : tn.getChildren()) {
+					System.out.println(tn.getData().getId() + "--" + "[R]" + "--" + succ.getData().getId());
 					s.push(succ);
 				}
 			}
