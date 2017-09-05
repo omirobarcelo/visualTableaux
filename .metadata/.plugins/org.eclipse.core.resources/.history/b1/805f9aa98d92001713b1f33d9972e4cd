@@ -39,12 +39,10 @@ public class OWNAxiomOperationVisitor implements OWNAxiomVisitor {
 
 	public void visit(OWNComplement axiom) {
 		// TODO Auto-generated method stub
-		if (!Ln.get(n).contains(OWNAxiom.BOTTOM)) {
-			for (OWNAxiom other : Ln.get(n)) {
-				if (other.isOfType(AXIOM_TYPE.LITERAL) && other.equals(axiom.getOperand())) {
-					operations.add(new Operation(OPERATOR.BOTTOM, other, axiom));
-					break;
-				}
+		for (OWNAxiom other : Ln.get(n)) {
+			if (other.isOfType(AXIOM_TYPE.LITERAL) && other.equals(axiom.getOperand())) {
+				operations.add(new Operation(OPERATOR.BOTTOM, other, axiom));
+				break;
 			}
 		}
 	}

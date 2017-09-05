@@ -61,8 +61,8 @@ public class Operation {
 	@Override
 	public int hashCode() {
 		int baseHashCode = operator.hashCode() ^ operand1.hashCode() ^ other.hashCode();
-		int hashCode = (node == null) ? baseHashCode : baseHashCode ^ node.hashCode();
-		return  hashCode;
+		baseHashCode = (node == null) ? baseHashCode : baseHashCode ^ node.hashCode();
+		return  ^ node.hashCode();
 	}
 	
 	@Override

@@ -7,7 +7,6 @@
 <fullyQualifiedTypeName name="ver1.Node"/>
 <fullyQualifiedTypeName name="ver1.OWNAxiom"/>
 <fullyQualifiedTypeName name="ver1.OWNAxiom.AXIOM_TYPE"/>
-<fullyQualifiedTypeName name="java.util.ArrayList"/>
 <fullyQualifiedTypeName name="org.semanticweb.owlapi.model.OWLAxiom"/>
 <fullyQualifiedTypeName name="uk.ac.manchester.cs.owl.owlapi.OWLSubClassOfAxiomImpl"/>
 <fullyQualifiedTypeName name="uk.ac.manchester.cs.owl.owlapi.OWLClassExpressionImpl"/>
@@ -28,4 +27,6 @@
 <fullyQualifiedTypeName name="java.util.HashMap"/>
 <fullyQualifiedTypeName name="java.util.Scanner"/>
 <fullyQualifiedTypeName name="java.util.Stack"/>
+<fullyQualifiedTypeName name="java.util.List"/>
+<fullyQualifiedTypeName name="java.util.ArrayList"/>
 </qualifiedTypeNameHistroy>
