@@ -1,8 +1,6 @@
 package ver1;
 
 import java.io.File;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -78,40 +76,20 @@ public class TUI {
 		System.out.println();
 		System.out.println("K : " + tableau.getOntology());
 		System.out.println();
-//		Stack<TreeNode> s = new Stack<TreeNode>();
-//		s.push(tableau.getFirstNode());
-//		while (!s.isEmpty()) {
-//			TreeNode n = s.pop();
-//			//visit(node)
-//			System.out.println(n.getData().getId() + " : " + tableau.getAxioms(n.getData()));
-//			if (!n.getChildren().isEmpty()) {
-//				for (TreeNode succ : n.getChildren()) {
-//					System.out.println(n.getData().getId() + "--" + 
-//							tableau.getRelations(n.getData(), succ.getData()) + 
-//							"--" + succ.getData().getId());
-//					s.push(succ);
-//				}
-//			}
-//		}
-		Method method;
-		try {
-			method = Tableau.class.getMethod("printNodeStatus", TreeNode.class);
-			tableau.iterativePreorder(tableau.getFirstNode(), tableau, method);
-		} catch (NoSuchMethodException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SecurityException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IllegalArgumentException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (InvocationTargetException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		Stack<TreeNode> s = new Stack<TreeNode>();
+		s.push(tableau.getFirstNode());
+		while (!s.isEmpty()) {
+			TreeNode n = s.pop();
+			//visit(node)
+			System.out.println(n.getData().getId() + " : " + tableau.getAxioms(n.getData()));
+			if (!n.getChildren().isEmpty()) {
+				for (TreeNode succ : n.getChildren()) {
+					System.out.println(n.getData().getId() + "--" + 
+							tableau.getRelations(n.getData(), succ.getData()) + 
+							"--" + succ.getData().getId());
+					s.push(succ);
+				}
+			}
 		}
 		System.out.println();
 	}

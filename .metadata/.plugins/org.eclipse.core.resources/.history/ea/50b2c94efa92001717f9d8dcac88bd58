@@ -1,10 +1,7 @@
 package ver1;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Stack;
 
 import ownapi.*;
 import ownapi.OWNAxiom.AXIOM_TYPE;
@@ -125,28 +122,4 @@ public class Tableau {
 	// Tree traversal to get all operations in all nodes
 	
 	// TODO iteratePreorder, maybe? Passing a method as argument
-	public void iterativePreorder(TreeNode treeNode, Object clas, Method method) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException {
-		Stack<TreeNode> s = new Stack<TreeNode>();
-		s.push(treeNode);
-		while (!s.isEmpty()) {
-			TreeNode n = s.pop();
-			method.invoke(clas, n);
-			if (!n.getChildren().isEmpty()) {
-				for (TreeNode succ : n.getChildren()) {
-					s.push(succ);
-				}
-			}
-		}
-	}
-	
-	public void printNodeStatus(TreeNode n) {
-		System.out.println(n.getData().getId() + " : " + getAxioms(n.getData()));
-		if (!n.getChildren().isEmpty()) {
-			for (TreeNode succ : n.getChildren()) {
-				System.out.println(n.getData().getId() + "--" + 
-						getRelations(n.getData(), succ.getData()) + 
-						"--" + succ.getData().getId());
-			}
-		}
-	}
 }

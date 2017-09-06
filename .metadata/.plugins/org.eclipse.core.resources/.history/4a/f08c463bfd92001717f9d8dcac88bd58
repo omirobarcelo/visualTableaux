@@ -1,7 +1,6 @@
 package ver1;
 
 import java.io.File;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -93,26 +92,8 @@ public class TUI {
 //				}
 //			}
 //		}
-		Method method;
-		try {
-			method = Tableau.class.getMethod("printNodeStatus", TreeNode.class);
-			tableau.iterativePreorder(tableau.getFirstNode(), tableau, method);
-		} catch (NoSuchMethodException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SecurityException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IllegalArgumentException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (InvocationTargetException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		Method method = Tableau.class.getMethod("printNodeStatus", TreeNode.class)
+		tableau.iterativePreorder(tableau.getFirstNode(), tableau, method);
 		System.out.println();
 	}
 

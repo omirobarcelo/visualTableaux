@@ -1,6 +1,5 @@
 package ver1;
 
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -125,12 +124,12 @@ public class Tableau {
 	// Tree traversal to get all operations in all nodes
 	
 	// TODO iteratePreorder, maybe? Passing a method as argument
-	public void iterativePreorder(TreeNode treeNode, Object clas, Method method) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+	public void iterativePreorder(TreeNode treeNode, Object clas, Method method, Object[] param) {
 		Stack<TreeNode> s = new Stack<TreeNode>();
 		s.push(treeNode);
 		while (!s.isEmpty()) {
 			TreeNode n = s.pop();
-			method.invoke(clas, n);
+			method.invoke(clas, param);
 			if (!n.getChildren().isEmpty()) {
 				for (TreeNode succ : n.getChildren()) {
 					s.push(succ);
