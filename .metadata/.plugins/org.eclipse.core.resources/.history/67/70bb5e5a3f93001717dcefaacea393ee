@@ -49,7 +49,7 @@ public class Test {
 		firstNode.addChild(n);
 		firstNode.addChild(o);
 		
-		System.out.println(TreeNode.getTreeNode(firstNode, new Node("ñ")).getData());
+		System.out.println(TreeNode.getTreeNode(firstNode, new Node("ñ")));
 		
 		TreeNode n2 = new TreeNode(new Node("n"));
 		n2.addChild(new Node("ñ"));

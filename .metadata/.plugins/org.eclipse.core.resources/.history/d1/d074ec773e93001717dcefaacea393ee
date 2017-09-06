@@ -54,6 +54,7 @@ public class TreeNode {
     
     // TODO probably implement copy function for Backtracker
     
+    // TODO maybe getTreeNode(firstNode, node)
     public static TreeNode getTreeNode(TreeNode root, Node n) {
     	Stack<TreeNode> s = new Stack<TreeNode>();
 		s.push(root);
@@ -61,13 +62,12 @@ public class TreeNode {
 			TreeNode tn = s.pop();
 			if (n.equals(tn.data))
 				return tn;
-			if (!tn.getChildren().isEmpty()) {
-				for (TreeNode succ : tn.getChildren()) {
+			if (!n.getChildren().isEmpty()) {
+				for (TreeNode succ : n.getChildren()) {
 					s.push(succ);
 				}
 			}
 		}
-		return null;
     }
     
     @Override

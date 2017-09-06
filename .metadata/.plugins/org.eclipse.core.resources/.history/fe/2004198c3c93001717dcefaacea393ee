@@ -81,6 +81,7 @@ public class TUI {
 	}
 
 	private static List<Pair<Node, Operation>> showOperations(Tableau tableau) {
+		// TODO Check if possible to use iterativePreorder
 		List<Pair<Node, Operation>> ops = new ArrayList<Pair<Node, Operation>>();
 		HashMap<Node, HashSet<Operation>> operations = tableau.getOperations();
 		System.out.println();

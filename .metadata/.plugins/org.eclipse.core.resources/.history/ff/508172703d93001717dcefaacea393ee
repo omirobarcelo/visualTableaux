@@ -3,7 +3,6 @@ package ver1;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Stack;
 
 public class TreeNode {
     private Node data = null;
@@ -54,21 +53,7 @@ public class TreeNode {
     
     // TODO probably implement copy function for Backtracker
     
-    public static TreeNode getTreeNode(TreeNode root, Node n) {
-    	Stack<TreeNode> s = new Stack<TreeNode>();
-		s.push(root);
-		while (!s.isEmpty()) {
-			TreeNode tn = s.pop();
-			if (n.equals(tn.data))
-				return tn;
-			if (!tn.getChildren().isEmpty()) {
-				for (TreeNode succ : tn.getChildren()) {
-					s.push(succ);
-				}
-			}
-		}
-		return null;
-    }
+    // TODO maybe getTreeNode(firstNode, node)
     
     @Override
     public int hashCode() {
