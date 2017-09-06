@@ -102,7 +102,7 @@ public class Tableau {
 	// Fills operations with the possible operations applicable to node 
 	private void updateOperations(Node n) {
 		// If n hasn't clashed and it's not blocked
-		if (!Ln.get(n).contains(OWNAxiom.BOTTOM) && !blockedNodes.contains(n)) {
+		if (!Ln.get(n).contains(OWNAxiom.BOTTOM)) {
 			// Add all applicable TOP rules
 			for (OWNAxiom axiom : K) {
 				if (!Ln.get(n).contains(axiom))
@@ -120,6 +120,4 @@ public class Tableau {
 	
 	// TODO updateAllOperations
 	// Tree traversal to get all operations in all nodes
-	
-	// TODO iteratePreorder, maybe? Passing a method as argument
 }

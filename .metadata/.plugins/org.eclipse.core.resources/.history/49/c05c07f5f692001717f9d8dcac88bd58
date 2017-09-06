@@ -120,6 +120,4 @@ public class Tableau {
 	
 	// TODO updateAllOperations
 	// Tree traversal to get all operations in all nodes
-	
-	// TODO iteratePreorder, maybe? Passing a method as argument
 }
