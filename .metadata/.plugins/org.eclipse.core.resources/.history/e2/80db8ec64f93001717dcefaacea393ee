@@ -63,13 +63,8 @@ public class OWNAxiomOperationVisitor implements OWNAxiomVisitor {
 		// If {op1,op2} disjunct with L(n)
 		if (!(Ln.get(tn.getData()).contains(axiom.getOperand1()) || 
 				Ln.get(tn.getData()).contains(axiom.getOperand2()))) {
-			// Only add operation if not branded as conflicting operation
-			if (!conflictingOperations.contains(new NonDeterministicOperation
-					(tn.getData(), OPERATOR.OR, axiom, axiom.getOperand1())))
-				operations.add(new Operation(OPERATOR.OR, axiom, axiom.getOperand1()));
-			if (!conflictingOperations.contains(new NonDeterministicOperation
-					(tn.getData(), OPERATOR.OR, axiom, axiom.getOperand2())))
-				operations.add(new Operation(OPERATOR.OR, axiom, axiom.getOperand2()));
+			operations.add(new Operation(OPERATOR.OR, axiom, axiom.getOperand1()));
+			operations.add(new Operation(OPERATOR.OR, axiom, axiom.getOperand2()));
 		}
 	}
 

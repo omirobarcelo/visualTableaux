@@ -32,6 +32,11 @@ public class Tableau {
 	}
 	
 	public void init(OWNAxiom concept) {
+		// DEBUG
+		conflictingOperations.add(new NonDeterministicOperation
+				(firstNode.getData(), OPERATOR.OR, concept, ((OWNUnion)concept).getOperand1()));
+		// DEBUG
+		
 		// Add first node with initial concept to L
 		Ln.put(firstNode.getData(), new HashSet<OWNAxiom>());
 		Ln.get(firstNode.getData()).add(concept);

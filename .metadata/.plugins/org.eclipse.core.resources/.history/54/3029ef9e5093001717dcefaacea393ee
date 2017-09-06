@@ -100,7 +100,6 @@ public class Tableau {
 				Lr.get(p).add(existential.getRelation());
 				Ln.put(newNode, new HashSet<OWNAxiom>());
 				Ln.get(newNode).add(existential.getOperand());
-				operations.put(newNode, new HashSet<Operation>());
 				break;
 			}
 			case ONLY: {

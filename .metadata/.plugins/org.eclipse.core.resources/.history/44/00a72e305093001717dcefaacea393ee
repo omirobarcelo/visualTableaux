@@ -67,9 +67,7 @@ public class OWNAxiomOperationVisitor implements OWNAxiomVisitor {
 			if (!conflictingOperations.contains(new NonDeterministicOperation
 					(tn.getData(), OPERATOR.OR, axiom, axiom.getOperand1())))
 				operations.add(new Operation(OPERATOR.OR, axiom, axiom.getOperand1()));
-			if (!conflictingOperations.contains(new NonDeterministicOperation
-					(tn.getData(), OPERATOR.OR, axiom, axiom.getOperand2())))
-				operations.add(new Operation(OPERATOR.OR, axiom, axiom.getOperand2()));
+			operations.add(new Operation(OPERATOR.OR, axiom, axiom.getOperand2()));
 		}
 	}
 

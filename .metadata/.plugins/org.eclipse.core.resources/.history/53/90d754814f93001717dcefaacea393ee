@@ -39,19 +39,4 @@ public class NonDeterministicOperation {
 				" \u27F6 " + 
 				"L(" + n.getId() + ") \u222A {" + result + "}";
 	}
-	
-	@Override
-	public int hashCode() {
-		return n.hashCode() ^ operator.hashCode() ^ operand.hashCode() ^ result.hashCode();
-	}
-	
-	@Override
-	public boolean equals(Object other) {
-		if (other instanceof NonDeterministicOperation) {
-			NonDeterministicOperation ndo = (NonDeterministicOperation)other;
-			return n.equals(ndo.n) && operator == ndo.operator &&
-					operand.equals(ndo.operand) && result.equals(ndo.result);
-		}
-		return false;
-	}
 }
