@@ -55,6 +55,7 @@ public class TreeNode {
     
     // TODO maybe getTreeNode(firstNode, node)
     
+    // TODO override hashCode and equals
     @Override
     public int hashCode() {
     	int baseHashCode = data.hashCode() ^ children.hashCode();
@@ -67,10 +68,18 @@ public class TreeNode {
     	if (other instanceof TreeNode) {
     		TreeNode tn = (TreeNode)other;
     		boolean sameNode = data.equals(tn.data);
-    		boolean sameChildren = children.equals(tn.children);
-    		// Just check parent data to avoid stack overflow
+    		//boolean sameChildren = children.equals(tn.children);
+    		boolean sameChildren = true;
+    		if (children.size() == tn.children.size()) {
+    			for (int i = 0; i < children.size(); i++) {
+    				boolean sameChild = children.get(i).equals(tn.children.get(i));
+    				sameChildren &= sameChild;
+    				if (!sameChildren)
+    					break;
+    			}
+    		}
     		boolean sameParent = (parent==null && tn.parent==null) || 
-					(parent != null && tn.parent != null && parent.data.equals(tn.parent.data));
+					(parent != null && tn.parent != null && parent.equals(tn.parent));
     		return sameNode && sameChildren && sameParent;
     	}
     	return false;

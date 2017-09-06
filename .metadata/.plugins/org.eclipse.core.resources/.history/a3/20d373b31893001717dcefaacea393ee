@@ -55,6 +55,7 @@ public class TreeNode {
     
     // TODO maybe getTreeNode(firstNode, node)
     
+    // TODO override hashCode and equals
     @Override
     public int hashCode() {
     	int baseHashCode = data.hashCode() ^ children.hashCode();

@@ -58,7 +58,7 @@ public class Test {
 		firstNode2.addChild(n2);
 		firstNode2.addChild(o2);
 		
-		System.out.println(firstNode.equals(firstNode2));
+		System.out.println(firstNode.getChildren().equals(firstNode2.getChildren()));
 		
 		Stack<TreeNode> s = new Stack<TreeNode>();
 		s.push(firstNode2);

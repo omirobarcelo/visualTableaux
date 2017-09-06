@@ -32,14 +32,6 @@ import ownapi.OWNAxiom.AXIOM_TYPE;
 public class Test {
 
 	public static void main(String[] args) {
-		ArrayList<Node> list1 = new ArrayList<Node>();
-		list1.add(new Node("a"));
-		list1.add(new Node("b"));
-		ArrayList<Node> list2 = new ArrayList<Node>();
-		list2.add(new Node("a"));
-		list2.add(new Node("b"));
-		System.out.println(list1.equals(list2));
-		
 		TreeNode n = new TreeNode(new Node("n"));
 		n.addChild(new Node("ñ"));
 		TreeNode o = new TreeNode(new Node("o"));
@@ -58,7 +50,7 @@ public class Test {
 		firstNode2.addChild(n2);
 		firstNode2.addChild(o2);
 		
-		System.out.println(firstNode.equals(firstNode2));
+		System.out.println(firstNode.getChildren().equals(firstNode2.getChildren()));
 		
 		Stack<TreeNode> s = new Stack<TreeNode>();
 		s.push(firstNode2);
