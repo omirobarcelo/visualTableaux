@@ -72,46 +72,37 @@ public class Tableau {
 	//////////////////////////////
 	public void apply(Node n, Operation op) {
 		switch (op.getOperator()) {
-			case TOP: {
-				Ln.get(n).add(op.getOperand1());
-				break;
-			}
-			case BOTTOM: {
-				Ln.get(n).add(OWNAxiom.BOTTOM);
-				clashed = true;
-				break;
-			}
-			case AND: {
-				OWNIntersection intersection = (OWNIntersection)op.getOperand1();
-				Ln.get(n).add(intersection.getOperand1());
-				Ln.get(n).add(intersection.getOperand2());
-				break;
-			}
-			case OR: {
-				break;
-			}
-			case SOME: {
-				OWNExistential existential = (OWNExistential)op.getOperand1();
-				TreeNode tn = TreeNode.getTreeNode(firstNode, n);
-				Node newNode = new Node(Character.toString((char)nodeCode++));
-				tn.addChild(newNode);
-				Pair<Node, Node> p = new Pair<Node, Node>(n, newNode);
-				Lr.put(p, new HashSet<OWNLiteral>());
-				Lr.get(p).add(existential.getRelation());
-				Ln.put(newNode, new HashSet<OWNAxiom>());
-				Ln.get(newNode).add(existential.getOperand());
-				break;
-			}
-			case ONLY: {
-				OWNUniversal universal = (OWNUniversal)op.getOperand1();
-				Ln.get(op.getNode()).add(universal.getOperand());
-				break;
-			}
+		case TOP: {
+			Ln.get(n).add(op.getOperand1());
+			break;
 		}
-		
-		// TODO get new operations
-		
-		// TODO check blocking
+		case BOTTOM: {
+			Ln.get(n).add(OWNAxiom.BOTTOM);
+			clashed = true;
+			break;
+		}
+		case AND: {
+			OWNIntersection intersection = (OWNIntersection)op.getOperand1();
+			Ln.get(n).add(intersection.getOperand1());
+			Ln.get(n).add(intersection.getOperand2());
+			break;
+		}
+		case OR: {
+			break;
+		}
+		case SOME: {
+			TreeNode tn = TreeNode.getTreeNode(firstNode, n);
+			Node newNode = new Node(Character.toString((char)nodeCode++));
+			tn.addChild(newNode);
+			Pair<Node, Node> p = new Pair<Node, Node>(n, newNode);
+			break;
+		}
+		case ONLY: {
+			OWNUniversal universal = (OWNUniversal)op.getOperand1();
+			Ln.get(op.getNode()).add(universal.getOperand());
+			break;
+		}
+		}
 	}
 	
 	public boolean isFinished() {
