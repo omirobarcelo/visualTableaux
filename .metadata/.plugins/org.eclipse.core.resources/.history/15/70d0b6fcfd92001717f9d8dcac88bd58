@@ -125,16 +125,12 @@ public class Tableau {
 	// Tree traversal to get all operations in all nodes
 	
 	// TODO iteratePreorder, maybe? Passing a method as argument
-	public void iterativePreorder(TreeNode treeNode, String method)  {
+	public void iterativePreorder(TreeNode treeNode, Object clas, Method method) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException {
 		Stack<TreeNode> s = new Stack<TreeNode>();
 		s.push(treeNode);
 		while (!s.isEmpty()) {
 			TreeNode n = s.pop();
-			switch(method) {
-				case "printNodeStatus":
-					printNodeStatus(n);
-					break;
-			}
+			method.invoke(clas, n);
 			if (!n.getChildren().isEmpty()) {
 				for (TreeNode succ : n.getChildren()) {
 					s.push(succ);

@@ -131,10 +131,9 @@ public class Tableau {
 		while (!s.isEmpty()) {
 			TreeNode n = s.pop();
 			switch(method) {
-				case "printNodeStatus":
-					printNodeStatus(n);
-					break;
+			
 			}
+			method.invoke(clas, n);
 			if (!n.getChildren().isEmpty()) {
 				for (TreeNode succ : n.getChildren()) {
 					s.push(succ);
