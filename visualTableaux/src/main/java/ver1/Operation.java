@@ -50,13 +50,6 @@ public class Operation {
 		return node;
 	}
 
-//	public OWNAxiom getResult1() {
-//		return result1;
-//	}
-//
-//	public OWNAxiom getResult2() {
-//		return result2;
-//	}
 	
 	@Override
 	public int hashCode() {
@@ -71,7 +64,8 @@ public class Operation {
 			Operation op = (Operation)other;
 			boolean sameOperands = (operand1.equals(op.operand1) && other.equals(op.other))
 					|| (operand1.equals(op.other) && other.equals(op.operand1));
-			boolean sameNode = (node==null && op.node==null) || node.equals(op.node);
+			boolean sameNode = (node==null && op.node==null) || 
+					(node != null && op.node != null && node.equals(op.node));
 			return this.operator == op.operator && sameOperands && sameNode;
 		}
 		return false;

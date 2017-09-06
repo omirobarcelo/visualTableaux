@@ -31,13 +31,11 @@ public class OWLClassExpressionCastVisitor implements OWLClassExpressionVisitor 
 	}
 
 	public void visit(OWLClass arg0) {
-		// TODO Auto-generated method stub
 		String litIRI = arg0.toString();
 		axiom = new OWNLiteral(litIRI.substring(1, litIRI.length()-1));
 	}
 
 	public void visit(OWLObjectIntersectionOf arg0) {
-		// TODO Auto-generated method stub
 		OWLClassExpression[] operands = (arg0.getOperands()).toArray(new OWLClassExpression[0]);
 		OWLClassExpressionCastVisitor visitor1 = new OWLClassExpressionCastVisitor();
 		operands[0].accept(visitor1);
@@ -47,7 +45,6 @@ public class OWLClassExpressionCastVisitor implements OWLClassExpressionVisitor 
 	}
 
 	public void visit(OWLObjectUnionOf arg0) {
-		// TODO Auto-generated method stub
 		OWLClassExpression[] operands = (arg0.getOperands()).toArray(new OWLClassExpression[0]);
 		OWLClassExpressionCastVisitor visitor1 = new OWLClassExpressionCastVisitor();
 		operands[0].accept(visitor1);
@@ -57,14 +54,12 @@ public class OWLClassExpressionCastVisitor implements OWLClassExpressionVisitor 
 	}
 
 	public void visit(OWLObjectComplementOf arg0) {
-		// TODO Auto-generated method stub
 		String compIRI = arg0.getComplementNNF().toString();
 		OWNLiteral lit = new OWNLiteral(compIRI.substring(1, compIRI.length()-1));
 		axiom = new OWNComplement(lit);
 	}
 
 	public void visit(OWLObjectSomeValuesFrom arg0) {
-		// TODO Auto-generated method stub
 		String relIRI = arg0.getProperty().toString();
 		OWNLiteral relation = new OWNLiteral(relIRI.substring(1, relIRI.length()-1));
 		OWLClassExpressionCastVisitor visitor = new OWLClassExpressionCastVisitor();
@@ -73,7 +68,6 @@ public class OWLClassExpressionCastVisitor implements OWLClassExpressionVisitor 
 	}
 
 	public void visit(OWLObjectAllValuesFrom arg0) {
-		// TODO Auto-generated method stub
 		String relIRI = arg0.getProperty().toString();
 		OWNLiteral relation = new OWNLiteral(relIRI.substring(1, relIRI.length()-1));
 		OWLClassExpressionCastVisitor visitor = new OWLClassExpressionCastVisitor();

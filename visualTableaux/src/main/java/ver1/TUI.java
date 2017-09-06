@@ -1,13 +1,10 @@
 package ver1;
 
 import java.io.File;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Scanner;
-import java.util.Stack;
 
 import org.semanticweb.owlapi.apibinding.OWLManager;
 import org.semanticweb.owlapi.model.IRI;
@@ -39,25 +36,18 @@ public class TUI {
 			System.out.println("Something is null");
 		// DEBUG
 		
-		// Interpreter.read
+		// Get concept and ontology K
 		Pair<OWNAxiom, HashSet<OWNAxiom>> pairCon_K = Interpreter.read(concept, tbox);
-		// DEBUG
-//		System.out.println(pairCon_K.getFirst());
-//		System.out.println(pairCon_K.getSecond());
-		// DEBUG
 		
 		// Create and initialize tableau
 		Tableau tableau = new Tableau(pairCon_K.getSecond());
 		tableau.init(pairCon_K.getFirst());
-		// DEBUG
-//		String[] ops = tableau.printOperations();
-//		for (String s : ops)
-//			System.out.println(s);
-		// DEBUG
 				
-		// Loop (show status, execute operation, get new status)
+		// Loop (show status, choose operations, execute operation)
 		boolean endProgram = false;
-		while (!endProgram) {
+		boolean finished = false;
+		boolean isSatisfiable = false;
+		while (!endProgram && !finished) {
 			showStatus(tableau);
 			List<Pair<Node, Operation>> ops = showOperations(tableau);
 			int option = readIntFromStdin("\nWhich option do you select? ");
@@ -67,37 +57,28 @@ public class TUI {
 				// TODO apply operation
 				Pair pNode_Op = ops.get(option-1);
 				// tableau.apply(pNode_Op.getFirst(), pNode_Op.getSecond());
+				
+//				if (finished = tableau.isFinished()) 
+//					isSatisfiable = tableau.isSatisfiable();
 			}
 		}
+		
+		if (finished)
+			System.out.println("This ontology is " +
+					(isSatisfiable ? "" : "not ") + "satisfiable");
 	}
 	
 
 	private static void showStatus(Tableau tableau) {
-		// TODO Auto-generated method stub
 		System.out.println();
 		System.out.println("K : " + tableau.getOntology());
 		System.out.println();
-//		Stack<TreeNode> s = new Stack<TreeNode>();
-//		s.push(tableau.getFirstNode());
-//		while (!s.isEmpty()) {
-//			TreeNode n = s.pop();
-//			//visit(node)
-//			System.out.println(n.getData().getId() + " : " + tableau.getAxioms(n.getData()));
-//			if (!n.getChildren().isEmpty()) {
-//				for (TreeNode succ : n.getChildren()) {
-//					System.out.println(n.getData().getId() + "--" + 
-//							tableau.getRelations(n.getData(), succ.getData()) + 
-//							"--" + succ.getData().getId());
-//					s.push(succ);
-//				}
-//			}
-//		}
 		tableau.iterativePreorder(tableau.getFirstNode(), "printNodeStatus");
 		System.out.println();
 	}
 
 	private static List<Pair<Node, Operation>> showOperations(Tableau tableau) {
-		// TODO Auto-generated method stub
+		// TODO Check if possible to use iterativePreorder
 		List<Pair<Node, Operation>> ops = new ArrayList<Pair<Node, Operation>>();
 		HashMap<Node, HashSet<Operation>> operations = tableau.getOperations();
 		System.out.println();
@@ -115,7 +96,6 @@ public class TUI {
 	}
 	
 	private static int readIntFromStdin(String msg) {
-		// TODO Auto-generated method stub
 		int number = 0;
         try {
             java.io.BufferedReader in = new java.io.BufferedReader(new java.io.InputStreamReader(System.in));

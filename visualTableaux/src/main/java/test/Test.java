@@ -1,6 +1,7 @@
 package test;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Scanner;
@@ -40,8 +41,19 @@ public class Test {
 		firstNode.addChild(n);
 		firstNode.addChild(o);
 		
+		TreeNode n2 = new TreeNode(new Node("n"));
+		n2.addChild(new Node("ñ"));
+		TreeNode o2 = new TreeNode(new Node("o"));
+		o2.addChild(new Node("p"));
+		o2.addChild(new Node("q"));
+		TreeNode firstNode2 = new TreeNode(new Node("m"));
+		firstNode2.addChild(n);
+		firstNode2.addChild(o);
+		
+		System.out.println(firstNode.getChildren().equals(firstNode2.getChildren()));
+		
 		Stack<TreeNode> s = new Stack<TreeNode>();
-		s.push(firstNode);
+		s.push(firstNode2);
 		while (!s.isEmpty()) {
 			TreeNode tn = s.pop();
 			//visit(node)

@@ -54,4 +54,6 @@ public class TreeNode {
     // TODO probably implement copy function for Backtracker
     
     // TODO maybe getTreeNode(firstNode, node)
+    
+    // TODO override hashCode and equals
 }
