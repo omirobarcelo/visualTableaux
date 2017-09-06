@@ -35,6 +35,7 @@ public class Tableau {
 		// Add first node with initial concept to L
 		Ln.put(firstNode.getData(), new HashSet<OWNAxiom>());
 		Ln.get(firstNode.getData()).add(concept);
+		// TODO check if changing updateOperations to iteratePreorder
 		// Get operations for firstNode
 		operations.put(firstNode.getData(), new HashSet<Operation>());
 		updateOperations(firstNode);

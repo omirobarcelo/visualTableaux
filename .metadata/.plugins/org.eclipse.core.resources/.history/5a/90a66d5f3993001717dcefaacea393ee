@@ -9,14 +9,15 @@ import ver1.Operation.OPERATOR;
 
 public class OWNAxiomOperationVisitor implements OWNAxiomVisitor {
 	private HashSet<Operation> operations;
-	private TreeNode tn;
+	// TODO change Node to TreeNode
+	private Node n;
 	private HashMap<Node, HashSet<OWNAxiom>> Ln;
 	private HashMap<Pair<Node, Node>, HashSet<OWNLiteral>> Lr;
 	
-	public OWNAxiomOperationVisitor(TreeNode tn, HashMap<Node, HashSet<OWNAxiom>> Ln, 
+	public OWNAxiomOperationVisitor(Node n, HashMap<Node, HashSet<OWNAxiom>> Ln, 
 			HashMap<Pair<Node, Node>, HashSet<OWNLiteral>> Lr) {
 		operations = new HashSet<Operation>();
-		this.tn = tn;
+		this.n = n;
 		this.Ln = Ln;
 		this.Lr = Lr;
 	}
@@ -38,9 +39,9 @@ public class OWNAxiomOperationVisitor implements OWNAxiomVisitor {
 	// OWNComplement to check than OWNLiteral
 	public void visit(OWNComplement axiom) {
 		// If BOTTOM not in L(n)
-		if (!Ln.get(tn.getData()).contains(OWNAxiom.BOTTOM)) {
+		if (!Ln.get(n).contains(OWNAxiom.BOTTOM)) {
 			// If L(n) includes ¬axiom
-			for (OWNAxiom other : Ln.get(tn.getData())) {
+			for (OWNAxiom other : Ln.get(n)) {
 				if (other.isOfType(AXIOM_TYPE.LITERAL) && other.equals(axiom.getOperand())) {
 					operations.add(new Operation(OPERATOR.BOTTOM, other, axiom));
 					break;
@@ -51,15 +52,13 @@ public class OWNAxiomOperationVisitor implements OWNAxiomVisitor {
 
 	public void visit(OWNIntersection axiom) {
 		// If {op1,op2} not included in L(n)
-		if (!(Ln.get(tn.getData()).contains(axiom.getOperand1()) && 
-				Ln.get(tn.getData()).contains(axiom.getOperand2())))
+		if (!(Ln.get(n).contains(axiom.getOperand1()) && Ln.get(n).contains(axiom.getOperand2())))
 			operations.add(new Operation(OPERATOR.AND, axiom));
 	}
 
 	public void visit(OWNUnion axiom) {
 		// If {op1,op2} disjunct with L(n)
-		if (!(Ln.get(tn.getData()).contains(axiom.getOperand1()) || 
-				Ln.get(tn.getData()).contains(axiom.getOperand2()))) {
+		if (!(Ln.get(n).contains(axiom.getOperand1()) || Ln.get(n).contains(axiom.getOperand2()))) {
 			operations.add(new Operation(OPERATOR.OR, axiom, axiom.getOperand1()));
 			operations.add(new Operation(OPERATOR.OR, axiom, axiom.getOperand2()));
 		}
@@ -69,12 +68,11 @@ public class OWNAxiomOperationVisitor implements OWNAxiomVisitor {
 		boolean axiomInL = false;
 		if (!Lr.isEmpty()) {
 			// Get all Node paired with n that contain the axiom relation
+			// TODO use treeNode.getChildren()
 			HashSet<Node> Ys = new HashSet<Node>();
-			for (TreeNode child : tn.getChildren()) {
-				Pair<Node, Node> p = new Pair<Node, Node>(tn.getData(), child.getData());
-				if (Lr.get(p).contains(axiom.getRelation())) {
+			for (Pair<Node, Node> p : Lr.keySet()) {
+				if (n.equals(p.getFirst()) && Lr.get(p).contains(axiom.getRelation()))
 					Ys.add(p.getSecond());
-				}
 			}
 			// Check if some contain the axiom operand
 			for (Node y : Ys) {
@@ -90,11 +88,9 @@ public class OWNAxiomOperationVisitor implements OWNAxiomVisitor {
 		if (!Lr.isEmpty()) {
 			// Get all Node paired with n that contain the axiom relation
 			HashSet<Node> Ys = new HashSet<Node>();
-			for (TreeNode child : tn.getChildren()) {
-				Pair<Node, Node> p = new Pair<Node, Node>(tn.getData(), child.getData());
-				if (Lr.get(p).contains(axiom.getRelation())) {
+			for (Pair<Node, Node> p : Lr.keySet()) {
+				if (n.equals(p.getFirst()) && Lr.get(p).contains(axiom.getRelation()))
 					Ys.add(p.getSecond());
-				}
 			}
 			// If op isn't in some L(y)
 			for (Node y : Ys) {

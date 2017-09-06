@@ -8,6 +8,7 @@ import ownapi.*;
 import ver1.Operation.OPERATOR;
 
 public class Tableau {
+	// TODO check if necessary to change Node to TreeNode
 	private HashSet<OWNAxiom> K;
 	private byte nodeCode;
 	private TreeNode firstNode;
@@ -35,9 +36,10 @@ public class Tableau {
 		// Add first node with initial concept to L
 		Ln.put(firstNode.getData(), new HashSet<OWNAxiom>());
 		Ln.get(firstNode.getData()).add(concept);
+		// TODO check if changing updateOperations to iteratePreorder
 		// Get operations for firstNode
 		operations.put(firstNode.getData(), new HashSet<Operation>());
-		updateOperations(firstNode);
+		updateOperations(firstNode.getData());
 	}
 	
 	///////////////////////
@@ -127,9 +129,9 @@ public class Tableau {
 	///////////////////////////////
 	/////   PRIVATE METHODS   /////
 	///////////////////////////////
+	// TODO check if changing it to iteratePreorder
 	// Fills operations with the possible operations applicable to node 
-	private void updateOperations(TreeNode tn) {
-		Node n = tn.getData();
+	private void updateOperations(Node n) {
 		// If n hasn't clashed and it's not blocked
 		if (!Ln.get(n).contains(OWNAxiom.BOTTOM) && !blockedNodes.contains(n)) {
 			// Add all applicable TOP rules
@@ -140,14 +142,14 @@ public class Tableau {
 
 			// Iterate over all axioms in node
 			for (OWNAxiom axiom : Ln.get(n)) {
-				OWNAxiomOperationVisitor visitor = new OWNAxiomOperationVisitor(tn, Ln, Lr);
+				OWNAxiomOperationVisitor visitor = new OWNAxiomOperationVisitor(n, Ln, Lr);
 				axiom.accept(visitor);
 				operations.get(n).addAll(visitor.getOperations());
 			}
 		}
 	}
 	
-	// TODO updateAllOperations (iteratePreorder)
+	// TODO updateAllOperations
 	// Tree traversal to get all operations in all nodes
 	
 }
