@@ -17,7 +17,7 @@ public class Tableau {
 	private HashMap<Node, HashSet<Operation>> operations;
 	private HashSet<NonDeterministicOperation> conflictingOperations;
 	private HashSet<Node> blockedNodes;
-	private boolean clashed, finished;
+	private boolean clashed, finished, satisfiable;
 	
 	public Tableau(HashSet<OWNAxiom> K) {
 		this.K = K;
@@ -30,6 +30,7 @@ public class Tableau {
 		blockedNodes = new HashSet<Node>();
 		clashed = false;
 		finished = false;
+		satisfiable = false;
 	}
 	
 	public void init(OWNAxiom concept) {
@@ -73,14 +74,17 @@ public class Tableau {
 	/////   PUBLIC METHODS   /////
 	//////////////////////////////
 	public boolean isFinished() {
-		// Traverse all nodes and check if finished still true after traversal
+		// Traverse all nodes and check if finished and satisfiable still true after traversal
 		finished = true;
-		iterativePreorder(firstNode, "checkFinished");
+		satisfiable = true;
+		iterativePreorder(firstNode, "checkFinishedAndSatisfiable");
+		// If still not finished, it is not satisfiable
+		satisfiable &= finished;
 		return finished;
 	}
 	
 	public boolean isSatisfiable() {
-		return finished && !clashed;
+		return satisfiable;
 	}
 	
 	///////////////////////////////////////////////////
@@ -95,8 +99,8 @@ public class Tableau {
 				case "printNodeStatus":
 					printNodeStatus(n);
 					break;
-				case "checkFinished":
-					checkFinished(n);
+				case "checkFinishedAndSatisfiable":
+					checkFinishedAndSatisfiable(n);
 					break;
 			}
 			if (!n.getChildren().isEmpty()) {
@@ -118,12 +122,14 @@ public class Tableau {
 		}
 	}
 	
-	private void checkFinished(TreeNode n) {
+	private void checkFinishedAndSatisfiable(TreeNode n) {
+		boolean blocked = blockedNodes.contains(n.getData());
+		boolean localClashed = Ln.get(n.getData()).contains(OWNAxiom.BOTTOM);
 		boolean tmpFinished = clashed ||
-				(operations.get(n.getData()).isEmpty() || 
-						blockedNodes.contains(n.getData()) || 
-						Ln.get(n.getData()).contains(OWNAxiom.BOTTOM));
-		finished &= tmpFinished;		
+				(operations.get(n.getData()).isEmpty() || blocked || localClashed);
+		finished &= tmpFinished;
+		
+		satisfiable &= !clashed;
 	}
 	
 	///////////////////////////////

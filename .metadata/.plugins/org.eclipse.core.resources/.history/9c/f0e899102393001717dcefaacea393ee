@@ -17,7 +17,8 @@ public class Tableau {
 	private HashMap<Node, HashSet<Operation>> operations;
 	private HashSet<NonDeterministicOperation> conflictingOperations;
 	private HashSet<Node> blockedNodes;
-	private boolean clashed, finished;
+	private boolean finished;
+	private boolean satisfiable;
 	
 	public Tableau(HashSet<OWNAxiom> K) {
 		this.K = K;
@@ -28,8 +29,8 @@ public class Tableau {
 		operations = new HashMap<Node, HashSet<Operation>>();
 		conflictingOperations = new HashSet<NonDeterministicOperation>();
 		blockedNodes = new HashSet<Node>();
-		clashed = false;
 		finished = false;
+		satisfiable = false;
 	}
 	
 	public void init(OWNAxiom concept) {
@@ -73,14 +74,16 @@ public class Tableau {
 	/////   PUBLIC METHODS   /////
 	//////////////////////////////
 	public boolean isFinished() {
+		// TODO 
 		// Traverse all nodes and check if finished still true after traversal
 		finished = true;
-		iterativePreorder(firstNode, "checkFinished");
-		return finished;
+		iterativePreorder(firstNode, "checkFinishedAndSatisfiable");
+		return false;
 	}
 	
 	public boolean isSatisfiable() {
-		return finished && !clashed;
+		// TODO
+		return false;
 	}
 	
 	///////////////////////////////////////////////////
@@ -95,8 +98,8 @@ public class Tableau {
 				case "printNodeStatus":
 					printNodeStatus(n);
 					break;
-				case "checkFinished":
-					checkFinished(n);
+				case "checkFinishedAndSatisfiable":
+					checkFinishedAndSatisfiable(n);
 					break;
 			}
 			if (!n.getChildren().isEmpty()) {
@@ -118,12 +121,14 @@ public class Tableau {
 		}
 	}
 	
-	private void checkFinished(TreeNode n) {
-		boolean tmpFinished = clashed ||
-				(operations.get(n.getData()).isEmpty() || 
-						blockedNodes.contains(n.getData()) || 
-						Ln.get(n.getData()).contains(OWNAxiom.BOTTOM));
-		finished &= tmpFinished;		
+	private void checkFinishedAndSatisfiable(TreeNode n) {
+		boolean blocked = blockedNodes.contains(n.getData());
+		boolean clashed = Ln.get(n.getData()).contains(OWNAxiom.BOTTOM)
+		boolean tmpFinished = operations.get(n.getData()).isEmpty() ||
+				blocked || clashed;
+		finished &= tmpFinished;
+		
+		
 	}
 	
 	///////////////////////////////

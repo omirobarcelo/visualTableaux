@@ -68,7 +68,6 @@ public class OWNAxiomOperationVisitor implements OWNAxiomVisitor {
 		boolean axiomInL = false;
 		if (!Lr.isEmpty()) {
 			// Get all Node paired with n that contain the axiom relation
-			// TODO use treeNode.getChildren()
 			HashSet<Node> Ys = new HashSet<Node>();
 			for (Pair<Node, Node> p : Lr.keySet()) {
 				if (n.equals(p.getFirst()) && Lr.get(p).contains(axiom.getRelation()))

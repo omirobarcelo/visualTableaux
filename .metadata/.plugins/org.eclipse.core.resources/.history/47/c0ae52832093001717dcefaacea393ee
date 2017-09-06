@@ -9,7 +9,6 @@ import ver1.Operation.OPERATOR;
 
 public class OWNAxiomOperationVisitor implements OWNAxiomVisitor {
 	private HashSet<Operation> operations;
-	// TODO change Node to TreeNode
 	private Node n;
 	private HashMap<Node, HashSet<OWNAxiom>> Ln;
 	private HashMap<Pair<Node, Node>, HashSet<OWNLiteral>> Lr;
@@ -68,7 +67,6 @@ public class OWNAxiomOperationVisitor implements OWNAxiomVisitor {
 		boolean axiomInL = false;
 		if (!Lr.isEmpty()) {
 			// Get all Node paired with n that contain the axiom relation
-			// TODO use treeNode.getChildren()
 			HashSet<Node> Ys = new HashSet<Node>();
 			for (Pair<Node, Node> p : Lr.keySet()) {
 				if (n.equals(p.getFirst()) && Lr.get(p).contains(axiom.getRelation()))

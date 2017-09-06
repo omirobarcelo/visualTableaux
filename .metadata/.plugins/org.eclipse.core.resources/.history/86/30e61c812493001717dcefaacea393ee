@@ -61,7 +61,7 @@ public class TUI {
 				if (finished = tableau.isFinished()) {
 					// TODO get last snapshot
 					// if no more snapshots, check satisfiability
-					// isSatisfiable = tableau.isSatisfiable();
+					isSatisfiable = tableau.isSatisfiable();
 				}
 			}
 		}

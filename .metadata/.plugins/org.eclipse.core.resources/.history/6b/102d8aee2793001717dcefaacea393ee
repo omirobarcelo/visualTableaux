@@ -11,7 +11,6 @@ public class Backtracker {
 		private HashMap<Node, HashSet<OWNAxiom>> Ln;
 		private HashMap<Pair<Node, Node>, HashSet<OWNAxiom>> Lr;
 		private HashMap<Node, HashSet<Operation>> operations;
-		// TODO probably adding firstNode and maybe clashed to Snapshot
 		
 		public Snapshot(HashMap<Node, HashSet<OWNAxiom>> ln, HashMap<Pair<Node, Node>, HashSet<OWNAxiom>> lr,
 				HashMap<Node, HashSet<Operation>> operations) {

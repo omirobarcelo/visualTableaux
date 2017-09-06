@@ -76,6 +76,7 @@ public class Tableau {
 		// Traverse all nodes and check if finished still true after traversal
 		finished = true;
 		iterativePreorder(firstNode, "checkFinished");
+		// If still not finished, it is not satisfiable
 		return finished;
 	}
 	

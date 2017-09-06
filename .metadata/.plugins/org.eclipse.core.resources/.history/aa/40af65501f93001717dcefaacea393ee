@@ -17,7 +17,6 @@ public class Tableau {
 	private HashMap<Node, HashSet<Operation>> operations;
 	private HashSet<NonDeterministicOperation> conflictingOperations;
 	private HashSet<Node> blockedNodes;
-	private boolean clashed, finished;
 	
 	public Tableau(HashSet<OWNAxiom> K) {
 		this.K = K;
@@ -28,8 +27,6 @@ public class Tableau {
 		operations = new HashMap<Node, HashSet<Operation>>();
 		conflictingOperations = new HashSet<NonDeterministicOperation>();
 		blockedNodes = new HashSet<Node>();
-		clashed = false;
-		finished = false;
 	}
 	
 	public void init(OWNAxiom concept) {
@@ -69,20 +66,6 @@ public class Tableau {
 		return Lr.get(new Pair<Node, Node>(pred, succ)).toString();
 	}
 	
-	//////////////////////////////
-	/////   PUBLIC METHODS   /////
-	//////////////////////////////
-	public boolean isFinished() {
-		// Traverse all nodes and check if finished still true after traversal
-		finished = true;
-		iterativePreorder(firstNode, "checkFinished");
-		return finished;
-	}
-	
-	public boolean isSatisfiable() {
-		return finished && !clashed;
-	}
-	
 	///////////////////////////////////////////////////
 	/////   TREE TRAVERSAL AND VISITING METHODS   /////
 	///////////////////////////////////////////////////
@@ -94,9 +77,6 @@ public class Tableau {
 			switch(method) {
 				case "printNodeStatus":
 					printNodeStatus(n);
-					break;
-				case "checkFinished":
-					checkFinished(n);
 					break;
 			}
 			if (!n.getChildren().isEmpty()) {
@@ -116,14 +96,6 @@ public class Tableau {
 						"--" + succ.getData().getId());
 			}
 		}
-	}
-	
-	private void checkFinished(TreeNode n) {
-		boolean tmpFinished = clashed ||
-				(operations.get(n.getData()).isEmpty() || 
-						blockedNodes.contains(n.getData()) || 
-						Ln.get(n.getData()).contains(OWNAxiom.BOTTOM));
-		finished &= tmpFinished;		
 	}
 	
 	///////////////////////////////

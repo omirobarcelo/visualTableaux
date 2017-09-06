@@ -58,11 +58,8 @@ public class TUI {
 				Pair pNode_Op = ops.get(option-1);
 				// tableau.apply(pNode_Op.getFirst(), pNode_Op.getSecond());
 				
-				if (finished = tableau.isFinished()) {
-					// TODO get last snapshot
-					// if no more snapshots, check satisfiability
-					// isSatisfiable = tableau.isSatisfiable();
-				}
+//				if (finished = tableau.isFinished()) 
+//					isSatisfiable = tableau.isSatisfiable();
 			}
 		}
 		

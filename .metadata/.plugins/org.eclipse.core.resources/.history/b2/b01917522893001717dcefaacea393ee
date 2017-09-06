@@ -73,9 +73,10 @@ public class Tableau {
 	/////   PUBLIC METHODS   /////
 	//////////////////////////////
 	public boolean isFinished() {
-		// Traverse all nodes and check if finished still true after traversal
+		// Traverse all nodes and check if finished and satisfiable still true after traversal
 		finished = true;
 		iterativePreorder(firstNode, "checkFinished");
+		// If still not finished, it is not satisfiable
 		return finished;
 	}
 	
@@ -119,10 +120,10 @@ public class Tableau {
 	}
 	
 	private void checkFinished(TreeNode n) {
+		boolean blocked = blockedNodes.contains(n.getData());
+		boolean localClashed = Ln.get(n.getData()).contains(OWNAxiom.BOTTOM);
 		boolean tmpFinished = clashed ||
-				(operations.get(n.getData()).isEmpty() || 
-						blockedNodes.contains(n.getData()) || 
-						Ln.get(n.getData()).contains(OWNAxiom.BOTTOM));
+				(operations.get(n.getData()).isEmpty() || blocked || localClashed);
 		finished &= tmpFinished;		
 	}
 	
