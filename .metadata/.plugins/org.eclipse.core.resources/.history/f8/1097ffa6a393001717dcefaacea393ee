@@ -39,7 +39,7 @@ public class Tableau {
 		Ln.put(firstNode.getData(), new HashSet<OWNAxiom>());
 		Ln.get(firstNode.getData()).add(concept);
 		// Add null predecessor
-		predecessor.put(firstNode.getData(), null);
+		predecessor.put(firstNode, null);
 		// Get operations for firstNode
 		operations.put(firstNode.getData(), new HashSet<Operation>());
 		updateOperations(firstNode);

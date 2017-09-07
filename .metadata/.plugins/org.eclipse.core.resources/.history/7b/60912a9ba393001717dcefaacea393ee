@@ -16,7 +16,6 @@ public class Tableau {
 	private HashMap<Node, HashSet<Operation>> operations;
 	private HashSet<NonDeterministicOperation> conflictingOperations;
 	private HashSet<Node> blockedNodes;
-	private HashMap<Node, Node> predecessor;
 	private boolean clashed, finished;
 	// TODO probably create attribute Backtracker
 	
@@ -29,7 +28,6 @@ public class Tableau {
 		operations = new HashMap<Node, HashSet<Operation>>();
 		conflictingOperations = new HashSet<NonDeterministicOperation>();
 		blockedNodes = new HashSet<Node>();
-		predecessor = new HashMap<Node, Node>();
 		clashed = false;
 		finished = false;
 	}
@@ -38,8 +36,6 @@ public class Tableau {
 		// Add first node with initial concept to L
 		Ln.put(firstNode.getData(), new HashSet<OWNAxiom>());
 		Ln.get(firstNode.getData()).add(concept);
-		// Add null predecessor
-		predecessor.put(firstNode.getData(), null);
 		// Get operations for firstNode
 		operations.put(firstNode.getData(), new HashSet<Operation>());
 		updateOperations(firstNode);
