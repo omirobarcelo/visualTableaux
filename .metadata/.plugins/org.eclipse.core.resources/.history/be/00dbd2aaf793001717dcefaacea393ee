@@ -33,61 +33,30 @@ import ownapi.OWNAxiom.AXIOM_TYPE;
 public class Test {
 
 	public static void main(String[] args) {
-		HashMap<Node, Node> p = new HashMap<Node, Node>();
-		p.put(new Node("c1"), new Node("p1"));
-		p.put(new Node("c2"), new Node("p2"));
-		HashMap<Node, Node> copy = new HashMap<Node, Node>(p);
-		p.put(new Node("c3"), new Node("p1"));
+		HashMap<Pair<Node, Node>, HashSet<OWNLiteral>> L = new HashMap<Pair<Node, Node>, HashSet<OWNLiteral>>();
+		Pair<Node, Node> p1 = new Pair<Node, Node>(new Node("a"), new Node("b"));
+		L.put(p1, new HashSet<OWNLiteral>());
+		L.get(p1).add(new OWNLiteral("test#R"));
+		L.get(p1).add(new OWNLiteral("test#S"));
+		Pair<Node, Node> p2 = new Pair<Node, Node>(new Node("c"), new Node("d"));
+		L.put(p2, new HashSet<OWNLiteral>());
+		L.get(p2).add(new OWNLiteral("test#T"));
+		L.get(p2).add(new OWNLiteral("test#U"));
+		HashMap<Pair<Node, Node>, HashSet<OWNLiteral>> copy = DeepClone.deepClone(L);
+		Pair<Node, Node> p3 = new Pair<Node, Node>(new Node("a"), new Node("b"));
+		L.put(p3, new HashSet<OWNLiteral>());
+		L.get(p3).add(new OWNLiteral("test#X"));
+		L.get(p3).add(new OWNLiteral("test#Y"));
+		L.get(p1).add(new OWNLiteral("test#Z"));
 		
-		System.out.println("p");
-		for (Entry<Node, Node> entry : p.entrySet()) {
+		System.out.println("L");
+		for (Entry<Node, HashSet<OWNAxiom>> entry : L.entrySet()) {
 			System.out.println(entry.getKey() + " : " + entry.getValue());
 		}
 		System.out.println("copy");
-		for (Entry<Node, Node> entry : copy.entrySet()) {
+		for (Entry<Node, HashSet<OWNAxiom>> entry : copy.entrySet()) {
 			System.out.println(entry.getKey() + " : " + entry.getValue());
 		}
-		
-		
-//		HashSet<Node> b = new HashSet<Node>();
-//		b.add(new Node("a"));
-//		b.add(new Node("b"));
-//		HashSet<Node> copy = new HashSet<Node>(b);
-//		b.add(new Node("c"));
-//		
-//		System.out.println("b");
-//		for (Node n : b) {
-//			System.out.println(n);
-//		}
-//		System.out.println("copy");
-//		for (Node n : copy) {
-//			System.out.println(n);
-//		}
-		
-//		HashMap<Node, HashSet<Operation>> L = new HashMap<Node, HashSet<Operation>>();
-//		Node a = new Node("a");
-//		L.put(a, new HashSet<Operation>());
-//		L.get(a).add(new Operation(OPERATOR.TOP, new OWNUnion(new OWNLiteral("test#A"), new OWNLiteral("test#B"))));
-//		L.get(a).add(new Operation(OPERATOR.BOTTOM, new OWNLiteral("test#M"), new OWNComplement(new OWNLiteral("test#M"))));
-//		Node b = new Node("b");
-//		L.put(b, new HashSet<Operation>());
-//		L.get(b).add(new Operation(OPERATOR.OR, new OWNUnion(new OWNLiteral("test#N"), new OWNLiteral("test#O")), new OWNLiteral("test#N")));
-//		L.get(b).add(new Operation(OPERATOR.ONLY, new OWNUniversal(new OWNLiteral("test#R"), new OWNComplement(new OWNLiteral("test#Q"))), new Node("g")));
-//		HashMap<Node, HashSet<Operation>> copy = DeepClone.deepClone(L);
-//		Node c = new Node("c");
-//		L.put(c, new HashSet<Operation>());
-//		L.get(c).add(new Operation(OPERATOR.TOP, new OWNUnion(new OWNLiteral("test#X"), new OWNLiteral("test#Y"))));
-//		L.get(c).add(new Operation(OPERATOR.BOTTOM, new OWNLiteral("test#Z"), new OWNComplement(new OWNLiteral("test#Z"))));
-//		L.get(a).add(new Operation(OPERATOR.TOP, new OWNLiteral("test#Q")));
-//		
-//		System.out.println("L");
-//		for (Entry<Node, HashSet<Operation>> entry : L.entrySet()) {
-//			System.out.println(entry.getKey() + " : " + entry.getValue());
-//		}
-//		System.out.println("copy");
-//		for (Entry<Node, HashSet<Operation>> entry : copy.entrySet()) {
-//			System.out.println(entry.getKey() + " : " + entry.getValue());
-//		}
 		
 		
 //		TreeNode root = new TreeNode(new Node("root"));

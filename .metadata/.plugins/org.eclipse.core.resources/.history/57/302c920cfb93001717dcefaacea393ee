@@ -38,7 +38,6 @@ public class TreeNode {
         this.data = data;
     }
     
-    // https://stackoverflow.com/questions/16098362/how-to-deep-copy-a-tree
     public TreeNode copy() {
     	List<TreeNode> copyChildren = new ArrayList<TreeNode>();
     	if (!this.children.isEmpty()) {

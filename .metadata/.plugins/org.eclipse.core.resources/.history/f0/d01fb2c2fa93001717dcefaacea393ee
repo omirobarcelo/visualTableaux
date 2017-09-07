@@ -39,12 +39,12 @@ public class Test {
 		HashMap<Node, Node> copy = new HashMap<Node, Node>(p);
 		p.put(new Node("c3"), new Node("p1"));
 		
-		System.out.println("p");
-		for (Entry<Node, Node> entry : p.entrySet()) {
+		System.out.println("L");
+		for (Entry<Node, HashSet<Operation>> entry : L.entrySet()) {
 			System.out.println(entry.getKey() + " : " + entry.getValue());
 		}
 		System.out.println("copy");
-		for (Entry<Node, Node> entry : copy.entrySet()) {
+		for (Entry<Node, HashSet<Operation>> entry : copy.entrySet()) {
 			System.out.println(entry.getKey() + " : " + entry.getValue());
 		}
 		

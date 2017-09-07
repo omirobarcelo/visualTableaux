@@ -33,36 +33,20 @@ import ownapi.OWNAxiom.AXIOM_TYPE;
 public class Test {
 
 	public static void main(String[] args) {
-		HashMap<Node, Node> p = new HashMap<Node, Node>();
-		p.put(new Node("c1"), new Node("p1"));
-		p.put(new Node("c2"), new Node("p2"));
-		HashMap<Node, Node> copy = new HashMap<Node, Node>(p);
-		p.put(new Node("c3"), new Node("p1"));
+		HashSet<Node> b = new HashSet<Node>();
+		b.add(new Node("a"));
+		b.add(new Node("b"));
+		HashSet<Node> copy = new HashSet<Node>(b);
+		b.add(new Node("c"));
 		
-		System.out.println("p");
-		for (Entry<Node, Node> entry : p.entrySet()) {
-			System.out.println(entry.getKey() + " : " + entry.getValue());
+		System.out.println("b");
+		for (Node n : b) {
+			System.out.println(n);
 		}
 		System.out.println("copy");
-		for (Entry<Node, Node> entry : copy.entrySet()) {
-			System.out.println(entry.getKey() + " : " + entry.getValue());
+		for (Node n : copy) {
+			System.out.println(n);
 		}
-		
-		
-//		HashSet<Node> b = new HashSet<Node>();
-//		b.add(new Node("a"));
-//		b.add(new Node("b"));
-//		HashSet<Node> copy = new HashSet<Node>(b);
-//		b.add(new Node("c"));
-//		
-//		System.out.println("b");
-//		for (Node n : b) {
-//			System.out.println(n);
-//		}
-//		System.out.println("copy");
-//		for (Node n : copy) {
-//			System.out.println(n);
-//		}
 		
 //		HashMap<Node, HashSet<Operation>> L = new HashMap<Node, HashSet<Operation>>();
 //		Node a = new Node("a");
