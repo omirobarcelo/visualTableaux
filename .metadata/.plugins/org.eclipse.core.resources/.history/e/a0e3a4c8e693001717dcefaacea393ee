@@ -7,7 +7,7 @@ import java.util.Stack;
 
 public class TreeNode {
     private Node data = null;
-    private List<TreeNode> children = new ArrayList<TreeNode>();
+    private ArrayList<TreeNode> children = new ArrayList<TreeNode>();
 
     public TreeNode(Node data) {
         this.data = data;
@@ -39,14 +39,9 @@ public class TreeNode {
     }
     
     public TreeNode copy() {
-    	List<TreeNode> copyChildren = new ArrayList<TreeNode>();
-    	if (!this.children.isEmpty()) {
-    		for (TreeNode child : this.children) {
-    			copyChildren.add(child.copy());
-    		}
-    	}
-    	TreeNode copy = new TreeNode(this.data);
-    	copy.addChildren(copyChildren);
+    	TreeNode copy = new TreeNode(data);
+    	//copy.children = new ArrayList<TreeNode>(children);
+    	copy.children = (ArrayList<TreeNode>)children.clone();
     	return copy;
     }
     

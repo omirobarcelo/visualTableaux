@@ -38,17 +38,7 @@ public class TreeNode {
         this.data = data;
     }
     
-    public TreeNode copy() {
-    	List<TreeNode> copyChildren = new ArrayList<TreeNode>();
-    	if (!this.children.isEmpty()) {
-    		for (TreeNode child : this.children) {
-    			copyChildren.add(child.copy());
-    		}
-    	}
-    	TreeNode copy = new TreeNode(this.data);
-    	copy.addChildren(copyChildren);
-    	return copy;
-    }
+    // TODO probably implement copy function for Backtracker
     
     public static TreeNode getTreeNode(TreeNode root, Node n) {
     	Stack<TreeNode> s = new Stack<TreeNode>();

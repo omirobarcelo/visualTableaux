@@ -47,14 +47,6 @@ public class Test {
 				System.out.println(grandChild.getData());
 			}
 		}
-		System.out.println("cRoot");
-		System.out.println(cRoot.getData());
-		for (TreeNode child : cRoot.getChildren()) {
-			System.out.println(child.getData());
-			for (TreeNode grandChild : child.getChildren()) {
-				System.out.println(grandChild.getData());
-			}
-		}
 		
 		System.out.println(root.getChildren().size() + " : " + cRoot.getChildren().size());
 		root = cRoot;

@@ -38,16 +38,11 @@ public class TreeNode {
         this.data = data;
     }
     
+    // TODO probably implement copy function for Backtracker
     public TreeNode copy() {
-    	List<TreeNode> copyChildren = new ArrayList<TreeNode>();
-    	if (!this.children.isEmpty()) {
-    		for (TreeNode child : this.children) {
-    			copyChildren.add(child.copy());
-    		}
-    	}
-    	TreeNode copy = new TreeNode(this.data);
-    	copy.addChildren(copyChildren);
-    	return copy;
+    	TreeNode copy = new TreeNode(data);
+    	
+    	return null;
     }
     
     public static TreeNode getTreeNode(TreeNode root, Node n) {

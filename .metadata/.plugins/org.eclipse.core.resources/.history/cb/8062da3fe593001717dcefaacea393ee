@@ -37,25 +37,7 @@ public class Test {
 		root.addChild(new Node("c2"));
 		TreeNode cRoot = root.copy();
 		root.addChild(new Node("c3"));
-		root.getChildren().get(0).addChild(new Node("c4"));
-		
-		System.out.println("root");
-		System.out.println(root.getData());
-		for (TreeNode child : root.getChildren()) {
-			System.out.println(child.getData());
-			for (TreeNode grandChild : child.getChildren()) {
-				System.out.println(grandChild.getData());
-			}
-		}
-		System.out.println("cRoot");
-		System.out.println(cRoot.getData());
-		for (TreeNode child : cRoot.getChildren()) {
-			System.out.println(child.getData());
-			for (TreeNode grandChild : child.getChildren()) {
-				System.out.println(grandChild.getData());
-			}
-		}
-		
+		root.addChild(new Node("c4"));
 		System.out.println(root.getChildren().size() + " : " + cRoot.getChildren().size());
 		root = cRoot;
 		System.out.println(root.getChildren().size() + " : " + cRoot.getChildren().size());

@@ -39,14 +39,8 @@ public class TreeNode {
     }
     
     public TreeNode copy() {
-    	List<TreeNode> copyChildren = new ArrayList<TreeNode>();
-    	if (!this.children.isEmpty()) {
-    		for (TreeNode child : this.children) {
-    			copyChildren.add(child.copy());
-    		}
-    	}
-    	TreeNode copy = new TreeNode(this.data);
-    	copy.addChildren(copyChildren);
+    	TreeNode copy = new TreeNode(data);
+    	copy.children = new ArrayList<TreeNode>(children);
     	return copy;
     }
     

@@ -38,6 +38,7 @@ public class Test {
 		TreeNode cRoot = root.copy();
 		root.addChild(new Node("c3"));
 		root.getChildren().get(0).addChild(new Node("c4"));
+		cRoot = root;
 		
 		System.out.println("root");
 		System.out.println(root.getData());
