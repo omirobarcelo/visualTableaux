@@ -27,7 +27,6 @@ public class Operation {
 	public Operation(OPERATOR operator, OWNAxiom operand1, Node node) {
 		this.operator = operator;
 		this.operand1 = operand1;
-		this.other = operand1;
 		this.node = node;
 	}
 

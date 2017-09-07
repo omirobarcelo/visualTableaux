@@ -203,10 +203,10 @@ public class Tableau {
 	// Fills operations with the possible operations applicable to node 
 	private void updateOperations(TreeNode tn) {
 		Node n = tn.getData();
-		// Reset operations set
-		operations.get(n).clear();
 		// If n hasn't clashed and it's not blocked
 		if (!Ln.get(n).contains(OWNAxiom.BOTTOM) && !blockedNodes.contains(n)) {
+			// Reset operations set
+			operations.get(n).clear();
 			// Add all applicable TOP rules
 			for (OWNAxiom axiom : K) {
 				if (!Ln.get(n).contains(axiom))

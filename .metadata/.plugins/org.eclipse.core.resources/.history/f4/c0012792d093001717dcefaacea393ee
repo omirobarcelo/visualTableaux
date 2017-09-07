@@ -238,6 +238,9 @@ public class Tableau {
 				// Mark updated node and all its subtree as blocked
 				TreeNode tn = TreeNode.getTreeNode(firstNode, updatedNode);
 				iterativePreorder(tn, "markAsBlocked");
+			} else {
+				if (blockedNodes.contains(updatedNode))
+					blockedNodes.remove(updatedNode);
 			}
 		}
 	}

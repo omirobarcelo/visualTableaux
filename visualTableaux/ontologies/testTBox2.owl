@@ -23,7 +23,6 @@ Declaration(ObjectProperty(:S))
 
 SubClassOf(owl:Thing ObjectSomeValuesFrom(:R :A))
 SubClassOf(owl:Thing ObjectSomeValuesFrom(:R :B))
-SubClassOf(owl:Thing ObjectSomeValuesFrom(:S ObjectIntersectionOf(:D ObjectComplementOf(:D))))
 SubClassOf(owl:Thing ObjectAllValuesFrom(:R :C))
 
 
