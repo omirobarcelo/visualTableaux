@@ -25,16 +25,14 @@ public class OWNLiteral extends OWNAxiom {
 	
 	@Override
 	public int hashCode() {
-		//return type.hashCode() ^ fullName.hashCode();
-		return type.hashCode() ^ getId().hashCode();
+		return type.hashCode() ^ fullName.hashCode();
 	}
 	
 	@Override
 	public boolean equals(Object other) {
 		if (other instanceof OWNLiteral) {
 			OWNLiteral literal = (OWNLiteral)other;
-			//return type == literal.type && fullName.equals(literal.fullName);
-			return type == literal.type && getId().equals(literal.getId());
+			return type == literal.type && fullName.equals(literal.fullName);
 		}
 		return false;
 	}

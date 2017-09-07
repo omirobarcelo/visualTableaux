@@ -25,8 +25,7 @@ public class OWNLiteral extends OWNAxiom {
 	
 	@Override
 	public int hashCode() {
-		//return type.hashCode() ^ fullName.hashCode();
-		return type.hashCode() ^ getId().hashCode();
+		return type.hashCode() ^ fullName.hashCode();
 	}
 	
 	@Override

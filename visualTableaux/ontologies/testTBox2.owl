@@ -1,0 +1,30 @@
+Prefix(:=<http://www.semanticweb.org/work/ontologies/2017/8/testTBox2#>)
+Prefix(owl:=<http://www.w3.org/2002/07/owl#>)
+Prefix(rdf:=<http://www.w3.org/1999/02/22-rdf-syntax-ns#>)
+Prefix(xml:=<http://www.w3.org/XML/1998/namespace>)
+Prefix(xsd:=<http://www.w3.org/2001/XMLSchema#>)
+Prefix(rdfs:=<http://www.w3.org/2000/01/rdf-schema#>)
+
+
+Ontology(<http://www.semanticweb.org/work/ontologies/2017/8/testTBox2>
+
+Declaration(Class(:A))
+Declaration(Class(:B))
+Declaration(Class(:C))
+Declaration(Class(:D))
+Declaration(ObjectProperty(:R))
+Declaration(ObjectProperty(:S))
+
+############################
+#   Classes
+############################
+
+# Class: owl:Thing (owl:Thing)
+
+SubClassOf(owl:Thing ObjectSomeValuesFrom(:R :A))
+SubClassOf(owl:Thing ObjectSomeValuesFrom(:R :B))
+SubClassOf(owl:Thing ObjectSomeValuesFrom(:S ObjectIntersectionOf(:D ObjectComplementOf(:D))))
+SubClassOf(owl:Thing ObjectAllValuesFrom(:R :C))
+
+
+)
