@@ -111,7 +111,7 @@ public class Tableau {
 			}
 		}
 		
-		updateAllOperations();
+		// TODO get new operations
 		
 		// TODO check blocking
 	}

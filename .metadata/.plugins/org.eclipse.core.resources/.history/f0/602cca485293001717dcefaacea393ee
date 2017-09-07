@@ -17,7 +17,6 @@ public class Tableau {
 	private HashSet<NonDeterministicOperation> conflictingOperations;
 	private HashSet<Node> blockedNodes;
 	private boolean clashed, finished;
-	// TODO probably create attribute Backtracker
 	
 	public Tableau(HashSet<OWNAxiom> K) {
 		this.K = K;
@@ -111,7 +110,7 @@ public class Tableau {
 			}
 		}
 		
-		updateAllOperations();
+		// TODO get new operations
 		
 		// TODO check blocking
 	}
@@ -139,9 +138,6 @@ public class Tableau {
 				case "printNodeStatus":
 					printNodeStatus(n);
 					break;
-				case "updateOperations":
-					updateOperations(n);
-					break;
 				case "checkFinished":
 					checkFinished(n);
 					break;
@@ -155,9 +151,7 @@ public class Tableau {
 	}
 	
 	private void printNodeStatus(TreeNode n) {
-		System.out.println(n.getData().getId() + 
-				(blockedNodes.contains(n.getData()) ? "[blocked]" : "") +
-				" : " + getAxioms(n.getData()));
+		System.out.println(n.getData().getId() + " : " + getAxioms(n.getData()));
 		if (!n.getChildren().isEmpty()) {
 			for (TreeNode succ : n.getChildren()) {
 				System.out.println(n.getData().getId() + "--" + 
@@ -199,8 +193,7 @@ public class Tableau {
 		}
 	}
 	
+	// TODO updateAllOperations (iteratePreorder)
 	// Tree traversal to get all operations in all nodes
-	private void updateAllOperations() {
-		iterativePreorder(firstNode, "updateOperations");
-	}
+	
 }

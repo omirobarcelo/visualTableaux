@@ -111,7 +111,7 @@ public class Tableau {
 			}
 		}
 		
-		updateAllOperations();
+		// TODO get new operations
 		
 		// TODO check blocking
 	}
@@ -138,9 +138,6 @@ public class Tableau {
 			switch(method) {
 				case "printNodeStatus":
 					printNodeStatus(n);
-					break;
-				case "updateOperations":
-					updateOperations(n);
 					break;
 				case "checkFinished":
 					checkFinished(n);
@@ -199,8 +196,7 @@ public class Tableau {
 		}
 	}
 	
+	// TODO updateAllOperations (iteratePreorder)
 	// Tree traversal to get all operations in all nodes
-	private void updateAllOperations() {
-		iterativePreorder(firstNode, "updateOperations");
-	}
+	
 }
