@@ -62,8 +62,12 @@ public class Operation {
 	public boolean equals(Object other) {
 		if (other instanceof Operation) {
 			Operation op = (Operation)other;
-			boolean sameOperands = (operand1.equals(op.operand1) && this.other.equals(op.other))
-					|| (operand1.equals(op.other) && this.other.equals(op.operand1));
+			boolean debug11 = operand1.equals(op.operand1);
+			boolean debug12 = other.equals(op.other);
+			boolean debug21 = operand1.equals(op.other);
+			boolean debug22 = other.equals(op.operand1);
+			boolean sameOperands = (operand1.equals(op.operand1) && other.equals(op.other))
+					|| (operand1.equals(op.other) && other.equals(op.operand1));
 			boolean sameNode = (node==null && op.node==null) || 
 					(node != null && op.node != null && node.equals(op.node));
 			return this.operator == op.operator && sameOperands && sameNode;

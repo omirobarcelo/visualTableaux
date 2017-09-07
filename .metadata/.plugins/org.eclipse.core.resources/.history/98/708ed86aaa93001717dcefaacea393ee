@@ -32,11 +32,14 @@ import ownapi.OWNAxiom.AXIOM_TYPE;
 public class Test {
 
 	public static void main(String[] args) {
-		OWNAxiom ax1 = new OWNIntersection(new OWNLiteral("test#C"), new OWNLiteral("test#D"));
-		OWNAxiom ax2 = new OWNIntersection(new OWNLiteral("test#C"), new OWNLiteral("test#D"));
-		HashSet<OWNAxiom> hs = new HashSet<OWNAxiom>();
-		hs.add(ax1);
-		System.out.println(hs.contains(ax2));
+		HashSet<String> hs1 = new HashSet<String>();
+		hs1.add("s1");
+		hs1.add("s2");
+		HashSet<String> hs2 = new HashSet<String>();
+		hs2.add("s2");
+		hs2.add("s3");
+		hs1.addAll(hs2);
+		System.out.println(hs1);
 		
 		ArrayList<Node> list1 = new ArrayList<Node>();
 		list1.add(new Node("a"));

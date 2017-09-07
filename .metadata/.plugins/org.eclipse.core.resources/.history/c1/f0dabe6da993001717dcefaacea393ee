@@ -97,24 +97,20 @@ public class Tableau {
 				break;
 			}
 			case OR: {
-				// TODO
 				updatedNode = n;
 				break;
 			}
 			case SOME: {
 				OWNExistential existential = (OWNExistential)op.getOperand1();
 				TreeNode tn = TreeNode.getTreeNode(firstNode, n);
-				// Creation of new node
 				Node newNode = new Node(Character.toString((char)nodeCode++));
 				tn.addChild(newNode);
-				predecessor.put(newNode, n);
 				Pair<Node, Node> p = new Pair<Node, Node>(n, newNode);
 				Lr.put(p, new HashSet<OWNLiteral>());
-				Ln.put(newNode, new HashSet<OWNAxiom>());
-				operations.put(newNode, new HashSet<Operation>());
-				// Apply operation
 				Lr.get(p).add(existential.getRelation());
+				Ln.put(newNode, new HashSet<OWNAxiom>());
 				Ln.get(newNode).add(existential.getOperand());
+				operations.put(newNode, new HashSet<Operation>());
 				updatedNode = newNode;
 				break;
 			}
@@ -128,7 +124,7 @@ public class Tableau {
 		
 		updateAllOperations();
 		
-		checkBlocking(updatedNode);
+		// TODO check blocking
 	}
 	
 	public boolean isFinished() {
@@ -205,8 +201,6 @@ public class Tableau {
 		Node n = tn.getData();
 		// If n hasn't clashed and it's not blocked
 		if (!Ln.get(n).contains(OWNAxiom.BOTTOM) && !blockedNodes.contains(n)) {
-			// Reset operations set
-			operations.get(n).clear();
 			// Add all applicable TOP rules
 			for (OWNAxiom axiom : K) {
 				if (!Ln.get(n).contains(axiom))

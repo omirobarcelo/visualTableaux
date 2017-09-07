@@ -36,7 +36,7 @@ public class Test {
 		OWNAxiom ax2 = new OWNIntersection(new OWNLiteral("test#C"), new OWNLiteral("test#D"));
 		HashSet<OWNAxiom> hs = new HashSet<OWNAxiom>();
 		hs.add(ax1);
-		System.out.println(hs.contains(ax2));
+		System.out.println(ax1.equals(ax2));
 		
 		ArrayList<Node> list1 = new ArrayList<Node>();
 		list1.add(new Node("a"));

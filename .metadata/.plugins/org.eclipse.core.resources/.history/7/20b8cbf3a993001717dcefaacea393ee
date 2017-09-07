@@ -97,7 +97,6 @@ public class Tableau {
 				break;
 			}
 			case OR: {
-				// TODO
 				updatedNode = n;
 				break;
 			}
@@ -205,8 +204,6 @@ public class Tableau {
 		Node n = tn.getData();
 		// If n hasn't clashed and it's not blocked
 		if (!Ln.get(n).contains(OWNAxiom.BOTTOM) && !blockedNodes.contains(n)) {
-			// Reset operations set
-			operations.get(n).clear();
 			// Add all applicable TOP rules
 			for (OWNAxiom axiom : K) {
 				if (!Ln.get(n).contains(axiom))
