@@ -6,7 +6,6 @@ import java.util.HashSet;
 import ownapi.*;
 import ownapi.OWNAxiom.AXIOM_TYPE;
 import ver1.Operation.OPERATOR;
-import ver1.util.*;
 
 public class OWNAxiomOperationVisitor implements OWNAxiomVisitor {
 	private HashSet<Operation> operations;

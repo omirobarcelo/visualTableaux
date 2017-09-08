@@ -7,7 +7,6 @@ import org.semanticweb.owlapi.model.OWLAxiom;
 import org.semanticweb.owlapi.model.OWLOntology;
 
 import ownapi.*;
-import ver1.util.*;
 
 import uk.ac.manchester.cs.owl.owlapi.OWLSubClassOfAxiomImpl;
 

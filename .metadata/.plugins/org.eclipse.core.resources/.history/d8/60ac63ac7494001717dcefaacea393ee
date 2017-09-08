@@ -6,7 +6,6 @@ import java.util.Stack;
 
 import ownapi.*;
 import ver1.Operation.OPERATOR;
-import ver1.util.*;
 
 public class Tableau {
 	private HashSet<OWNAxiom> K;
@@ -142,12 +141,6 @@ public class Tableau {
 	public boolean isSatisfiable() {
 		return finished && !clashed;
 	}
-	
-	
-	/////////////////////////////////
-	/////   PROTECTED METHODS   /////
-	/////////////////////////////////
-	
 	
 	///////////////////////////////////////////////////
 	/////   TREE TRAVERSAL AND VISITING METHODS   /////
