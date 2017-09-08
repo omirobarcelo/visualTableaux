@@ -34,15 +34,7 @@ import ownapi.OWNAxiom.AXIOM_TYPE;
 public class Test {
 
 	public static void main(String[] args) {
-		OWNUnion union = new OWNUnion(new OWNLiteral("test#A"), new OWNExistential(
-				new OWNLiteral("test#R"), new OWNComplement(new OWNLiteral("test#B"))));
-		OWNLiteral lit = new OWNLiteral("test#B");
-		OWNExistential exist = new OWNExistential(
-				new OWNLiteral("test#R"), new OWNComplement(new OWNLiteral("test#B")));
-		OWNIntersection inter = new OWNIntersection(new OWNLiteral("test#A"), new OWNLiteral("test#B"));
-		OWNAxiomContainsVisitor visitor = new OWNAxiomContainsVisitor(inter);
-		union.accept(visitor);
-		System.out.println(visitor.isContained());
+		Pair<Node, OWNAxiom> p1 = new Pair<Node, OWNAxiom>(new Node("n"), new OWNLiteral("test#a"));
 		
 		HashMap<Node, Node> p = new HashMap<Node, Node>();
 		p.put(new Node("c1"), new Node("p1"));

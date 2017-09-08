@@ -9,13 +9,6 @@ public class NonDeterministicOperation {
 	private OWNAxiom operand;
 	private OWNAxiom result;
 	
-	public NonDeterministicOperation(Node n, Operation op) {
-		this.n = n;
-		this.operator = op.getOperator();
-		this.operand = op.getOperand1();
-		this.result = op.getResult();
-	}
-	
 	public NonDeterministicOperation(Node n, OPERATOR operator, 
 			OWNAxiom operand, OWNAxiom result) {
 		this.n = n;

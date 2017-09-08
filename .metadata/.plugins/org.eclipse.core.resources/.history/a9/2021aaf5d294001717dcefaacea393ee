@@ -40,7 +40,7 @@ public class Test {
 		OWNExistential exist = new OWNExistential(
 				new OWNLiteral("test#R"), new OWNComplement(new OWNLiteral("test#B")));
 		OWNIntersection inter = new OWNIntersection(new OWNLiteral("test#A"), new OWNLiteral("test#B"));
-		OWNAxiomContainsVisitor visitor = new OWNAxiomContainsVisitor(inter);
+		OWNAxiomContainsVisitor visitor = new OWNAxiomContainsVisitor(lit);
 		union.accept(visitor);
 		System.out.println(visitor.isContained());
 		

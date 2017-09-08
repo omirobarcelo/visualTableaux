@@ -19,7 +19,7 @@ public class Tableau {
 	private HashSet<Node> blockedNodes;
 	private HashMap<Node, Node> predecessor;
 	private boolean clashed, finished;
-	private Backtracker backtracker;
+	// TODO probably create attribute Backtracker
 	
 	public Tableau(HashSet<OWNAxiom> K) {
 		this.K = K;
@@ -33,7 +33,6 @@ public class Tableau {
 		predecessor = new HashMap<Node, Node>();
 		clashed = false;
 		finished = false;
-		backtracker = new Backtracker();
 	}
 	
 	public void init(OWNAxiom concept) {
@@ -101,8 +100,6 @@ public class Tableau {
 			}
 			case OR: {
 				// TODO
-				backtracker.takeSnapshot(new NonDeterministicOperation(n, op), this);
-				Ln.get(n).add(op.getResult());
 				updatedNode = n;
 				break;
 			}

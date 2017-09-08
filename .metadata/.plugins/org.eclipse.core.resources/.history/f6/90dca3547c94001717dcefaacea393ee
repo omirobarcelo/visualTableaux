@@ -101,8 +101,7 @@ public class Tableau {
 			}
 			case OR: {
 				// TODO
-				backtracker.takeSnapshot(new NonDeterministicOperation(n, op), this);
-				Ln.get(n).add(op.getResult());
+				
 				updatedNode = n;
 				break;
 			}

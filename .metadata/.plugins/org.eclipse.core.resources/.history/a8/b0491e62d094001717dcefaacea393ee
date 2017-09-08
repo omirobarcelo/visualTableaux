@@ -26,7 +26,6 @@ import uk.ac.manchester.cs.owl.owlapi.OWLObjectUnionOfImpl;
 import uk.ac.manchester.cs.owl.owlapi.OWLSubClassOfAxiomImpl;
 
 import ver1.*;
-import ver1.util.*;
 import ver1.Operation.OPERATOR;
 import ownapi.*;
 import ownapi.OWNAxiom.AXIOM_TYPE;
@@ -34,16 +33,6 @@ import ownapi.OWNAxiom.AXIOM_TYPE;
 public class Test {
 
 	public static void main(String[] args) {
-		OWNUnion union = new OWNUnion(new OWNLiteral("test#A"), new OWNExistential(
-				new OWNLiteral("test#R"), new OWNComplement(new OWNLiteral("test#B"))));
-		OWNLiteral lit = new OWNLiteral("test#B");
-		OWNExistential exist = new OWNExistential(
-				new OWNLiteral("test#R"), new OWNComplement(new OWNLiteral("test#B")));
-		OWNIntersection inter = new OWNIntersection(new OWNLiteral("test#A"), new OWNLiteral("test#B"));
-		OWNAxiomContainsVisitor visitor = new OWNAxiomContainsVisitor(inter);
-		union.accept(visitor);
-		System.out.println(visitor.isContained());
-		
 		HashMap<Node, Node> p = new HashMap<Node, Node>();
 		p.put(new Node("c1"), new Node("p1"));
 		p.put(new Node("c2"), new Node("p2"));

@@ -1,0 +1,56 @@
+package ver1;
+
+import ownapi.OWNAxiom;
+import ownapi.OWNAxiomVisitor;
+import ownapi.OWNComplement;
+import ownapi.OWNExistential;
+import ownapi.OWNIntersection;
+import ownapi.OWNLiteral;
+import ownapi.OWNUnion;
+import ownapi.OWNUniversal;
+
+public class OWNAxiomContainsVisitor implements OWNAxiomVisitor {
+
+	@Override
+	public void visit(OWNAxiom axiom) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void visit(OWNLiteral axiom) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void visit(OWNComplement axiom) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void visit(OWNIntersection axiom) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void visit(OWNUnion axiom) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void visit(OWNExistential axiom) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void visit(OWNUniversal axiom) {
+		// TODO Auto-generated method stub
+
+	}
+
+}
