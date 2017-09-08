@@ -66,11 +66,9 @@ public class TUI {
 			}
 		}
 		
-		if (finished) {
-			showStatus(tableau);
+		if (finished)
 			System.out.println("This ontology is " +
 					(isSatisfiable ? "" : "not ") + "satisfiable");
-		}
 	}
 	
 

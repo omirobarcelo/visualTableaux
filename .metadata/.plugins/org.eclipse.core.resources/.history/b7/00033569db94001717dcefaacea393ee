@@ -13,19 +13,17 @@ public class Backtracker {
 		private TreeNode firstNode;
 		private HashMap<Node, HashSet<OWNAxiom>> Ln;
 		private HashMap<Pair<Node, Node>, HashSet<OWNLiteral>> Lr;
-		private HashMap<Node, HashSet<Operation>> operations;
 		private HashSet<Node> blockedNodes;
 		private HashMap<Node, Node> predecessor;
 		private boolean clashed, finished;
 		
 		public Snapshot(byte nodeCode, TreeNode firstNode, HashMap<Node, HashSet<OWNAxiom>> ln,
-				HashMap<Pair<Node, Node>, HashSet<OWNLiteral>> lr, HashMap<Node, HashSet<Operation>> operations,
-				HashSet<Node> blockedNodes, HashMap<Node, Node> predecessor, boolean clashed, boolean finished) {
+				HashMap<Pair<Node, Node>, HashSet<OWNLiteral>> lr, HashSet<Node> blockedNodes, 
+				HashMap<Node, Node> predecessor, boolean clashed, boolean finished) {
 			this.nodeCode = nodeCode;
 			this.firstNode = firstNode.copy();
 			Ln = DeepClone.deepClone(ln);
 			Lr = DeepClone.deepClone(lr);
-			this.operations = DeepClone.deepClone(operations);
 			this.blockedNodes = new HashSet<Node>(blockedNodes);
 			this.predecessor = new HashMap<Node, Node>(predecessor);
 			this.clashed = clashed;
@@ -46,10 +44,6 @@ public class Backtracker {
 
 		public HashMap<Pair<Node, Node>, HashSet<OWNLiteral>> getLr() {
 			return Lr;
-		}
-
-		public HashMap<Node, HashSet<Operation>> getOperations() {
-			return operations;
 		}
 
 		public HashSet<Node> getBlockedNodes() {
@@ -78,7 +72,7 @@ public class Backtracker {
 	
 	public void takeSnapshot(NonDeterministicOperation ndo, Tableau tableau) {
 		Snapshot snapshot = new Snapshot(tableau.getNodeCode(), tableau.getFirstNode(), 
-				tableau.getLn(), tableau.getLr(), tableau.getOperations(), tableau.getBlockedNodes(), 
+				tableau.getLn(), tableau.getLr(), tableau.getBlockedNodes(), 
 				tableau.getPredecessor(), tableau.getClashed(), tableau.getFinished());
 		timeline.push(new Pair<NonDeterministicOperation, Snapshot>(ndo, snapshot));
 	}

@@ -1,0 +1,26 @@
+Prefix(:=<http://www.semanticweb.org/work/ontologies/2017/7/testTBox#>)
+Prefix(owl:=<http://www.w3.org/2002/07/owl#>)
+Prefix(rdf:=<http://www.w3.org/1999/02/22-rdf-syntax-ns#>)
+Prefix(xml:=<http://www.w3.org/XML/1998/namespace>)
+Prefix(xsd:=<http://www.w3.org/2001/XMLSchema#>)
+Prefix(rdfs:=<http://www.w3.org/2000/01/rdf-schema#>)
+
+
+Ontology(<http://www.semanticweb.org/work/ontologies/2017/7/testB3TBox>
+
+Declaration(Class(<http://www.semanticweb.org/work/ontologies/2017/7/testB3TBox#B>))
+Declaration(Class(<http://www.semanticweb.org/work/ontologies/2017/7/testB3TBox#C>))
+Declaration(Class(<http://www.semanticweb.org/work/ontologies/2017/7/testB3TBox#D>))
+Declaration(ObjectProperty(<http://www.semanticweb.org/work/ontologies/2017/7/testB3TBox#R>))
+
+############################
+#   Classes
+############################
+
+# Class: owl:Thing (owl:Thing)
+
+SubClassOf(owl:Thing ObjectIntersectionOf(<http://www.semanticweb.org/work/ontologies/2017/7/testB3TBox#C> <http://www.semanticweb.org/work/ontologies/2017/7/testB3TBox#D>))
+SubClassOf(owl:Thing ObjectUnionOf(ObjectSomeValuesFrom(<http://www.semanticweb.org/work/ontologies/2017/7/testB3TBox#R> <http://www.semanticweb.org/work/ontologies/2017/7/testB3TBox#B>) ObjectSomeValuesFrom(<http://www.semanticweb.org/work/ontologies/2017/7/testB3TBox#R> ObjectUnionOf(ObjectComplementOf(<http://www.semanticweb.org/work/ontologies/2017/7/testB3TBox#C>) ObjectComplementOf(<http://www.semanticweb.org/work/ontologies/2017/7/testB3TBox#D>)))))
+
+
+)

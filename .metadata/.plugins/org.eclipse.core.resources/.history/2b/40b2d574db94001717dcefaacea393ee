@@ -314,7 +314,6 @@ public class Tableau {
 		firstNode = p.getSecond().getFirstNode();
 		Ln = p.getSecond().getLn();
 		Lr = p.getSecond().getLr();
-		operations = p.getSecond().getOperations();
 		blockedNodes = p.getSecond().getBlockedNodes();
 		predecessor = p.getSecond().getPredecessor();
 		clashed = p.getSecond().getClashed();

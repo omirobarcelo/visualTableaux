@@ -5,7 +5,6 @@ import java.util.HashSet;
 import java.util.Stack;
 
 import ownapi.*;
-import ver1.Backtracker.Snapshot;
 import ver1.Operation.OPERATOR;
 import ver1.util.*;
 
@@ -92,17 +91,6 @@ public class Tableau {
 			}
 			case BOTTOM: {
 				Ln.get(n).add(OWNAxiom.BOTTOM);
-				if (backtracker.thereAreSnapshots()) {
-					// Check if last NDO contains literal
-					OWNAxiomContainsVisitor visitor1 = new OWNAxiomContainsVisitor(op.getOperand1());
-					backtracker.checkLastNDOAxiom().accept(visitor1);
-					// Check if last NDO contains complement
-					OWNAxiomContainsVisitor visitor2 = new OWNAxiomContainsVisitor(op.getOperand2());
-					backtracker.checkLastNDOAxiom().accept(visitor2);
-					// If the literal or the complement is contained, the clash is a consequence of 
-					// the last NDO
-					clashConsequenceNDO = visitor1.isContained() || visitor2.isContained();
-				}
 				updatedNode = n;
 				clashed = true;
 				break;
@@ -116,11 +104,7 @@ public class Tableau {
 			}
 			case OR: {
 				// TODO
-				Pair<Node, OWNAxiom> p = new Pair<Node, OWNAxiom>(n, op.getOperand1());
-				if (!executedNDO.contains(p)) {
-					executedNDO.add(p);
-					backtracker.takeSnapshot(new NonDeterministicOperation(n, op), this);
-				}
+				backtracker.takeSnapshot(new NonDeterministicOperation(n, op), this);
 				Ln.get(n).add(op.getResult());
 				updatedNode = n;
 				break;
@@ -156,12 +140,6 @@ public class Tableau {
 	}
 	
 	public boolean isFinished() {
-		if (clashed && clashConsequenceNDO) {
-			if (backtracker.thereAreSnapshots()) {
-				recoverFromLastSnapshot();
-				updateAllOperations();
-			}
-		}
 		// Traverse all nodes and check if finished still true after traversal
 		finished = true;
 		iterativePreorder(firstNode, "checkFinished");
@@ -304,20 +282,5 @@ public class Tableau {
 				iterativePreorder(tn, "markAsBlocked");
 			}
 		}
-	}
-	
-	private void recoverFromLastSnapshot() {
-		Pair<NonDeterministicOperation, Snapshot> p = backtracker.getLastSnapshot();
-		conflictingOperations.add(p.getFirst());
-		// Recover
-		nodeCode = p.getSecond().getNodeCode();
-		firstNode = p.getSecond().getFirstNode();
-		Ln = p.getSecond().getLn();
-		Lr = p.getSecond().getLr();
-		operations = p.getSecond().getOperations();
-		blockedNodes = p.getSecond().getBlockedNodes();
-		predecessor = p.getSecond().getPredecessor();
-		clashed = p.getSecond().getClashed();
-		finished = p.getSecond().getFinished();
 	}
 }

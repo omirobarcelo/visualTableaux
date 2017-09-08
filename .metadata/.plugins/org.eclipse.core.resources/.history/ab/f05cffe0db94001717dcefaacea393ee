@@ -61,16 +61,16 @@ public class TUI {
 				tableau.apply(pNode_Op.getFirst(), pNode_Op.getSecond());
 				
 				if (finished = tableau.isFinished()) {
-					isSatisfiable = tableau.isSatisfiable();
+					// TODO get last snapshot
+					// if no more snapshots, check satisfiability
+					// isSatisfiable = tableau.isSatisfiable();
 				}
 			}
 		}
 		
-		if (finished) {
-			showStatus(tableau);
+		if (finished)
 			System.out.println("This ontology is " +
 					(isSatisfiable ? "" : "not ") + "satisfiable");
-		}
 	}
 	
 

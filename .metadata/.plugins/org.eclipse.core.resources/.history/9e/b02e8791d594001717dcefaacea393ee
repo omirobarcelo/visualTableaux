@@ -83,11 +83,6 @@ public class Backtracker {
 		timeline.push(new Pair<NonDeterministicOperation, Snapshot>(ndo, snapshot));
 	}
 	
-	public OWNAxiom checkLastNDOAxiom() {
-		Pair<NonDeterministicOperation, Snapshot> p = timeline.peek();
-		return p.getFirst().getOperand();
-	}
-	
 	public Pair<NonDeterministicOperation, Snapshot> getLastSnapshot() {
 		return timeline.pop();
 	}

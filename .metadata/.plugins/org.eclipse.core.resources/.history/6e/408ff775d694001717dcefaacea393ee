@@ -92,17 +92,15 @@ public class Tableau {
 			}
 			case BOTTOM: {
 				Ln.get(n).add(OWNAxiom.BOTTOM);
-				if (backtracker.thereAreSnapshots()) {
-					// Check if last NDO contains literal
-					OWNAxiomContainsVisitor visitor1 = new OWNAxiomContainsVisitor(op.getOperand1());
-					backtracker.checkLastNDOAxiom().accept(visitor1);
-					// Check if last NDO contains complement
-					OWNAxiomContainsVisitor visitor2 = new OWNAxiomContainsVisitor(op.getOperand2());
-					backtracker.checkLastNDOAxiom().accept(visitor2);
-					// If the literal or the complement is contained, the clash is a consequence of 
-					// the last NDO
-					clashConsequenceNDO = visitor1.isContained() || visitor2.isContained();
-				}
+				// Check if last NDO contains literal
+				OWNAxiomContainsVisitor visitor1 = new OWNAxiomContainsVisitor(op.getOperand1());
+				backtracker.checkLastNDOAxiom().accept(visitor1);
+				// Check if last NDO contains complement
+				OWNAxiomContainsVisitor visitor2 = new OWNAxiomContainsVisitor(op.getOperand2());
+				backtracker.checkLastNDOAxiom().accept(visitor2);
+				// If the literal or the complement is contained, the clash is a consequence of 
+				// the last NDO
+				clashConsequenceNDO = visitor1.isContained() || visitor2.isContained();
 				updatedNode = n;
 				clashed = true;
 				break;
@@ -157,10 +155,7 @@ public class Tableau {
 	
 	public boolean isFinished() {
 		if (clashed && clashConsequenceNDO) {
-			if (backtracker.thereAreSnapshots()) {
-				recoverFromLastSnapshot();
-				updateAllOperations();
-			}
+			recoverFromLastSnapshot();
 		}
 		// Traverse all nodes and check if finished still true after traversal
 		finished = true;
@@ -308,16 +303,6 @@ public class Tableau {
 	
 	private void recoverFromLastSnapshot() {
 		Pair<NonDeterministicOperation, Snapshot> p = backtracker.getLastSnapshot();
-		conflictingOperations.add(p.getFirst());
-		// Recover
-		nodeCode = p.getSecond().getNodeCode();
-		firstNode = p.getSecond().getFirstNode();
-		Ln = p.getSecond().getLn();
-		Lr = p.getSecond().getLr();
-		operations = p.getSecond().getOperations();
-		blockedNodes = p.getSecond().getBlockedNodes();
-		predecessor = p.getSecond().getPredecessor();
-		clashed = p.getSecond().getClashed();
-		finished = p.getSecond().getFinished();
+		conflictingOperations.add(null);
 	}
 }
