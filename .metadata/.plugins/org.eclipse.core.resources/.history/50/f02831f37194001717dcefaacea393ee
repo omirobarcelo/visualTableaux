@@ -32,43 +32,15 @@ public class Backtracker {
 			this.clashed = clashed;
 			this.finished = finished;
 		}
-
-		public byte getNodeCode() {
-			return nodeCode;
-		}
-
-		public TreeNode getFirstNode() {
-			return firstNode;
-		}
-
 		public HashMap<Node, HashSet<OWNAxiom>> getLn() {
 			return Ln;
 		}
-
-		public HashMap<Pair<Node, Node>, HashSet<OWNLiteral>> getLr() {
+		public HashMap<Pair<Node, Node>, HashSet<OWNAxiom>> getLr() {
 			return Lr;
 		}
-
 		public HashMap<Node, HashSet<Operation>> getOperations() {
 			return operations;
 		}
-
-		public HashSet<Node> getBlockedNodes() {
-			return blockedNodes;
-		}
-
-		public HashMap<Node, Node> getPredecessor() {
-			return predecessor;
-		}
-
-		public boolean getClashed() {
-			return clashed;
-		}
-
-		public boolean getFinished() {
-			return finished;
-		}
-
 	}
 	
 	private Stack<Pair<NonDeterministicOperation, Snapshot>> timeline;
@@ -77,16 +49,7 @@ public class Backtracker {
 		this.timeline = new Stack<Pair<NonDeterministicOperation, Snapshot>>();
 	}
 	
-	public void takeSnapshot(NonDeterministicOperation ndo, Tableau tableau) {
-		return;
-	}
+	//take last snapshot
 	
-	public Pair<NonDeterministicOperation, Snapshot> getLastSnapshot() {
-		return timeline.pop();
-	}
-		
-	public boolean thereAreSnapshots() {
-		return !timeline.isEmpty();
-	}
-	
+	// TODO tableau.clashed = false when getting last snapshot
 }

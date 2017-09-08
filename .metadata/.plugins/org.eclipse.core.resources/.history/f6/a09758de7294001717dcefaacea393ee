@@ -77,7 +77,7 @@ public class Backtracker {
 		this.timeline = new Stack<Pair<NonDeterministicOperation, Snapshot>>();
 	}
 	
-	public void takeSnapshot(NonDeterministicOperation ndo, Tableau tableau) {
+	public void takeSnapshot() {
 		return;
 	}
 	

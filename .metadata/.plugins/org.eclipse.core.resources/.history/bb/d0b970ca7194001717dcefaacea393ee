@@ -1,0 +1,51 @@
+package ver1;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Stack;
+
+import ownapi.OWNAxiom;
+import ownapi.OWNLiteral;
+
+public class Backtracker {
+	class Snapshot {
+		private byte nodeCode;
+		private TreeNode firstNode;
+		private HashMap<Node, HashSet<OWNAxiom>> Ln;
+		private HashMap<Pair<Node, Node>, HashSet<OWNLiteral>> Lr;
+		private HashMap<Node, HashSet<Operation>> operations;
+		private HashSet<Node> blockedNodes;
+		private HashMap<Node, Node> predecessor;
+		private boolean clashed, finished;
+		
+		// TODO probably builder could do the clones/copies of the elements
+		public Snapshot(HashMap<Node, HashSet<OWNAxiom>> ln, HashMap<Pair<Node, Node>, HashSet<OWNAxiom>> lr,
+				HashMap<Node, HashSet<Operation>> operations) {
+			Ln = ln;
+			Lr = lr;
+			this.operations = operations;
+		}
+		
+		public HashMap<Node, HashSet<OWNAxiom>> getLn() {
+			return Ln;
+		}
+		public HashMap<Pair<Node, Node>, HashSet<OWNAxiom>> getLr() {
+			return Lr;
+		}
+		public HashMap<Node, HashSet<Operation>> getOperations() {
+			return operations;
+		}
+	}
+	
+	private Stack<Pair<NonDeterministicOperation, Snapshot>> timeline;
+
+	// TODO probably not necessary to pass timeline to builder; created in builder
+	public Backtracker() {
+		this.timeline = new Stack<Pair<NonDeterministicOperation, Snapshot>>();
+	}
+	
+	//take last snapshot
+	
+	// TODO tableau.clashed = false when getting last snapshot
+}
