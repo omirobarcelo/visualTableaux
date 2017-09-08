@@ -73,7 +73,6 @@ public class Tableau {
 		return Lr.get(new Pair<Node, Node>(pred, succ)).toString();
 	}
 	
-	
 	//////////////////////////////
 	/////   PUBLIC METHODS   /////
 	//////////////////////////////
@@ -160,23 +159,6 @@ public class Tableau {
 		return Lr;
 	}
 	
-	protected HashSet<Node> getBlockedNodes() {
-		return blockedNodes;
-	}
-	
-	protected HashMap<Node, Node> getPredecessor() {
-		return predecessor;
-	}
-	
-	protected boolean getClashed() {
-		return clashed;
-	}
-	
-	protected boolean getFinished() {
-		return finished;
-	}
-	
-	
 	///////////////////////////////////////////////////
 	/////   TREE TRAVERSAL AND VISITING METHODS   /////
 	///////////////////////////////////////////////////
@@ -231,7 +213,6 @@ public class Tableau {
 						Ln.get(n.getData()).contains(OWNAxiom.BOTTOM));
 		finished &= tmpFinished;		
 	}
-	
 	
 	///////////////////////////////
 	/////   PRIVATE METHODS   /////

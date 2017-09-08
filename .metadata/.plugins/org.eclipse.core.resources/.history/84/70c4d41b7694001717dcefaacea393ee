@@ -77,10 +77,7 @@ public class Backtracker {
 	}
 	
 	public void takeSnapshot(NonDeterministicOperation ndo, Tableau tableau) {
-		Snapshot snapshot = new Snapshot(tableau.getNodeCode(), tableau.getFirstNode(), 
-				tableau.getLn(), tableau.getLr(), tableau.getOperations(), tableau.getBlockedNodes(), 
-				tableau.getPredecessor(), tableau.getClashed(), tableau.getFinished());
-		timeline.push(new Pair<NonDeterministicOperation, Snapshot>(ndo, snapshot));
+		return;
 	}
 	
 	public Pair<NonDeterministicOperation, Snapshot> getLastSnapshot() {

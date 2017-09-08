@@ -80,7 +80,7 @@ public class Backtracker {
 		Snapshot snapshot = new Snapshot(tableau.getNodeCode(), tableau.getFirstNode(), 
 				tableau.getLn(), tableau.getLr(), tableau.getOperations(), tableau.getBlockedNodes(), 
 				tableau.getPredecessor(), tableau.getClashed(), tableau.getFinished());
-		timeline.push(new Pair<NonDeterministicOperation, Snapshot>(ndo, snapshot));
+		timeline.push(new Pair<ndo, snapshot>());
 	}
 	
 	public Pair<NonDeterministicOperation, Snapshot> getLastSnapshot() {
