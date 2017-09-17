@@ -17,6 +17,7 @@ import ver1.*;
 import ver1.util.*;
 
 public class TUI {
+	private static final int END_PROGRAM = 0;
 
 	public static void main(String[] args) {
 		// Load files
@@ -46,20 +47,23 @@ public class TUI {
 		tableau.init(pairCon_K.getFirst());
 				
 		// Loop (show status, choose operations, execute operation)
-		boolean endProgram = false;
-		boolean finished = false;
-		boolean isSatisfiable = false;
+		boolean endProgram = false; // true when 'exit program' option selected
+		boolean finished = false; // true when the tableau expansion finished
+		boolean isSatisfiable = false; // true if the tableau results satisfiable
 		while (!endProgram && !finished) {
 			showStatus(tableau);
+			// Returns a list so the option can easily be selected
 			List<Pair<Node, Operation>> ops = showOperations(tableau);
 			int option = readIntFromStdin("\nWhich option do you select? ");
-			if (option == 0)
+			if (option == END_PROGRAM)
 				endProgram = true;
 			else {
-				// TODO apply operation
+				// option starts from 1, so necessary to subtract 1 to get it from the list
 				Pair<Node, Operation> pNode_Op = ops.get(option-1);
+				// Blocking automatically applied
 				tableau.apply(pNode_Op.getFirst(), pNode_Op.getSecond());
 				
+				// Backtracking automatically applied
 				if (finished = tableau.isFinished()) {
 					isSatisfiable = tableau.isSatisfiable();
 				}
@@ -73,7 +77,12 @@ public class TUI {
 		}
 	}
 	
-
+	/**
+	 * Prints the tableau current status
+	 * Includes ontology, L(n) for every n, if it's blocked, 
+	 * and its relations with other nodes
+	 * @param tableau
+	 */
 	private static void showStatus(Tableau tableau) {
 		System.out.println();
 		System.out.println("K : " + tableau.getOntology());
@@ -82,6 +91,12 @@ public class TUI {
 		System.out.println();
 	}
 
+	/**
+	 * Print possible options and return them in list format
+	 * Options start from 1. Last option is END PROGRAM
+	 * @param tableau
+	 * @return
+	 */
 	private static List<Pair<Node, Operation>> showOperations(Tableau tableau) {
 		List<Pair<Node, Operation>> ops = new ArrayList<Pair<Node, Operation>>();
 		HashMap<Node, HashSet<Operation>> operations = tableau.getOperations();
@@ -94,7 +109,7 @@ public class TUI {
 				System.out.println("\t" + option++ + ". " + op.fullString(n, tableau.checkNextCreatedNode()));
 			}
 		}
-		System.out.println("0. Exit program");
+		System.out.println(END_PROGRAM + ". Exit program");
 		System.out.println();
 		return ops;
 	}

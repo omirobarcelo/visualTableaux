@@ -4,6 +4,11 @@ public class Pair<F, S> {
     private F first; //first member of pair
     private S second; //second member of pair
 
+    /**
+     * Assumed not null arguments
+     * @param first
+     * @param second
+     */
     public Pair(F first, S second) {
         this.first = first;
         this.second = second;

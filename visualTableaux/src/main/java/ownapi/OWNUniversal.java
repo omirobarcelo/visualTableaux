@@ -1,9 +1,17 @@
 package ownapi;
 
 public class OWNUniversal extends OWNAxiom{
+	/**
+	 * Assumed that relations will always be literals
+	 */
 	private OWNLiteral relation;
 	private OWNAxiom operand;
 	
+	/**
+	 * Not null arguments assumed
+	 * @param relation
+	 * @param op
+	 */
 	public OWNUniversal(OWNLiteral relation, OWNAxiom op) {
 		super();
 		this.relation = relation;

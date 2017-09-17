@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="java.util.Set"/>
 <fullyQualifiedTypeName name="org.semanticweb.owlapi.model.AxiomType"/>
 <fullyQualifiedTypeName name="uk.ac.manchester.cs.owl.owlapi.OWLDeclarationAxiomImpl"/>
 <fullyQualifiedTypeName name="org.semanticweb.owlapi.model.OWLOntology"/>
@@ -21,13 +20,26 @@
 <fullyQualifiedTypeName name="ownapi.OWNLiteral"/>
 <fullyQualifiedTypeName name="ownapi.OWNIntersection"/>
 <fullyQualifiedTypeName name="ownapi.OWNUniversal"/>
-<fullyQualifiedTypeName name="java.util.HashSet"/>
 <fullyQualifiedTypeName name="ownapi.OWNAxiom.AXIOM_TYPE"/>
-<fullyQualifiedTypeName name="ver1.Operation.OPERATOR"/>
-<fullyQualifiedTypeName name="java.util.HashMap"/>
 <fullyQualifiedTypeName name="java.util.Scanner"/>
 <fullyQualifiedTypeName name="java.util.List"/>
-<fullyQualifiedTypeName name="java.util.ArrayList"/>
-<fullyQualifiedTypeName name="java.util.Stack"/>
 <fullyQualifiedTypeName name="java.lang.reflect.Method"/>
+<fullyQualifiedTypeName name="ver1.Operation.OPERATOR"/>
+<fullyQualifiedTypeName name="java.util.Map"/>
+<fullyQualifiedTypeName name="java.util.Collection"/>
+<fullyQualifiedTypeName name="java.lang.reflect.Array"/>
+<fullyQualifiedTypeName name="java.util.LinkedList"/>
+<fullyQualifiedTypeName name="java.util.SortedSet"/>
+<fullyQualifiedTypeName name="java.util.TreeSet"/>
+<fullyQualifiedTypeName name="java.util.Set"/>
+<fullyQualifiedTypeName name="java.util.ArrayList"/>
+<fullyQualifiedTypeName name="java.util.LinkedHashMap"/>
+<fullyQualifiedTypeName name="java.util.TreeMap"/>
+<fullyQualifiedTypeName name="java.util.HashMap"/>
+<fullyQualifiedTypeName name="com.google.common.collect.Multiset.Entry"/>
+<fullyQualifiedTypeName name="java.util.Map.Entry"/>
+<fullyQualifiedTypeName name="java.util.Stack"/>
+<fullyQualifiedTypeName name="ver1.Pair"/>
+<fullyQualifiedTypeName name="java.util.HashSet"/>
+<fullyQualifiedTypeName name="ver1.Backtracker.Snapshot"/>
 </qualifiedTypeNameHistroy>

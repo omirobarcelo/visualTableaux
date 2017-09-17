@@ -3,12 +3,20 @@ package ownapi;
 public class OWNLiteral extends OWNAxiom {
 	private String fullName;
 	
+	/**
+	 * Not blank string or without ontology#name structure assumed
+	 * @param fullName
+	 */
 	public OWNLiteral(String fullName) {
 		super();
 		this.fullName = fullName;
 		super.type = AXIOM_TYPE.LITERAL;
 	}
 
+	/**
+	 * Assumed that the full name of a literal is ontology#name
+	 * @return string with the name
+	 */
 	public String getId() {
 		return fullName.split("#")[1];
 	}
@@ -23,12 +31,20 @@ public class OWNLiteral extends OWNAxiom {
 		//return "OWNLiteral [Id=" + getId() + "]";
 	}
 	
+	/**
+	 * Use of getId() instead of fullName so axioms from different ontologies that
+	 * are actually equal, remain equal when compared or inserted into a set or list
+	 */
 	@Override
 	public int hashCode() {
 		//return type.hashCode() ^ fullName.hashCode();
 		return type.hashCode() ^ getId().hashCode();
 	}
 	
+	/**
+	 * Use of getId() instead of fullName so axioms from different ontologies that
+	 * are actually equal, remain equal when compared or inserted into a set or list
+	 */
 	@Override
 	public boolean equals(Object other) {
 		if (other instanceof OWNLiteral) {

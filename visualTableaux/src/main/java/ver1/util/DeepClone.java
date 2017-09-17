@@ -1,4 +1,4 @@
-// https://stackoverflow.com/questions/11296490/assigning-hashmap-to-hashmap
+//src.: https://stackoverflow.com/questions/11296490/assigning-hashmap-to-hashmap
 package ver1.util;
 
 import java.lang.reflect.Array;

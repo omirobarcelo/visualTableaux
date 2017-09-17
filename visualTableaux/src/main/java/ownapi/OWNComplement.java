@@ -1,8 +1,16 @@
 package ownapi;
 
 public class OWNComplement extends OWNAxiom{
+	/**
+	 * Assumed that OWNAxioms will always be created from NNF, so a complement only
+	 * complements a literal, not a whole axiom
+	 */
 	private OWNLiteral operand;
 	
+	/**
+	 * Not null arguments assumed
+	 * @param op
+	 */
 	public OWNComplement(OWNLiteral op) {
 		super();
 		this.operand = op;

@@ -4,6 +4,11 @@ public class OWNIntersection extends OWNAxiom {
 	private OWNAxiom operand1;
 	private OWNAxiom operand2;
 	
+	/**
+	 * Not null arguments assumed
+	 * @param op1
+	 * @param op2
+	 */
 	public OWNIntersection(OWNAxiom op1, OWNAxiom op2) {
 		super();
 		this.operand1 = op1;
