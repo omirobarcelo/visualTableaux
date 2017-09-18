@@ -10,7 +10,9 @@ import ownapi.OWNUnion;
 import ownapi.OWNUniversal;
 
 public class OWNAxiomContainsVisitor implements OWNAxiomVisitor {
+	// OWNAxiom which is going to be checked if it's contained in axiom
 	private OWNAxiom searched;
+	// True if this contains searched
 	private boolean contains;
 	
 	public OWNAxiomContainsVisitor(OWNAxiom searched) {
@@ -22,6 +24,9 @@ public class OWNAxiomContainsVisitor implements OWNAxiomVisitor {
 		return contains;
 	}
 
+	/**
+	 * Not implemented since should only be called for specific OWNAxiom
+	 */
 	@Override
 	public void visit(OWNAxiom axiom) {
 		// TODO Auto-generated method stub

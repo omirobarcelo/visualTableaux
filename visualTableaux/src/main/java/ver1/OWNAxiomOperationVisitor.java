@@ -9,6 +9,7 @@ import ver1.Operation.OPERATOR;
 import ver1.util.*;
 
 public class OWNAxiomOperationVisitor implements OWNAxiomVisitor {
+	// Contains all the operations possible from axiom
 	private HashSet<Operation> operations;
 	private TreeNode tn;
 	private HashMap<Node, HashSet<OWNAxiom>> Ln;
@@ -37,9 +38,11 @@ public class OWNAxiomOperationVisitor implements OWNAxiomVisitor {
 		// TODO Auto-generated method stub
 	}
 
-	// Only check for BOTTOM operations in complement to avoid
-	// duplicate operations and because probably there are less 
-	// OWNComplement to check than OWNLiteral
+	/**
+	 * Only check for BOTTOM operations in complement to avoid
+	 * duplicate operations and because probably there are less 
+	 * OWNComplement to check than OWNLiteral
+	 */
 	public void visit(OWNComplement axiom) {
 		// If BOTTOM not in L(n)
 		if (!Ln.get(tn.getData()).contains(OWNAxiom.BOTTOM)) {

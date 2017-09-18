@@ -62,6 +62,10 @@ public class Tableau {
 		return firstNode;
 	}
 	
+	/**
+	 * Checks which would be the ID of the next created node
+	 * @return
+	 */
 	public String checkNextCreatedNode() {
 		return Character.toString((char)nodeCode);
 	}
@@ -84,6 +88,8 @@ public class Tableau {
 	//////////////////////////////
 	public void apply(Node n, Operation op) {
 		Node updatedNode = null;
+		// Assumed that operator will be one of the cases, so an operation
+		// will always be applied and updatedNode won't remain null
 		switch (op.getOperator()) {
 			case TOP: {
 				Ln.get(n).add(op.getOperand1());
@@ -92,11 +98,15 @@ public class Tableau {
 			}
 			case BOTTOM: {
 				Ln.get(n).add(OWNAxiom.BOTTOM);
+				// If there aren't snapshots to backtrack to, and BOTTOM operation
+				// is applied, then the tableau expansion clashed
+				// If there are snapshots, check if the clash is a consequence from
+				// the last non deterministic operation applied
 				if (backtracker.thereAreSnapshots()) {
-					// Check if last NDO contains literal
+					// Check if last NDO's operand contains literal
 					OWNAxiomContainsVisitor visitor1 = new OWNAxiomContainsVisitor(op.getOperand1());
 					backtracker.checkLastNDOAxiom().accept(visitor1);
-					// Check if last NDO contains complement
+					// Check if last NDO's operand contains complement
 					OWNAxiomContainsVisitor visitor2 = new OWNAxiomContainsVisitor(op.getOperand2());
 					backtracker.checkLastNDOAxiom().accept(visitor2);
 					// If the literal or the complement is contained, the clash is a consequence of 
@@ -115,7 +125,11 @@ public class Tableau {
 				break;
 			}
 			case OR: {
-				// TODO
+				// All operations have to be applied to fully expand the tableau
+				// NDO can have more than one application (assumed 2 in this implementation)
+				// In executedNDO stored the NDO applied. If an NDO was already applied once, 
+				// then a snapshot is not taken since last application resulted in a clash,
+				// and operation has to be applied at least once
 				Pair<Node, OWNAxiom> p = new Pair<Node, OWNAxiom>(n, op.getOperand1());
 				if (!executedNDO.contains(p)) {
 					executedNDO.add(p);
@@ -132,9 +146,9 @@ public class Tableau {
 				Node newNode = new Node(Character.toString((char)nodeCode++));
 				tn.addChild(newNode);
 				predecessor.put(newNode, n);
+				Ln.put(newNode, new HashSet<OWNAxiom>());
 				Pair<Node, Node> p = new Pair<Node, Node>(n, newNode);
 				Lr.put(p, new HashSet<OWNLiteral>());
-				Ln.put(newNode, new HashSet<OWNAxiom>());
 				operations.put(newNode, new HashSet<Operation>());
 				// Apply operation
 				Lr.get(p).add(existential.getRelation());
@@ -208,6 +222,12 @@ public class Tableau {
 	///////////////////////////////////////////////////
 	/////   TREE TRAVERSAL AND VISITING METHODS   /////
 	///////////////////////////////////////////////////
+	/**
+	 * Use string to indicate the visiting method to avoid all
+	 * the overhead required to pass a function as argument
+	 * @param treeNode
+	 * @param method
+	 */
 	public void iterativePreorder(TreeNode treeNode, String method)  {
 		Stack<TreeNode> s = new Stack<TreeNode>();
 		s.push(treeNode);
@@ -292,6 +312,11 @@ public class Tableau {
 		iterativePreorder(firstNode, "updateOperations");
 	}
 	
+	/**
+	 * Check if updatedNode becomes blocked by its parent
+	 * and mark all the updatedNode children as blocked if so
+	 * @param updatedNode
+	 */
 	private void checkBlocking(Node updatedNode) {
 		if (updatedNode == null)
 			return;

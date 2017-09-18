@@ -24,6 +24,7 @@ import org.semanticweb.owlapi.model.OWLObjectUnionOf;
 import ownapi.*;
 
 public class OWLClassExpressionCastVisitor implements OWLClassExpressionVisitor {
+	// OWNAxiom created from the visit operation
 	private OWNAxiom axiom;
 	
 	public OWNAxiom getAxiom() {

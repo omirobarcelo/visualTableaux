@@ -3,12 +3,22 @@ package ver1;
 import ownapi.OWNAxiom;
 import ver1.Operation.OPERATOR;
 
+/**
+ * A non deterministic operation is characterized by the node on which
+ * is performed, the operation applied (operator), which is the operand, 
+ * and which is the result in this specific case
+ */
 public class NonDeterministicOperation {
 	private Node n;
 	private OPERATOR operator;
 	private OWNAxiom operand;
 	private OWNAxiom result;
 	
+	/**
+	 * Non null arguments assumed
+	 * @param n
+	 * @param op Assumed that the operation represents a type of NDO (i.e.: OR)
+	 */
 	public NonDeterministicOperation(Node n, Operation op) {
 		this.n = n;
 		this.operator = op.getOperator();
@@ -16,6 +26,13 @@ public class NonDeterministicOperation {
 		this.result = op.getResult();
 	}
 	
+	/**
+	 * Non null arguments assumed
+	 * @param n
+	 * @param operator
+	 * @param operand
+	 * @param result
+	 */
 	public NonDeterministicOperation(Node n, OPERATOR operator, 
 			OWNAxiom operand, OWNAxiom result) {
 		this.n = n;
@@ -40,6 +57,9 @@ public class NonDeterministicOperation {
 		return result;
 	}
 	
+	/**
+	 * As per right not, toString() returns always OR format
+	 */
 	@Override
 	public String toString() {
 		return "\u2A06(" + operand + ", " + result + ")" + 

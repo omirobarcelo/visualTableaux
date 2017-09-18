@@ -1,5 +1,6 @@
 package ver1;
-// https://stackoverflow.com/questions/19330731/tree-implementation-in-java-root-parents-and-children/22419453
+// src.: https://stackoverflow.com/questions/19330731/tree-implementation-in-java-root-parents-and-children/22419453
+// disposed of parent since it provoked stack overflow errors when checking for equality or copying
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,6 +10,10 @@ public class TreeNode {
     private Node data = null;
     private List<TreeNode> children = new ArrayList<TreeNode>();
 
+    /**
+     * Not null arguments assumed
+     * @param data
+     */
     public TreeNode(Node data) {
         this.data = data;
     }
@@ -38,7 +43,11 @@ public class TreeNode {
         this.data = data;
     }
     
-    // https://stackoverflow.com/questions/16098362/how-to-deep-copy-a-tree
+    /**
+     * Deep clone of a tree node
+     * src.: https://stackoverflow.com/questions/16098362/how-to-deep-copy-a-tree
+     * @return
+     */
     public TreeNode copy() {
     	List<TreeNode> copyChildren = new ArrayList<TreeNode>();
     	if (!this.children.isEmpty()) {
@@ -51,6 +60,12 @@ public class TreeNode {
     	return copy;
     }
     
+    /**
+     * Obtains the TreeNode object contained in root from Node n data
+     * @param root
+     * @param n
+     * @return
+     */
     public static TreeNode getTreeNode(TreeNode root, Node n) {
     	Stack<TreeNode> s = new Stack<TreeNode>();
 		s.push(root);

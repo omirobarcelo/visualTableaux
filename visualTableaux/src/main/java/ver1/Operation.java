@@ -8,25 +8,44 @@ public class Operation {
 	private OPERATOR operator;
 	private OWNAxiom operand1;
 	private OWNAxiom other; //operand2 for BOTTOM and result for OR
-	private Node node;
+	private Node node; // Can be null, when first 2 constructors used
 	
+	/**
+	 * Not null arguments assumed
+	 * @param operator
+	 * @param operand1
+	 */
 	public Operation(OPERATOR operator, OWNAxiom operand1) {
 		this.operator = operator;
 		this.operand1 = operand1;
+		// Repeat operand1 to other to avoid null attribute
 		this.other = operand1;
 	}
 	
-	// Only for BOTTOM and OR operation
+	/**
+	 * Only for BOTTOM and OR operation
+	 * Not null arguments assumed
+	 * @param operator
+	 * @param operand1
+	 * @param other
+	 */
 	public Operation(OPERATOR operator, OWNAxiom operand1, OWNAxiom other) {
 		this.operator = operator;
 		this.operand1 = operand1;
 		this.other = other;
 	}
 	
-	// Only for ONLY operation
+	/**
+	 * Only for ONLY operation
+	 * Not null arguments assumed
+	 * @param operator
+	 * @param operand1
+	 * @param node
+	 */
 	public Operation(OPERATOR operator, OWNAxiom operand1, Node node) {
 		this.operator = operator;
 		this.operand1 = operand1;
+		// Repeat operand1 to other to avoid null attribute
 		this.other = operand1;
 		this.node = node;
 	}
@@ -39,14 +58,25 @@ public class Operation {
 		return operand1;
 	}
 
+	/**
+	 * Same return as getResult() for abstractness 
+	 * @return
+	 */
 	public OWNAxiom getOperand2() {
 		return other;
 	}
 	
+	/**
+	 * Same return as getOperand2() for abstractness
+	 * @return
+	 */
 	public OWNAxiom getResult() {
 		return other;
 	}
 	
+	/**
+	 * @return May be null
+	 */
 	public Node getNode() {
 		return node;
 	}
@@ -63,6 +93,7 @@ public class Operation {
 	public boolean equals(Object other) {
 		if (other instanceof Operation) {
 			Operation op = (Operation)other;
+			// The order of the operands doesn't matter
 			boolean sameOperands = (operand1.equals(op.operand1) && this.other.equals(op.other))
 					|| (operand1.equals(op.other) && this.other.equals(op.operand1));
 			boolean sameNode = (node==null && op.node==null) || 
@@ -91,6 +122,12 @@ public class Operation {
 		return "";
 	}
 	
+	/**
+	 * Returns fully formatted string for the operation
+	 * @param x
+	 * @param nextCreatedNode id of what would be the next created node
+	 * @return
+	 */
 	public String fullString(Node x, String nextCreatedNode) {
 		String base = this.toString() + " \u27F6 ";
 		switch (operator) {
