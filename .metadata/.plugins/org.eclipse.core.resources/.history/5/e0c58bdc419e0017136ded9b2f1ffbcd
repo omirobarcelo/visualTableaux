@@ -1,0 +1,11 @@
+package ver1.ui;
+
+import javax.swing.*;
+
+public class Graph extends JPanel {
+	JTextArea jtaTmp;
+	
+	public Graph() {
+		jtaTmp = new JTextArea();
+	}
+}

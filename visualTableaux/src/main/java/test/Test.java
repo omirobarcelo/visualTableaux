@@ -34,30 +34,31 @@ import ownapi.OWNAxiom.AXIOM_TYPE;
 public class Test {
 
 	public static void main(String[] args) {
-		OWNUnion union = new OWNUnion(new OWNLiteral("test#A"), new OWNExistential(
-				new OWNLiteral("test#R"), new OWNComplement(new OWNLiteral("test#B"))));
-		OWNLiteral lit = new OWNLiteral("test#B");
-		OWNExistential exist = new OWNExistential(
-				new OWNLiteral("test#R"), new OWNComplement(new OWNLiteral("test#B")));
-		OWNIntersection inter = new OWNIntersection(new OWNLiteral("test#A"), new OWNLiteral("test#B"));
-		OWNAxiomContainsVisitor visitor = new OWNAxiomContainsVisitor(inter);
-		union.accept(visitor);
-		System.out.println(visitor.isContained());
 		
-		HashMap<Node, Node> p = new HashMap<Node, Node>();
-		p.put(new Node("c1"), new Node("p1"));
-		p.put(new Node("c2"), new Node("p2"));
-		HashMap<Node, Node> copy = new HashMap<Node, Node>(p);
-		p.put(new Node("c3"), new Node("p1"));
-		
-		System.out.println("p");
-		for (Entry<Node, Node> entry : p.entrySet()) {
-			System.out.println(entry.getKey() + " : " + entry.getValue());
-		}
-		System.out.println("copy");
-		for (Entry<Node, Node> entry : copy.entrySet()) {
-			System.out.println(entry.getKey() + " : " + entry.getValue());
-		}
+//		OWNUnion union = new OWNUnion(new OWNLiteral("test#A"), new OWNExistential(
+//				new OWNLiteral("test#R"), new OWNComplement(new OWNLiteral("test#B"))));
+//		OWNLiteral lit = new OWNLiteral("test#B");
+//		OWNExistential exist = new OWNExistential(
+//				new OWNLiteral("test#R"), new OWNComplement(new OWNLiteral("test#B")));
+//		OWNIntersection inter = new OWNIntersection(new OWNLiteral("test#A"), new OWNLiteral("test#B"));
+//		OWNAxiomContainsVisitor visitor = new OWNAxiomContainsVisitor(inter);
+//		union.accept(visitor);
+//		System.out.println(visitor.isContained());
+//		
+//		HashMap<Node, Node> p = new HashMap<Node, Node>();
+//		p.put(new Node("c1"), new Node("p1"));
+//		p.put(new Node("c2"), new Node("p2"));
+//		HashMap<Node, Node> copy = new HashMap<Node, Node>(p);
+//		p.put(new Node("c3"), new Node("p1"));
+//		
+//		System.out.println("p");
+//		for (Entry<Node, Node> entry : p.entrySet()) {
+//			System.out.println(entry.getKey() + " : " + entry.getValue());
+//		}
+//		System.out.println("copy");
+//		for (Entry<Node, Node> entry : copy.entrySet()) {
+//			System.out.println(entry.getKey() + " : " + entry.getValue());
+//		}
 		
 		
 //		HashSet<Node> b = new HashSet<Node>();

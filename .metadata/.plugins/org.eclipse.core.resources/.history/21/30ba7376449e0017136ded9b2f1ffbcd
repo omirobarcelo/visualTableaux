@@ -1,0 +1,13 @@
+package ver1.ui;
+
+import javax.swing.*;
+
+public class Options extends JPanel {
+	private JButton jbTmp1;
+	private JButton jbTmp2;
+	
+	public Options() {
+		jbTmp1 = new JButton("Temp1");
+		jbTmp2 = new JButton("Temp2");
+	}
+}
