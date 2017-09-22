@@ -1,5 +1,7 @@
 package ver1.ui;
 
+import java.awt.Dimension;
+
 import javax.swing.*;
 
 public class Graph extends JPanel {
@@ -9,10 +11,26 @@ public class Graph extends JPanel {
 	private JTextArea jtaTmp;
 	
 	public Graph() {
+		this.setMaximumSize(new Dimension(X_SIZE, Y_SIZE));
+		
 		jtaTmp = new JTextArea();
+		jtaTmp.setMaximumSize(new Dimension(X_SIZE, Y_SIZE));
 		jtaTmp.setText("Test");
+		jtaTmp.setPreferredSize(new Dimension(X_SIZE, Y_SIZE));
 		this.add(jtaTmp);
 		//this.repaint();
+	}
+	
+	public void setText(String text) {
+		jtaTmp.setText(text);
+	}
+	
+	public void addText(String text) {
+		jtaTmp.append(text);
+	}
+	
+	public void clearText() {
+		jtaTmp.setText("");
 	}
 	
 	@Override
@@ -25,8 +43,8 @@ public class Graph extends JPanel {
 		return Y_SIZE;
 	}
 	
-//	@Override
-//	public Dimension getPreferredSize() {
-//		return new Dimension(X_SIZE, Y_SIZE+JMB_SIZE);
-//	}
+	@Override
+	public Dimension getPreferredSize() {
+		return new Dimension(X_SIZE, Y_SIZE);
+	}
 }
