@@ -43,7 +43,7 @@ public class TUI {
 		Pair<OWNAxiom, HashSet<OWNAxiom>> pairCon_K = Interpreter.read(concept, tbox);
 		
 		// Create and initialize tableau
-		Tableau tableau = new Tableau(pairCon_K.getSecond());
+		Tableau tableau = new Tableau(pairCon_K.getSecond(), false);
 		tableau.init(pairCon_K.getFirst());
 				
 		// Loop (show status, choose operations, execute operation)

@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Stack;
 
+import javax.swing.JOptionPane;
+
 import ownapi.*;
 import ver1.Backtracker.Snapshot;
 import ver1.Operation.OPERATOR;
@@ -22,8 +24,18 @@ public class Tableau {
 	private HashMap<Node, Node> predecessor;
 	private boolean clashed, clashConsequenceNDO, finished;
 	private Backtracker backtracker;
+	private boolean modeGUI;
 	
-	public Tableau(HashSet<OWNAxiom> K) {
+	// Auxiliary string with the status
+	private String currentStatus = "";
+	public void clearStatus() {
+		currentStatus = "";
+	}
+	public String stringStatus() {
+		return currentStatus;
+	}
+	
+	public Tableau(HashSet<OWNAxiom> K, boolean modeGUI) {
 		this.K = K;
 		nodeCode = 109; // ASCII m
 		this.firstNode = new TreeNode(new Node(Character.toString((char)nodeCode++)));
@@ -38,6 +50,7 @@ public class Tableau {
 		clashConsequenceNDO = false;
 		finished = false;
 		backtracker = new Backtracker();
+		this.modeGUI = modeGUI;
 	}
 	
 	public void init(OWNAxiom concept) {
@@ -172,6 +185,13 @@ public class Tableau {
 	public boolean isFinished() {
 		if (clashed && clashConsequenceNDO) {
 			if (backtracker.thereAreSnapshots()) {
+				// TODO if GUI mode, inform of backtracking
+				if (modeGUI) {
+					JOptionPane.showMessageDialog(null, 
+							"There has been a clash, consequence of the last " + 
+							"non deterministic operation.\n" + 
+							"Recovering last state.");
+				}
 				recoverFromLastSnapshot();
 				updateAllOperations();
 			}
@@ -237,6 +257,9 @@ public class Tableau {
 				case "printNodeStatus":
 					printNodeStatus(n);
 					break;
+				case "stringNodeStatus":
+					stringNodeStatus(n);
+					break;
 				case "updateOperations":
 					updateOperations(n);
 					break;
@@ -264,6 +287,19 @@ public class Tableau {
 				System.out.println(n.getData().getId() + "--" + 
 						getRelations(n.getData(), succ.getData()) + 
 						"--" + succ.getData().getId());
+			}
+		}
+	}
+	
+	private void stringNodeStatus(TreeNode n) {
+		currentStatus += n.getData().getId() + 
+				(blockedNodes.contains(n.getData()) ? "[blocked]" : "") +
+				" : " + getAxioms(n.getData()) + "\n";
+		if (!n.getChildren().isEmpty()) {
+			for (TreeNode succ : n.getChildren()) {
+				currentStatus += n.getData().getId() + "--" + 
+						getRelations(n.getData(), succ.getData()) + 
+						"--" + succ.getData().getId() + "\n";
 			}
 		}
 	}
@@ -324,6 +360,11 @@ public class Tableau {
 		if (parent != null) {
 			// If L(updatedNode) is a subset of L(parent)
 			if (Ln.get(parent).containsAll(Ln.get(updatedNode))) {
+				// TODO if GUI mode, dialog informing of blocking
+				if (modeGUI) {
+					JOptionPane.showMessageDialog(null, "Node " + updatedNode.getId() + 
+							" and all its children have become blocked.");
+				}
 				// Mark updated node and all its subtree as blocked
 				TreeNode tn = TreeNode.getTreeNode(firstNode, updatedNode);
 				iterativePreorder(tn, "markAsBlocked");

@@ -51,6 +51,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener {
 		options = new Options();
 		
 		// init graph
+		graph.setText(stringStatus());
 		operations = options.setOptions(tableau.getOperations(), tableau.checkNextCreatedNode());
 		
 		container.add(graph);
@@ -91,8 +92,35 @@ public class GUI extends JFrame implements ActionListener, MouseListener {
 		this.setJMenuBar(jmbarGUI);
 	}
 	
-	public static void execOption(int option) {
-		System.out.println(operations.get(option));
+	private static String stringStatus() {
+		String status = "\n";
+		status += "K : " + tableau.getOntology() + "\n";
+		status += "\n";
+		tableau.clearStatus();
+		tableau.iterativePreorder(tableau.getFirstNode(), "stringNodeStatus");
+		status += tableau.stringStatus() + "\n";
+		status += "\n";
+		return status;
+	}
+	
+	public void execOption(int option) {
+		// TODO
+		Pair<Node, Operation> pNode_Op = operations.get(option);
+		// Blocking automatically applied
+		tableau.apply(pNode_Op.getFirst(), pNode_Op.getSecond());
+		
+		// Backtracking automatically applied
+		if (tableau.isFinished()) {
+			// TODO show dialog, update status, and remove operations
+			JOptionPane.showMessageDialog(this, "Tableau expansion has finished.\n" +
+					"This ontology is " + (tableau.isSatisfiable() ? "" : "not ") + "satisfiable");
+			graph.setText(stringStatus());
+			options.clearOptions();
+		} else {
+			// update
+			graph.setText(stringStatus());
+			operations = options.setOptions(tableau.getOperations(), tableau.checkNextCreatedNode());
+		}
 	}
 
 	public static void main(String[] args) {
@@ -104,8 +132,8 @@ public class GUI extends JFrame implements ActionListener, MouseListener {
         		String sConcept = "ontologies/testConcept.owl";
         		String sTBox = "ontologies/testB3TBox.owl";
         		
-        		//sConcept = chooseFile("Select concept file", "OWL Ontology Document", "owl");
-        		//sTBox = chooseFile("Select TBox file", "OWL Ontology Document", "owl");
+        		sConcept = chooseFile("Select concept file", "OWL Ontology Document", "owl");
+        		sTBox = chooseFile("Select TBox file", "OWL Ontology Document", "owl");
         		//System.out.println(sConcept);
         		//System.out.println(sTBox);
         		
@@ -128,7 +156,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener {
         		Pair<OWNAxiom, HashSet<OWNAxiom>> pairCon_K = Interpreter.read(concept, tbox);
         		
         		// Create and initialize tableau
-        		tableau = new Tableau(pairCon_K.getSecond());
+        		tableau = new Tableau(pairCon_K.getSecond(), true);
         		tableau.init(pairCon_K.getFirst());
         		
         		
@@ -195,7 +223,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener {
 		System.out.println("gui");
 		JMenuItem item = (JMenuItem)e.getSource();
 		if (item == jmitemOpen) {
-			//TODO
+			// TODO
 		} else if (item == jmitemReset) {
 			// TODO
 		} else if (item == jmitemClose) {

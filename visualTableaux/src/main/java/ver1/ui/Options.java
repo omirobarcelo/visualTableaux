@@ -45,15 +45,11 @@ public class Options extends JPanel implements ActionListener {
 		
 		List<Pair<Node, Operation>> ops = new ArrayList<Pair<Node, Operation>>();
 		for (Node n : options.keySet()) {
-			System.out.println("Node " + n.getId());
-			JLabel jlNode = new JLabel("MomomomomoLlalLg");
+			JLabel jlNode = new JLabel("Node " + n.getId());
 			this.add(jlNode);
 			for (Operation op : options.get(n)) {
 				ops.add(new Pair<Node, Operation>(n, op));
-				JButton jbOp = new JButton("GhamaLamaLa");
-				String s = op.fullString(n, nextCreatedNode);
-				System.out.println(s);
-				//jbOp.setText(s);
+				JButton jbOp = new JButton(op.fullString(n, nextCreatedNode));
 				jbOp.addActionListener(this);
 				jbList.add(jbOp);
 				this.add(jbOp);
@@ -91,10 +87,11 @@ public class Options extends JPanel implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
-		System.out.println("options");
 		JButton button = (JButton)e.getSource();
 		int index = jbList.indexOf(button);
 //		System.out.println(index);
-		GUI.execOption(index);
+		//GUI.execOption(index);
+		// Get GUI where this component lives and execute option
+		((GUI)SwingUtilities.getWindowAncestor(this)).execOption(index);
 	}
 }

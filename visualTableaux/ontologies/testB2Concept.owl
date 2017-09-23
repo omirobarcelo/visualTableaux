@@ -6,7 +6,7 @@ Prefix(xsd:=<http://www.w3.org/2001/XMLSchema#>)
 Prefix(rdfs:=<http://www.w3.org/2000/01/rdf-schema#>)
 
 
-Ontology(<http://www.semanticweb.org/work/ontologies/2017/8/testB2TBox>
+Ontology(<http://www.semanticweb.org/work/ontologies/2017/8/testB2Concept>
 
 Declaration(Class(:A))
 Declaration(Class(:B))
