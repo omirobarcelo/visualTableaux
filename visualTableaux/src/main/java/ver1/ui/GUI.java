@@ -37,6 +37,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener {
 	private JMenu jmFile;
 	private JMenuItem jmitemOpen, jmitemReset, jmitemClose;
 	
+	private static Pair<OWNAxiom, HashSet<OWNAxiom>> pairCon_K;
 	private static Tableau tableau;
 	private static List<Pair<Node, Operation>> operations;
 	
@@ -128,32 +129,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener {
         //creating and showing this application's GUI.
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-            	// Get files
-        		String sConcept = "ontologies/testConcept.owl";
-        		String sTBox = "ontologies/testB3TBox.owl";
-        		
-        		sConcept = chooseFile("Select concept file", "OWL Ontology Document", "owl");
-        		sTBox = chooseFile("Select TBox file", "OWL Ontology Document", "owl");
-        		//System.out.println(sConcept);
-        		//System.out.println(sTBox);
-        		
-        		// Load files
-        		OWLOntologyManager man = OWLManager.createOWLOntologyManager();
-        		IRI conceptIRI = IRI.create(new File(sConcept));
-        		IRI tboxIRI = IRI.create(new File(sTBox));
-        		
-        		OWLOntology concept = null;
-        		OWLOntology tbox = null;
-        		try {
-        			concept = man.loadOntology(conceptIRI);
-        			tbox = man.loadOntology(tboxIRI);
-        		} catch (OWLOntologyCreationException e) {
-        			// TODO Auto-generated catch block
-        			e.printStackTrace();
-        		}
-        		
-        		// Get concept and ontology K
-        		Pair<OWNAxiom, HashSet<OWNAxiom>> pairCon_K = Interpreter.read(concept, tbox);
+            	openFiles();
         		
         		// Create and initialize tableau
         		tableau = new Tableau(pairCon_K.getSecond(), true);
@@ -164,6 +140,35 @@ public class GUI extends JFrame implements ActionListener, MouseListener {
         		gui.setVisible(true);
             }
         });
+	}
+	
+	private static void openFiles() {
+		// Get files
+		String sConcept = "ontologies/testConcept.owl";
+		String sTBox = "ontologies/testB3TBox.owl";
+		
+		sConcept = chooseFile("Select concept file", "OWL Ontology Document", "owl");
+		sTBox = chooseFile("Select TBox file", "OWL Ontology Document", "owl");
+		//System.out.println(sConcept);
+		//System.out.println(sTBox);
+		
+		// Load files
+		OWLOntologyManager man = OWLManager.createOWLOntologyManager();
+		IRI conceptIRI = IRI.create(new File(sConcept));
+		IRI tboxIRI = IRI.create(new File(sTBox));
+		
+		OWLOntology concept = null;
+		OWLOntology tbox = null;
+		try {
+			concept = man.loadOntology(conceptIRI);
+			tbox = man.loadOntology(tboxIRI);
+		} catch (OWLOntologyCreationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		// Get concept and ontology K
+		pairCon_K = Interpreter.read(concept, tbox);
 	}
 	
 	private static String chooseFile(String title, String desc, String ext) {
@@ -186,6 +191,13 @@ public class GUI extends JFrame implements ActionListener, MouseListener {
 			}
 		}
 		return path;
+	}
+	
+	private void reset() {
+		tableau = new Tableau(pairCon_K.getSecond(), true);
+		tableau.init(pairCon_K.getFirst());
+		graph.setText(stringStatus());
+		operations = options.setOptions(tableau.getOperations(), tableau.checkNextCreatedNode());
 	}
 
 	@Override
@@ -220,12 +232,14 @@ public class GUI extends JFrame implements ActionListener, MouseListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		System.out.println("gui");
 		JMenuItem item = (JMenuItem)e.getSource();
 		if (item == jmitemOpen) {
 			// TODO
+			openFiles();
+			reset();
 		} else if (item == jmitemReset) {
 			// TODO
+			reset();
 		} else if (item == jmitemClose) {
 			System.exit(0);
 		}

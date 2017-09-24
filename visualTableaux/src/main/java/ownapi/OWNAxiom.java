@@ -41,6 +41,20 @@ public class OWNAxiom {
 	}
 	
 	/**
+	 * @return true if is a literal axiom (OWNLiteral or OWNComplement)
+	 */
+	public boolean isTop() {
+		return this.type == AXIOM_TYPE.TOP;
+	}
+	
+	/**
+	 * @return true if is a literal axiom (OWNLiteral or OWNComplement)
+	 */
+	public boolean isBottom() {
+		return this.type == AXIOM_TYPE.BOTTOM;
+	}
+	
+	/**
 	 * Checks if OWNAxiom is of specified type
 	 * @param type
 	 * @return 
@@ -51,5 +65,14 @@ public class OWNAxiom {
 	
 	public void accept(OWNAxiomVisitor visitor) {
 		visitor.visit(this);
+	}
+	
+	@Override
+	public String toString() {
+		if (this.isTop())
+			return "\u22A4";
+		else if (this.isBottom())
+			return "\u22A5";
+		return "";
 	}
 }

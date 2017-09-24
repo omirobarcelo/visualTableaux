@@ -15,27 +15,21 @@ import ver1.Operation;
 import ver1.util.Pair;
 
 public class Options extends JPanel implements ActionListener {
-	private static final int X_SIZE = 200;
+	private static final int X_SIZE = 250;
 	private static final int Y_SIZE = 600;
+	private static final int BORDER = 10;
 	
-	private JButton jbTmp1;
-	private JButton jbTmp2;
+	private static final int BUTTON_WIDTH = 230;
+	private static final int MAX_STRING_SIZE = 23;
 	
 	private List<JButton> jbList;
 	
 	public Options() {
-//		jbTmp1 = new JButton("Temp1");
-//		jbTmp2 = new JButton("Temp2");
 		jbList = new ArrayList<JButton>();
-//		jbList.add(jbTmp1);
-//		jbList.add(jbTmp2);
 		
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		
-//		this.add(jbTmp1);
-//		this.add(jbTmp2);
-//		jbTmp1.addActionListener(this);
-//		jbTmp2.addActionListener(this);
+		this.setBorder(BorderFactory.createEmptyBorder(BORDER, BORDER, BORDER, BORDER));
 	}
 	
 	public List<Pair<Node, Operation>> setOptions(HashMap<Node, HashSet<Operation>> options, 
@@ -49,12 +43,21 @@ public class Options extends JPanel implements ActionListener {
 			this.add(jlNode);
 			for (Operation op : options.get(n)) {
 				ops.add(new Pair<Node, Operation>(n, op));
-				JButton jbOp = new JButton(op.fullString(n, nextCreatedNode));
+				String s = op.fullString(n, nextCreatedNode);
+				//JButton jbOp = new JButton(op.fullString(n, nextCreatedNode));
+				JButton jbOp = new JButton(transformText(op.fullString(n, nextCreatedNode)));
+				// Needed both minimum and maximum size to make the button use all the 
+				// panel space
+				jbOp.setMinimumSize(new Dimension(BUTTON_WIDTH, 0));
+				jbOp.setMaximumSize(new Dimension(BUTTON_WIDTH, Y_SIZE));
+				jbOp.setHorizontalAlignment(SwingConstants.CENTER);
 				jbOp.addActionListener(this);
 				jbList.add(jbOp);
 				this.add(jbOp);
 			}
 		}
+		// To make everything stick to the top
+		this.add(Box.createVerticalGlue());
 		
 		// TODO maybe repaint?
 		this.revalidate();
@@ -67,6 +70,27 @@ public class Options extends JPanel implements ActionListener {
 		jbList.clear();
 		this.removeAll();
 		// TODO maybe repaint?
+	}
+	
+	/**
+	 * Transform the button text to fit
+	 * @param s
+	 * @return
+	 */
+	private String transformText(String s) {
+		String t = s;
+		String[] splitted = s.split("\u2192");
+		//if (splitted[0].trim().length() > MAX_STRING_SIZE || 
+		//	splitted[1].trim().length() > MAX_STRING_SIZE) {
+		// Line breaks have to be done in HTML, and also centered in HTML
+		if (s.length() > MAX_STRING_SIZE) {
+			t = "<html><center>" + 
+					splitted[0].trim() + 
+					"<br />\u2193<br />" + 
+					splitted[1].trim() + 
+				"</center></html>";
+		}
+		return t;
 	}
 	
 	@Override

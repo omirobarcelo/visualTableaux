@@ -129,7 +129,7 @@ public class Operation {
 	 * @return
 	 */
 	public String fullString(Node x, String nextCreatedNode) {
-		String base = this.toString() + " \u27F6 ";
+		String base = this.toString() + " \u2192 "; // or \u27F6
 		switch (operator) {
 		case AND: {
 			OWNIntersection axiom = (OWNIntersection)operand1;

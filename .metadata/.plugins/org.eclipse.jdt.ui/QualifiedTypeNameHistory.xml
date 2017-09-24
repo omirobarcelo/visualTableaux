@@ -22,7 +22,6 @@
 <fullyQualifiedTypeName name="ownapi.OWNUniversal"/>
 <fullyQualifiedTypeName name="ownapi.OWNAxiom.AXIOM_TYPE"/>
 <fullyQualifiedTypeName name="java.util.Scanner"/>
-<fullyQualifiedTypeName name="java.util.List"/>
 <fullyQualifiedTypeName name="java.lang.reflect.Method"/>
 <fullyQualifiedTypeName name="ver1.Operation.OPERATOR"/>
 <fullyQualifiedTypeName name="java.util.Map"/>
@@ -32,7 +31,6 @@
 <fullyQualifiedTypeName name="java.util.SortedSet"/>
 <fullyQualifiedTypeName name="java.util.TreeSet"/>
 <fullyQualifiedTypeName name="java.util.Set"/>
-<fullyQualifiedTypeName name="java.util.ArrayList"/>
 <fullyQualifiedTypeName name="java.util.LinkedHashMap"/>
 <fullyQualifiedTypeName name="java.util.TreeMap"/>
 <fullyQualifiedTypeName name="java.util.HashMap"/>
@@ -43,7 +41,10 @@
 <fullyQualifiedTypeName name="java.util.HashSet"/>
 <fullyQualifiedTypeName name="ver1.Backtracker.Snapshot"/>
 <fullyQualifiedTypeName name="javax.swing.JFrame"/>
-<fullyQualifiedTypeName name="java.awt.event.ActionListener"/>
 <fullyQualifiedTypeName name="java.awt.event.MouseListener"/>
+<fullyQualifiedTypeName name="java.awt.event.ActionListener"/>
 <fullyQualifiedTypeName name="java.awt.Dimension"/>
+<fullyQualifiedTypeName name="java.util.List"/>
+<fullyQualifiedTypeName name="java.util.ArrayList"/>
+<fullyQualifiedTypeName name="javax.swing.filechooser.FileNameExtensionFilter"/>
 </qualifiedTypeNameHistroy>
