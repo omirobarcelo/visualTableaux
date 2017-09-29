@@ -1,7 +1,0 @@
-package ver1.ui;
-
-import javax.swing.JPanel;
-
-public class Graph extends JPanel {
-
-}

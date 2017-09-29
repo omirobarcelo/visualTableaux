@@ -47,22 +47,34 @@ public class GUI extends JFrame implements ActionListener, MouseListener {
 		JPanel container = new JPanel();
 		container.setLayout(new BoxLayout(container, BoxLayout.X_AXIS));
 
-		graph = new Graph();
+		// TODO change to pass ontology string, and root
+		graph = new Graph(tableau);
+		// TODO maybe mouse could be used to detect the box clicked, and show 
+		// the operations related to said box
+		// If so, clicked box should also be remarked
 		graph.addMouseListener(this);
+		JScrollPane scrollGraph = new JScrollPane(graph);
 		options = new Options();
+		JScrollPane scrollOptions = new JScrollPane(options);
 		
+		// TODO update graph to paint instead of text area
 		// init graph
 		graph.setText(stringStatus());
+		// DEBUG
+		System.out.println(stringStatus());
+		// DEBUG
 		operations = options.setOptions(tableau.getOperations(), tableau.checkNextCreatedNode());
 		
-		container.add(graph);
-		container.add(options);
+		//container.add(graph);
+		container.add(scrollGraph);
+		//container.add(options);
+		container.add(scrollOptions);
 		this.getContentPane().add(container);
 		
-        this.setSize((graph.getWidth() + options.getWidth()), Y_SIZE + JMB_SIZE);
-		//this.setSize(1000, 600+21);
+        //this.setSize((graph.getWidth() + options.getWidth()), Y_SIZE + JMB_SIZE);
+		this.setSize(1110, 600+21);
 		
-        this.pack();
+        //this.pack();
         this.setLocationRelativeTo(null);
         this.setResizable(false);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -93,6 +105,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener {
 		this.setJMenuBar(jmbarGUI);
 	}
 	
+	// TODO may not be necessary when completed
 	private static String stringStatus() {
 		String status = "\n";
 		status += "K : " + tableau.getOntology() + "\n";
@@ -116,10 +129,20 @@ public class GUI extends JFrame implements ActionListener, MouseListener {
 			JOptionPane.showMessageDialog(this, "Tableau expansion has finished.\n" +
 					"This ontology is " + (tableau.isSatisfiable() ? "" : "not ") + "satisfiable");
 			graph.setText(stringStatus());
+			// TODO pass to graph
+			graph.repaint();
+			// DEBUG
+			System.out.println(stringStatus());
+			// DEBUG
 			options.clearOptions();
 		} else {
 			// update
 			graph.setText(stringStatus());
+			// TODO pass to graph
+			graph.repaint();
+			// DEBUG
+			System.out.println(stringStatus());
+			// DEBUG
 			operations = options.setOptions(tableau.getOperations(), tableau.checkNextCreatedNode());
 		}
 	}
@@ -196,6 +219,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener {
 	private void reset() {
 		tableau = new Tableau(pairCon_K.getSecond(), true);
 		tableau.init(pairCon_K.getFirst());
+		// TODO update to current graph instead of text area
 		graph.setText(stringStatus());
 		operations = options.setOptions(tableau.getOperations(), tableau.checkNextCreatedNode());
 	}

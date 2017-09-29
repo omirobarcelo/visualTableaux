@@ -1,0 +1,80 @@
+package ver1.ui;
+
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.geom.Line2D;
+
+import javax.swing.*;
+
+import ver1.Tableau;
+
+public class Graph extends JPanel {
+	private static final int X_SIZE = 800;
+	private static final int Y_SIZE = 600;
+	private static final int BORDER = 10;
+	
+	private JTextArea jtaTmp;
+	
+	private Tableau tableau;
+	
+	public Graph(Tableau tableau) {
+		//this.setMaximumSize(new Dimension(X_SIZE, Y_SIZE));
+		this.setBorder(BorderFactory.createEmptyBorder(BORDER, BORDER, BORDER, BORDER));
+		
+		jtaTmp = new JTextArea();
+		jtaTmp.setMaximumSize(new Dimension(X_SIZE, Y_SIZE));
+		jtaTmp.setText("Test");
+		jtaTmp.setPreferredSize(new Dimension(X_SIZE, Y_SIZE));
+		//this.add(jtaTmp);
+		//this.repaint();
+		
+		this.tableau = tableau;
+	}
+	
+	public void setText(String text) {
+		jtaTmp.setText("");
+		jtaTmp.setText(text);
+		this.revalidate();
+		this.repaint();
+	}
+	
+	public void addText(String text) {
+		jtaTmp.append(text);
+		this.revalidate();
+		this.repaint();
+	}
+	
+	public void clearText() {
+		jtaTmp.setText("");
+		this.revalidate();
+		this.repaint();
+	}
+	
+	@Override
+	public void paintComponent(Graphics g) {
+		Graphics2D g2d = (Graphics2D)g;
+		g2d.setColor(Color.WHITE);
+		g2d.fillRect(0, 0, X_SIZE, Y_SIZE);
+		
+		g2d.setPaint(Color.RED);
+		Line2D line = new Line2D.Double(200, 50, 200, 1000);
+		g2d.draw(line);
+	}
+	
+	@Override
+	public int getWidth() {
+		return X_SIZE;
+	}
+	
+	@Override
+	public int getHeight() {
+		return Y_SIZE;
+	}
+	
+	@Override
+	public Dimension getPreferredSize() {
+		return new Dimension(X_SIZE, Y_SIZE);
+	}
+}
