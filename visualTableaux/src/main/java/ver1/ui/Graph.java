@@ -74,6 +74,7 @@ public class Graph extends JPanel {
 		g2d.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 18));
 		g2d.setPaint(Color.BLACK);
 		FontMetrics fm = g2d.getFontMetrics();
+		// TODO change to GraphAxiom, so the position of each axiom in the ontology is known and can be highlighted
 		g2d.drawString(tableau.getOntology(), 10, 5+fm.getHeight());
 		g2d.drawLine(0, 5+fm.getHeight()+10, 
 				10+fm.stringWidth(tableau.getOntology())+10, 5+fm.getHeight()+10);
