@@ -35,6 +35,16 @@ public class Test {
 
 	public static void main(String[] args) {
 		
+		HashSet<OWNAxiom> test = new HashSet<OWNAxiom>();
+		test.add(new OWNUnion(new OWNLiteral("test#a"), new OWNLiteral("test#b")));
+		test.add(new OWNIntersection(new OWNLiteral("test#a"), new OWNLiteral("test#b")));
+		test.add(new OWNExistential(new OWNLiteral("test#R"), new OWNLiteral("test#b")));
+		System.out.println(test.toString());
+		String sTest = test.toString();
+		String[] stringArray = (sTest.substring(1, sTest.length()-1)).split(", ");
+		System.out.println(stringArray.length);
+		for (String s : stringArray) System.out.println(s);
+		
 //		OWNUnion union = new OWNUnion(new OWNLiteral("test#A"), new OWNExistential(
 //				new OWNLiteral("test#R"), new OWNComplement(new OWNLiteral("test#B"))));
 //		OWNLiteral lit = new OWNLiteral("test#B");
