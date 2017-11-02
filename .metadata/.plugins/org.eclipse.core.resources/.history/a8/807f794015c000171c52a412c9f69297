@@ -74,7 +74,7 @@ public class GraphNode {
 		fontHeight = fm.getHeight();
 		int height = fontHeight + STD_MARGIN; // height of the box; each text line height is going to be added
 		String text = "";
-		int xCursor = position.x+STD_MARGIN, yCursor = position.y+height+STD_MARGIN; // cursor of the text, to save each axiom position
+		int xCursor = position.x+STD_MARGIN, yCursor = position.y+height+STD_MARGIN/2; // cursor of the text, to save each axiom position
 		for (int i = 0; i < axioms.length; i++) {
 			// If last line longer than the box, add a new line
 			String lastLine = text.split("\n")[text.split("\n").length-1];
@@ -84,7 +84,9 @@ public class GraphNode {
 				xCursor = position.x+STD_MARGIN; // reset xCursor
 			}
 			axioms[i].setPosition(xCursor, yCursor);
-			if (axioms[i].isHighligthed()) {
+			//if (axioms[i].isHighligthed()) {
+			if (i == 1) {
+				// TODO use xCursor and yCursor
 				g2d.setPaint(colHL);
 				g2d.fillRect(xCursor, yCursor, fm.stringWidth(axioms[i].getText()), fontHeight);
 			}

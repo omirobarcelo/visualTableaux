@@ -54,7 +54,13 @@ public class Graph extends JPanel {
 		
 		// TODO paint the whole tree according to the current state
 		String sAxioms = tableau.getAxioms(tableau.getFirstNode().getData());
+		// DEBUG
+		System.out.println(sAxioms);
+		// DEBUG
 		String[] axioms = (sAxioms.substring(1, sAxioms.length()-1)).split(", ");
+		// DEBUG
+		for (String s : axioms) System.out.println(s);
+		// DEBUG
 		GraphNode gn = new GraphNode(tableau.getFirstNode().getData().getId(), axioms, 200, 200);
 		gn.paint(g);
 	}

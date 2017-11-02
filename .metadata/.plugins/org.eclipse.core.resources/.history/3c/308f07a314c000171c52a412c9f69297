@@ -74,7 +74,7 @@ public class GraphNode {
 		fontHeight = fm.getHeight();
 		int height = fontHeight + STD_MARGIN; // height of the box; each text line height is going to be added
 		String text = "";
-		int xCursor = position.x+STD_MARGIN, yCursor = position.y+height+STD_MARGIN; // cursor of the text, to save each axiom position
+		int xCursor = position.x+STD_MARGIN, yCursor = position.y+height; // cursor of the text, to save each axiom position
 		for (int i = 0; i < axioms.length; i++) {
 			// If last line longer than the box, add a new line
 			String lastLine = text.split("\n")[text.split("\n").length-1];
@@ -84,9 +84,11 @@ public class GraphNode {
 				xCursor = position.x+STD_MARGIN; // reset xCursor
 			}
 			axioms[i].setPosition(xCursor, yCursor);
-			if (axioms[i].isHighligthed()) {
+			//if (axioms[i].isHighligthed()) {
+			if (i == 0) {
+				// TODO use xCursor and yCursor
 				g2d.setPaint(colHL);
-				g2d.fillRect(xCursor, yCursor, fm.stringWidth(axioms[i].getText()), fontHeight);
+//				g2d.fillRect(xCursor, yCursor-fontHeight, fm.stringWidth(axioms[i].getText()), fontHeight);
 			}
 			text += axioms[i].getText() + (i+1 < axioms.length ? ", " : "");
 			xCursor += fm.stringWidth(axioms[i].getText() + ", "); // Even though the last axiom doesn't add ', ', xCursor is not used after it, so it doesn't matter
@@ -98,10 +100,8 @@ public class GraphNode {
 			height += fontHeight;
 		}
 		// Bottom line
-		g2d.setPaint(colLine);
 		g2d.drawLine(position.x, position.y+height+STD_MARGIN, position.x+WIDTH, position.y+height+STD_MARGIN);
 		// Side lines
-		g2d.setPaint(colLine);
 		g2d.drawLine(position.x, position.y, position.x, position.y+height+STD_MARGIN);
 		g2d.drawLine(position.x+WIDTH, position.y, position.x+WIDTH, position.y+height+STD_MARGIN);
 	}

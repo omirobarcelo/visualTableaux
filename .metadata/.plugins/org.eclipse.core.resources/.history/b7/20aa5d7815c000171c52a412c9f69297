@@ -57,6 +57,9 @@ public class Graph extends JPanel {
 		String[] axioms = (sAxioms.substring(1, sAxioms.length()-1)).split(", ");
 		GraphNode gn = new GraphNode(tableau.getFirstNode().getData().getId(), axioms, 200, 200);
 		gn.paint(g);
+		
+		GraphNode gn2 = new GraphNode(tableau.getFirstNode().getData().getId(), axioms, 400, 400);
+		gn2.paint(g);
 	}
 	
 	@Override
