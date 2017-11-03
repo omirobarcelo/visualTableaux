@@ -89,7 +89,8 @@ public class Options extends JPanel implements ActionListener {
 	 * @return
 	 */
 	private String transformText(String s) {
-		String t = s;
+		// TODO take out HTML wrapper if it doesn't make it work in other systems
+		String t = "<html><center>" + s + "</center></html>";
 		String[] splitted = s.split("\u2192");
 		//if (splitted[0].trim().length() > MAX_STRING_SIZE || 
 		//	splitted[1].trim().length() > MAX_STRING_SIZE) {
