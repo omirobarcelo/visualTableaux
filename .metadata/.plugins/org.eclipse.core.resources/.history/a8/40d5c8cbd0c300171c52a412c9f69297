@@ -29,7 +29,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener {
 	public static class NonCompatibleFileException extends Exception {}
 	private static final String echo = null;
 	
-	private static final int X_SIZE = 1150;
+	private static final int X_SIZE = 1130;
 	private static final int Y_SIZE = 600;
 	private static final int JMB_SIZE = 21;
 	
@@ -212,7 +212,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener {
 				JFileChooser fc = new JFileChooser();
 				// TODO uncomment 
 				// Set JFileChooser to working directory
-				fc.setCurrentDirectory(new File(System.getProperty("user.dir")));
+				//fc.setCurrentDirectory(new File(System.getProperty("user.dir")));
 		        fc.setFileFilter(filter);
 		        fc.setDialogTitle(title);
 		        int option = fc.showOpenDialog(null);

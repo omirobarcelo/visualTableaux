@@ -212,7 +212,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener {
 				JFileChooser fc = new JFileChooser();
 				// TODO uncomment 
 				// Set JFileChooser to working directory
-				fc.setCurrentDirectory(new File(System.getProperty("user.dir")));
+				//fc.setCurrentDirectory(new File(System.getProperty("user.dir")));
 		        fc.setFileFilter(filter);
 		        fc.setDialogTitle(title);
 		        int option = fc.showOpenDialog(null);

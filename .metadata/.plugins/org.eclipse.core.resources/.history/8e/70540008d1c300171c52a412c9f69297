@@ -68,8 +68,6 @@ public class Graph extends JPanel {
 		String[] axioms = (sAxioms.substring(1, sAxioms.length()-1)).split(", ");
 		GraphNode gn = new GraphNode(tableau.getFirstNode().getData().getId(), axioms, 200, 200);
 		gn.paint(g);
-		
-		// TODO update canvas size
 	}
 	
 	@Override

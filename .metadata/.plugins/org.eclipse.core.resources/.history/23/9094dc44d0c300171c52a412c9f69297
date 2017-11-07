@@ -45,9 +45,7 @@ public class Graph extends JPanel {
 		g2d.setColor(Color.WHITE);
 		// TODO change max sizes to current canvas size
 		// canvas size equal to lowest point of the graph plus some space
-		//g2d.fillRect(0, 0, X_SIZE, Y_SIZE);
-		// 50 represents some margin so everything shown is filled
-		g2d.fillRect(0, 0, CANVAS_WIDTH+50, CANVAS_HEIGHT+50);
+		g2d.fillRect(0, 0, X_SIZE, Y_SIZE);
 		
 		// Write K
 		g2d.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 18));
@@ -58,8 +56,6 @@ public class Graph extends JPanel {
 		// Bottom line
 		int lineLength = 10+fm.stringWidth(tableau.getOntology())+10;
 		g2d.drawLine(0, 5+fm.getHeight()+10, lineLength, 5+fm.getHeight()+10);
-		// If ontology longer than panel, adjust canvas size
-		CANVAS_WIDTH = Math.max(CANVAS_WIDTH, lineLength+10);
 		// Side line
 		g2d.drawLine(lineLength, 5+fm.getHeight()+10, lineLength, 0);
 		
@@ -68,8 +64,6 @@ public class Graph extends JPanel {
 		String[] axioms = (sAxioms.substring(1, sAxioms.length()-1)).split(", ");
 		GraphNode gn = new GraphNode(tableau.getFirstNode().getData().getId(), axioms, 200, 200);
 		gn.paint(g);
-		
-		// TODO update canvas size
 	}
 	
 	@Override

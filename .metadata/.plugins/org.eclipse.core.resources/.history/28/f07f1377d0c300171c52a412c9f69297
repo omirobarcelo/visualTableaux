@@ -46,7 +46,6 @@ public class Graph extends JPanel {
 		// TODO change max sizes to current canvas size
 		// canvas size equal to lowest point of the graph plus some space
 		//g2d.fillRect(0, 0, X_SIZE, Y_SIZE);
-		// 50 represents some margin so everything shown is filled
 		g2d.fillRect(0, 0, CANVAS_WIDTH+50, CANVAS_HEIGHT+50);
 		
 		// Write K
@@ -68,8 +67,6 @@ public class Graph extends JPanel {
 		String[] axioms = (sAxioms.substring(1, sAxioms.length()-1)).split(", ");
 		GraphNode gn = new GraphNode(tableau.getFirstNode().getData().getId(), axioms, 200, 200);
 		gn.paint(g);
-		
-		// TODO update canvas size
 	}
 	
 	@Override
