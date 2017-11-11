@@ -212,7 +212,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener {
 				JFileChooser fc = new JFileChooser();
 				// TODO uncomment 
 				// Set JFileChooser to working directory
-				fc.setCurrentDirectory(new File(System.getProperty("user.dir")));
+				//fc.setCurrentDirectory(new File(System.getProperty("user.dir")));
 		        fc.setFileFilter(filter);
 		        fc.setDialogTitle(title);
 		        int option = fc.showOpenDialog(null);
@@ -242,7 +242,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener {
 		tableau.init(pairCon_K.getFirst());
 		// TODO update to current graph instead of text area
 		// Even though graph shares the above tableau, we need to reset it so it repaints
-		graph.setTableau(tableau);
+		graph.reset(tableau);
 		graph.revalidate();
 		graph.repaint();
 		operations = options.setOptions(tableau.getOperations(), tableau.checkNextCreatedNode());

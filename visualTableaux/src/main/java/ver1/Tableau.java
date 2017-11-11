@@ -182,6 +182,10 @@ public class Tableau {
 		updateAllOperations();
 	}
 	
+	public boolean isBlocked(Node n) {
+		return blockedNodes.contains(n);
+	}
+	
 	public boolean isFinished() {
 		if (clashed && clashConsequenceNDO) {
 			if (backtracker.thereAreSnapshots()) {
@@ -314,6 +318,23 @@ public class Tableau {
 						blockedNodes.contains(n.getData()) || 
 						Ln.get(n.getData()).contains(OWNAxiom.BOTTOM));
 		finished &= tmpFinished;		
+	}
+	
+	public int numLeaves(TreeNode treeNode) {
+		int leaves = 0;
+		Stack<TreeNode> s = new Stack<TreeNode>();
+		s.push(treeNode);
+		while (!s.isEmpty()) {
+			TreeNode n = s.pop();
+			if (!n.getChildren().isEmpty()) {
+				for (TreeNode succ : n.getChildren()) {
+					s.push(succ);
+				}
+			} else {
+				leaves++;
+			}
+		}
+		return leaves;
 	}
 	
 	

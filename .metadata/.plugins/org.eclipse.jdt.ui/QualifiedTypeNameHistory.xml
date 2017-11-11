@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="org.semanticweb.owlapi.model.AxiomType"/>
 <fullyQualifiedTypeName name="uk.ac.manchester.cs.owl.owlapi.OWLDeclarationAxiomImpl"/>
 <fullyQualifiedTypeName name="org.semanticweb.owlapi.model.OWLOntology"/>
-<fullyQualifiedTypeName name="ver1.Node"/>
 <fullyQualifiedTypeName name="ver1.OWNAxiom"/>
 <fullyQualifiedTypeName name="ver1.OWNAxiom.AXIOM_TYPE"/>
 <fullyQualifiedTypeName name="org.semanticweb.owlapi.model.OWLAxiom"/>
@@ -59,4 +57,7 @@
 <fullyQualifiedTypeName name="java.awt.Color"/>
 <fullyQualifiedTypeName name="java.awt.Graphics"/>
 <fullyQualifiedTypeName name="java.util.Arrays"/>
+<fullyQualifiedTypeName name="ver1.Node"/>
+<fullyQualifiedTypeName name="java.awt.BasicStroke"/>
+<fullyQualifiedTypeName name="javax.swing.JFileChooser"/>
 </qualifiedTypeNameHistroy>
