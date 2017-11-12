@@ -22,6 +22,8 @@ public class GraphEdge {
 	private Font font;
 	
 	public GraphEdge(String[] relations, Point pos1, Point pos2) {
+		// TODO set relations, and positions with arg
+		// set default color
 		this.relations = new GraphAxiom[relations.length];
 		int i = 0;
 		for (String s : relations) 

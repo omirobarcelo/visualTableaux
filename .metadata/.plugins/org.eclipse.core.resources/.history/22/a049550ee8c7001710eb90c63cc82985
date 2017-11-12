@@ -48,7 +48,6 @@ public class Graph extends JPanel {
 		CANVAS_WIDTH = X_SIZE;
 		CANVAS_HEIGHT = Y_SIZE;
 		this.tableau = tableau;
-		this.graphNodes = new ArrayList<GraphNode>();
 	}
 	
 	public Node boldGraphNode(int x, int y) {

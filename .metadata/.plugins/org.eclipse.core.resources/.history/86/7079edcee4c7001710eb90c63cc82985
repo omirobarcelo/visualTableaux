@@ -29,7 +29,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener {
 	public static class NonCompatibleFileException extends Exception {}
 	private static final String echo = null;
 	
-	private static final int X_SIZE = 1250;
+	private static final int X_SIZE = 1150;
 	private static final int Y_SIZE = 600;
 	private static final int JMB_SIZE = 21;
 	
@@ -42,8 +42,6 @@ public class GUI extends JFrame implements ActionListener, MouseListener {
 	private static Pair<OWNAxiom, HashSet<OWNAxiom>> pairCon_K;
 	private static Tableau tableau;
 	private static List<Pair<Node, Operation>> operations;
-	
-	private Node selectedNode;
 	
 	public GUI() {
 		super("Visual Tableaux");
@@ -66,7 +64,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener {
 		// DEBUG
 		//System.out.println(stringStatus());
 		// DEBUG
-		//operations = options.setOptions(tableau.getOperations(), tableau.checkNextCreatedNode());
+		operations = options.setOptions(tableau.getOperations(), tableau.checkNextCreatedNode());
 		
 		//container.add(graph);
 		container.add(scrollGraph);
@@ -145,7 +143,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener {
 			// DEBUG
 			//System.out.println(stringStatus());
 			// DEBUG
-			operations = options.setOptions(tableau.getOperations(), tableau.checkNextCreatedNode(), selectedNode);
+			operations = options.setOptions(tableau.getOperations(), tableau.checkNextCreatedNode());
 		}
 	}
 
@@ -247,17 +245,17 @@ public class GUI extends JFrame implements ActionListener, MouseListener {
 		graph.reset(tableau);
 		graph.revalidate();
 		graph.repaint();
-		//operations = options.setOptions(tableau.getOperations(), tableau.checkNextCreatedNode());
-		options.clearOptions();
+		operations = options.setOptions(tableau.getOperations(), tableau.checkNextCreatedNode());
 	}
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
-		selectedNode = graph.boldGraphNode(e.getX(), e.getY());
+		System.out.println(e.getX() + ", " + e.getY());
+		Node n = graph.boldGraphNode(e.getX(), e.getY());
 		graph.revalidate();
 		graph.repaint();
-		operations = options.setOptions(tableau.getOperations(), tableau.checkNextCreatedNode(), selectedNode);
+		operations = options.setOptions(tableau.getOperations(), tableau.checkNextCreatedNode(), n);
 	}
 
 	@Override

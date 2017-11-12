@@ -48,7 +48,6 @@ public class Graph extends JPanel {
 		CANVAS_WIDTH = X_SIZE;
 		CANVAS_HEIGHT = Y_SIZE;
 		this.tableau = tableau;
-		this.graphNodes = new ArrayList<GraphNode>();
 	}
 	
 	public Node boldGraphNode(int x, int y) {
@@ -81,8 +80,8 @@ public class Graph extends JPanel {
 		// TODO change max sizes to current canvas size
 		// canvas size equal to lowest point of the graph plus some space
 		//g2d.fillRect(0, 0, X_SIZE, Y_SIZE);
-		// Paint background equal to shown plus 2 graph nodes at each side
-		g2d.fillRect(0, 0, CANVAS_WIDTH+GraphNode.getWidth()*2, CANVAS_HEIGHT+GraphNode.getStdHeight(g)*2);
+		// 50 represents some margin so everything shown is filled
+		g2d.fillRect(0, 0, CANVAS_WIDTH+GraphNode.getWidth(), CANVAS_HEIGHT+GraphNode.getStdHeight(g));
 		
 		// Write K
 		g2d.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 18));

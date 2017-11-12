@@ -29,7 +29,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener {
 	public static class NonCompatibleFileException extends Exception {}
 	private static final String echo = null;
 	
-	private static final int X_SIZE = 1250;
+	private static final int X_SIZE = 1150;
 	private static final int Y_SIZE = 600;
 	private static final int JMB_SIZE = 21;
 	
@@ -145,7 +145,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener {
 			// DEBUG
 			//System.out.println(stringStatus());
 			// DEBUG
-			operations = options.setOptions(tableau.getOperations(), tableau.checkNextCreatedNode(), selectedNode);
+			//operations = options.setOptions(tableau.getOperations(), tableau.checkNextCreatedNode());
 		}
 	}
 
@@ -248,12 +248,12 @@ public class GUI extends JFrame implements ActionListener, MouseListener {
 		graph.revalidate();
 		graph.repaint();
 		//operations = options.setOptions(tableau.getOperations(), tableau.checkNextCreatedNode());
-		options.clearOptions();
 	}
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
+		System.out.println(e.getX() + ", " + e.getY());
 		selectedNode = graph.boldGraphNode(e.getX(), e.getY());
 		graph.revalidate();
 		graph.repaint();

@@ -21,7 +21,7 @@ import ver1.TreeNode;
 import ver1.util.Pair;
 
 public class Graph extends JPanel {
-	private static final int X_SIZE = 700;
+	private static final int X_SIZE = 800;
 	private static final int Y_SIZE = 600;
 	private static final int BORDER = 10;
 	// Margin respect the sides and the graph
@@ -48,7 +48,6 @@ public class Graph extends JPanel {
 		CANVAS_WIDTH = X_SIZE;
 		CANVAS_HEIGHT = Y_SIZE;
 		this.tableau = tableau;
-		this.graphNodes = new ArrayList<GraphNode>();
 	}
 	
 	public Node boldGraphNode(int x, int y) {
@@ -63,26 +62,16 @@ public class Graph extends JPanel {
 		return n;
 	}
 	
-	private Node getBoldedNode() {
-		for (GraphNode gn : graphNodes)
-			if (gn.isBolded())
-				return gn.getNode();
-		return null;
-	}
-	
 	@Override
 	public void paintComponent(Graphics g) {
-		// Obtain bolded node, if any, to repaint, and reset list
-		Node bold = getBoldedNode();
-		graphNodes.clear();
 		// Paint background
 		Graphics2D g2d = (Graphics2D)g;
 		g2d.setColor(Color.WHITE);
 		// TODO change max sizes to current canvas size
 		// canvas size equal to lowest point of the graph plus some space
 		//g2d.fillRect(0, 0, X_SIZE, Y_SIZE);
-		// Paint background equal to shown plus 2 graph nodes at each side
-		g2d.fillRect(0, 0, CANVAS_WIDTH+GraphNode.getWidth()*2, CANVAS_HEIGHT+GraphNode.getStdHeight(g)*2);
+		// 50 represents some margin so everything shown is filled
+		g2d.fillRect(0, 0, CANVAS_WIDTH+GraphNode.getWidth(), CANVAS_HEIGHT+GraphNode.getStdHeight(g));
 		
 		// Write K
 		g2d.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 18));
@@ -125,9 +114,6 @@ public class Graph extends JPanel {
 			String sAxioms = tableau.getAxioms(tn.getData());
 			String[] axioms = (sAxioms.substring(1, sAxioms.length()-1)).split(", ");
 			GraphNode gn = new GraphNode(tn.getData(), axioms, gnIH.getTopRight().x, gnIH.getTopRight().y);
-			if (bold != null && bold.equals(tn.getData())) {
-				gn.setBolded(true);
-			}
 			if (tableau.isBlocked(tn.getData())) {
 				gn.toggleBlocked();
 			}

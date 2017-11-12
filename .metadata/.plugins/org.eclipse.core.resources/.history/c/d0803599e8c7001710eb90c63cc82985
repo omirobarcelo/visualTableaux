@@ -254,6 +254,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener {
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
+		System.out.println(e.getX() + ", " + e.getY());
 		selectedNode = graph.boldGraphNode(e.getX(), e.getY());
 		graph.revalidate();
 		graph.repaint();

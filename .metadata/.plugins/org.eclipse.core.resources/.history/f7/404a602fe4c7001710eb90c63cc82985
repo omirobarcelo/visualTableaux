@@ -95,18 +95,10 @@ public class GraphNode {
 		return height;
 	}
 	
-	public Node getNode() {
-		return node;
-	}
-	
 	public boolean isGraphNode(int x, int y) {
 		boolean xIn = (x >= position.x) && (x <= position.x + width);
 		boolean yIn = (y >= position.y) && (y <= position.y + height);
 		return xIn && yIn;
-	}
-	
-	public boolean isBolded() {
-		return bolded;
 	}
 	
 	public void paint(Graphics g) {
