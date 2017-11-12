@@ -49,7 +49,7 @@ public class GraphEdge {
 		g2d.drawLine(pos1.x, pos1.y, pos2.x, pos2.y);
 		
 		// Get relations text and highlighting, if any
-		String text = "";
+		String text = "X, ";
 		int offsetHL = -1, width = -1; // offset respect the String beginning and the width of highlighted axiom, if any
 		for (int i = 0; i < relations.length; i++) {
 			// DEBUG

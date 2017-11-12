@@ -6,12 +6,12 @@ import java.awt.Point;
 
 public class GraphAxiom {
 	
-	private String axiom;
+	public String axiom;
 	// TODO which position is this?
-	private Point position;
+	public Point position;
 	// Highlight color
-	private Color color;
-	private boolean highlighted;
+	public Color color;
+	public boolean highlighted;
 	
 	public GraphAxiom(String text) {
 		axiom = text;

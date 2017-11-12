@@ -1,0 +1,25 @@
+package ver1.ui;
+
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Point;
+
+public class GraphEdge {
+	
+	public GraphAxiom[] relations;
+	public Point pos1, pos2;
+	public Color color;
+	
+	public GraphEdge(String[] relations) {
+		// TODO set relations, and positions with arg
+		// set default color
+		this.relations = new GraphAxiom[relations.length];
+		int i = 0;
+		for (String s : relations) 
+			this.relations[i++] = new GraphAxiom(s);
+	}
+	
+	public void paint(Graphics g) {
+		
+	}
+}

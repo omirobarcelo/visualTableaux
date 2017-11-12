@@ -131,9 +131,7 @@ public class GraphNode {
 				xCursor = position.x+STD_MARGIN; // reset xCursor
 			}
 			axioms[i].setPosition(xCursor, yCursor);
-			// DEBUG
 			//if (i == 1) {
-			// DEBUG
 			if (axioms[i].isHighligthed()) {
 				g2d.setPaint(colHL);
 				g2d.fillRect(xCursor, yCursor, fm.stringWidth(axioms[i].getText()), fontHeight);

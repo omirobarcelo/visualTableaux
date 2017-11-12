@@ -14,7 +14,7 @@ public class GraphEdge {
 	private static final String SEP = ", ";
 	private static final Font FONT = new Font(Font.MONOSPACED, Font.PLAIN, 16);
 	private static final int STD_MARGIN = 5;
-	private static final int PROPORTION = 25;
+	private static final int LONG_MARGIN = STD_MARGIN*10;
 	
 	private GraphAxiom[] relations;
 	private Point pos1, pos2;
@@ -66,9 +66,9 @@ public class GraphEdge {
 		// Locate text
 		int x = 0;
 		if (pos1.x < pos2.x)
-			x = pos1.x + (pos2.x-pos1.x)/2 + STD_MARGIN*(pos2.x-pos1.x)/PROPORTION; // Separate from edge proportional to the width of the edge
+			x = pos1.x + (pos2.x-pos1.x)/2 + STD_MARGIN*(pos2.x-pos1.x)/100; // Separate from edge proportional to the width of the edge
 		else if (pos1.x > pos2.x)
-			x = pos1.x - (pos1.x-pos2.x)/2 - fm.stringWidth(text) - STD_MARGIN*(pos1.x-pos2.x)/PROPORTION; // Separate from edge proportional to the width of the edge
+			x = pos1.x - (pos1.x-pos2.x)/2 - fm.stringWidth(text) - STD_MARGIN*(pos1.x-pos2.x)/100; // Separate from edge proportional to the width of the edge
 		else
 			x = pos1.x - (pos1.x-pos2.x)/2 - fm.stringWidth(text) - STD_MARGIN;
 		int y = pos1.y + (pos2.y-pos1.y)/2 + fm.getHeight()/2;

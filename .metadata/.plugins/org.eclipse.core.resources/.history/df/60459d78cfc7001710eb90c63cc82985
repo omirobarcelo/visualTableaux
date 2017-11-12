@@ -146,7 +146,7 @@ public class Operation {
 		}
 		case ONLY: {
 			OWNUniversal axiom = (OWNUniversal)operand1;
-			return base + "L(" + node.getId() + ") \u222A {" + axiom.getOperand() + "}";
+			return base + "L(" + node + ") \u222A {" + axiom.getOperand() + "}";
 		}
 		case TOP:
 			return base + "L(" + x.getId() + ") \u222A {" + operand1 + "}";

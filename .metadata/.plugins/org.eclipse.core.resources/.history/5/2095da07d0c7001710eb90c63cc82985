@@ -78,17 +78,32 @@ public class Graph extends JPanel {
 		// Side line
 		g2d.drawLine(lineLength, 5+fm.getHeight()+10, lineLength, 0);
 		
+		// TODO paint the whole tree according to the current state
+		// TODO maybe change getAxioms to return the axioms and not the string
+//		String sAxioms = tableau.getAxioms(tableau.getFirstNode().getData());
+//		String[] axioms = (sAxioms.substring(1, sAxioms.length()-1)).split(", ");
+//		GraphNode gn = new GraphNode(tableau.getFirstNode().getData().getId(), axioms, 200, 100);
+//		gn.paint(g);
+		
+		// TODO remove debugging sysout
 		// Get root and create its information holder
 		TreeNode root = tableau.getFirstNode();
 		InfoHolder rootInfo = new InfoHolder();
+		// Set parent info to null
+		rootInfo.setParentBottomLeft(null);
 		// Check number of leaves of root to allocate all the horizontal space and center the first GraphNode
 		rootInfo.setLeaves(tableau.numLeaves(root));
 		// Adjust canvas size
 		int workspaceLength = rootInfo.getLeaves()*(GraphNode.getWidth()+IN_MARGIN*2);
+		System.out.println(rootInfo.getLeaves());
+		System.out.println(workspaceLength);
 		CANVAS_WIDTH = Math.max(CANVAS_WIDTH, OUT_MARGIN+workspaceLength+OUT_MARGIN);
+		System.out.println(CANVAS_WIDTH);
 		// Set workspace and position of first node
 		rootInfo.setWorkspace(CANVAS_WIDTH/2-workspaceLength/2, CANVAS_WIDTH/2+workspaceLength/2);
+		System.out.println(CANVAS_WIDTH/2-workspaceLength/2 + ", " + (CANVAS_WIDTH/2+workspaceLength/2));
 		rootInfo.setTopRight(new Point(CANVAS_WIDTH/2-GraphNode.getWidth()/2, 100));
+		System.out.println(CANVAS_WIDTH/2-GraphNode.getWidth()/2);
 		// Adjust canvas size
 		CANVAS_WIDTH = Math.max(CANVAS_WIDTH, OUT_MARGIN+(rootInfo.getLeaves()*(GraphNode.getWidth()+IN_MARGIN*2))+OUT_MARGIN);
 		// Enqueue root and its information
@@ -99,8 +114,12 @@ public class Graph extends JPanel {
 			TreeNode tn = pNodeIH.getFirst();
 			InfoHolder gnIH = pNodeIH.getSecond();
 			
+			// Draw GraphEdge if there's a parent
+			if (gnIH.getParentBottomLeft() != null) {
+				// TODO not here
+			}
+			
 			// Draw GraphNode
-			// TODO maybe change getAxioms to return the axioms and not the string
 			String sAxioms = tableau.getAxioms(tn.getData());
 			String[] axioms = (sAxioms.substring(1, sAxioms.length()-1)).split(", ");
 			GraphNode gn = new GraphNode(tn.getData().getId(), axioms, gnIH.getTopRight().x, gnIH.getTopRight().y);
@@ -119,6 +138,7 @@ public class Graph extends JPanel {
 			for (TreeNode child : tn.getChildren()) {
 				InfoHolder ih = new InfoHolder();
 				ih.setLeaves(tableau.numLeaves(child));
+				ih.setParentBottomLeft(new Point(gnIH.getTopRight().x, gnIH.getTopRight().y+gn.getHeight()));
 				// Assign a fraction of the parent workspace proportional to the number of leaves the child has
 				ih.setWorkspace(wsCursor, wsCursor+=(wsLength*ih.getLeaves()/gnIH.getLeaves()));
 				int childWSLength = ih.getWorkspace().getSecond() - ih.getWorkspace().getFirst();

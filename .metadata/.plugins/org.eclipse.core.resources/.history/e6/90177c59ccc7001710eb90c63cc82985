@@ -13,8 +13,6 @@ public class GraphEdge {
 	private static final Color COL_HL = Color.YELLOW;
 	private static final String SEP = ", ";
 	private static final Font FONT = new Font(Font.MONOSPACED, Font.PLAIN, 16);
-	private static final int STD_MARGIN = 5;
-	private static final int PROPORTION = 25;
 	
 	private GraphAxiom[] relations;
 	private Point pos1, pos2;
@@ -41,7 +39,6 @@ public class GraphEdge {
 	
 	public void paint(Graphics g) {
 		Graphics2D g2d = (Graphics2D)g;
-		g2d.setFont(font);
 		FontMetrics fm = g2d.getFontMetrics();
 		
 		// Draw line
@@ -50,37 +47,26 @@ public class GraphEdge {
 		
 		// Get relations text and highlighting, if any
 		String text = "";
-		int offsetHL = -1, width = -1; // offset respect the String beginning and the width of highlighted axiom, if any
+		int offset = -1, width = -1; // offset respect the String beginning and the width of highlighted axiom, if any
 		for (int i = 0; i < relations.length; i++) {
-			// DEBUG
-			//if (i == 0) {
-			// DEBUG
+			//if (i == 1) {
 			if (relations[i].isHighligthed()) {
 				width = fm.stringWidth(relations[i].getText());
-				offsetHL = fm.stringWidth(text);
+				offset = fm.stringWidth(text);
 			}
 			
 			text += relations[i].getText() + (i+1 < relations.length ? SEP : "");;
 		}
-		
-		// Locate text
-		int x = 0;
-		if (pos1.x < pos2.x)
-			x = pos1.x + (pos2.x-pos1.x)/2 + STD_MARGIN*(pos2.x-pos1.x)/PROPORTION; // Separate from edge proportional to the width of the edge
-		else if (pos1.x > pos2.x)
-			x = pos1.x - (pos1.x-pos2.x)/2 - fm.stringWidth(text) - STD_MARGIN*(pos1.x-pos2.x)/PROPORTION; // Separate from edge proportional to the width of the edge
-		else
-			x = pos1.x - (pos1.x-pos2.x)/2 - fm.stringWidth(text) - STD_MARGIN;
-		int y = pos1.y + (pos2.y-pos1.y)/2 + fm.getHeight()/2;
-		
 		// If some relation is highlighted
-		if (offsetHL != -1 && width != -1) {
+		if (offset != -1 && width != -1) {
 			g2d.setPaint(colHL);
-			g2d.fillRect(x+offsetHL, y-fm.getHeight(), width, fm.getHeight());
+			g2d.fillRect(xCursor, yCursor, fm.stringWidth(axioms[i].getText()), fontHeight);
 		}
-		
-		// Write text
+		// Write each line
 		g2d.setPaint(colFont);
-		g2d.drawString(text, x, y);
+		for (String line : text.split("\n")) {
+			g2d.drawString(line, position.x+STD_MARGIN, position.y+height+fontHeight);
+			height += fontHeight;
+		}
 	}
 }

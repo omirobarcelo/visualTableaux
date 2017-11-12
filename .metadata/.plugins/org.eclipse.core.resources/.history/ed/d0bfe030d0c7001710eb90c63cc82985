@@ -5,11 +5,20 @@ import java.awt.Point;
 import ver1.util.Pair;
 
 public class InfoHolder {
+	private Point parentBottomLeft;
 	private Point topRight;
 	private int leaves;
 	private Pair<Integer, Integer> workspace;
 	
 	public InfoHolder() {}
+
+	public Point getParentBottomLeft() {
+		return parentBottomLeft;
+	}
+
+	public void setParentBottomLeft(Point parentBottomLeft) {
+		this.parentBottomLeft = parentBottomLeft;
+	}
 
 	public Point getTopRight() {
 		return topRight;
