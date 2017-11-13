@@ -31,8 +31,8 @@ public class GraphAxiom {
 		position = new Point(x, y);
 	}
 	
-	public void toggleHighlight() {
-		highlighted = !highlighted;
+	public void setHighlight(boolean state) {
+		highlighted = state;
 	}
 	
 	public void paint(Graphics g) {

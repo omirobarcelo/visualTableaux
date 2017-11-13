@@ -8,6 +8,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
@@ -15,6 +16,7 @@ import java.util.Queue;
 import javax.swing.*;
 
 import ver1.Node;
+import ver1.Operation;
 import ver1.Tableau;
 import ver1.TreeNode;
 
@@ -35,12 +37,14 @@ public class Graph extends JPanel {
 	private int CANVAS_HEIGHT = Y_SIZE;
 		
 	private Tableau tableau;
+	private GraphOntology graphOntology;
 	private List<GraphNode> graphNodes;
 	
 	public Graph(Tableau tableau) {
 		this.setBorder(BorderFactory.createEmptyBorder(BORDER, BORDER, BORDER, BORDER));
 		
 		this.tableau = tableau;
+		this.graphOntology = null;
 		this.graphNodes = new ArrayList<GraphNode>();
 	}
 	
@@ -48,6 +52,7 @@ public class Graph extends JPanel {
 		CANVAS_WIDTH = X_SIZE;
 		CANVAS_HEIGHT = Y_SIZE;
 		this.tableau = tableau;
+		this.graphOntology = null;
 		this.graphNodes = new ArrayList<GraphNode>();
 	}
 	
@@ -70,10 +75,51 @@ public class Graph extends JPanel {
 		return null;
 	}
 	
+	public void setHighlighting(Node n, Operation op, boolean state) {
+		if (op.getOperator() == Operation.OPERATOR.TOP) {
+			graphOntology.setHighlight(op.getOperand1().toString(), state);
+		} else {
+			for (GraphNode gn : graphNodes) {
+				if (gn.getNode().equals(n)) {
+					gn.setHighlight((op.getOperator() == Operation.OPERATOR.BOTTOM) ? op.getOperand2() : op.getOperand1(), state);
+				}
+			}
+		}
+	}
+	
+	private GraphAxiom[] getGraphNodeAxioms(Node n) {
+		for (GraphNode gn : graphNodes) {
+			if (gn.getNode().equals(n))
+				return gn.getGraphAxioms();
+		}
+		return null;
+	}
+	
+	// Since graphNodes is cleared before painting, and we need to save the state in case of highlighting
+	private HashMap<Node, GraphAxiom[]> getAllGraphNodeAxioms() {
+		HashMap<Node, GraphAxiom[]> map = new HashMap<Node, GraphAxiom[]>();
+		for (GraphNode gn : graphNodes) {
+			map.put(gn.getNode(), gn.getGraphAxioms());
+		}
+		return map;
+	}
+	
+	// Necessary because after pressing the option, there's no Exited, so the highlighting it's not cleared
+	public void clearGraphOntologyHighlighting() {
+		graphOntology.clearHighlight();
+	}
+	
+	public void clearGraphNodesHighlighting() {
+		for (GraphNode gn : graphNodes) {
+			gn.clearHighlight();
+		}
+	}
+	
 	@Override
 	public void paintComponent(Graphics g) {
 		// Obtain bolded node, if any, to repaint, and reset list
 		Node bold = getBoldedNode();
+		HashMap<Node, GraphAxiom[]> mapNodeGA = getAllGraphNodeAxioms();
 		graphNodes.clear();
 		// Paint background
 		Graphics2D g2d = (Graphics2D)g;
@@ -84,20 +130,21 @@ public class Graph extends JPanel {
 		// Paint background equal to shown plus 2 graph nodes at each side
 		g2d.fillRect(0, 0, CANVAS_WIDTH+GraphNode.getWidth()*2, CANVAS_HEIGHT+GraphNode.getStdHeight(g)*2);
 		
-		// Write K
-		g2d.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 18));
-		g2d.setPaint(Color.BLACK);
-		FontMetrics fm = g2d.getFontMetrics();
-		// TODO change to GraphAxiom, so the position of each axiom in the ontology is known and can be highlighted
-		// TODO max_width equal to longest axiom + ", "
-		g2d.drawString(tableau.getOntology(), 10, 5+fm.getHeight());
-		// Bottom line
-		int lineLength = 10+fm.stringWidth(tableau.getOntology())+10;
-		g2d.drawLine(0, 5+fm.getHeight()+10, lineLength, 5+fm.getHeight()+10);
+		// Draw ontology
+		// Need to check it's not null for the first execution
+		GraphAxiom[] ontPrevAxioms = null;
+		if (graphOntology != null)
+			ontPrevAxioms = graphOntology.getGraphAxioms();
+		String sOntology = tableau.getOntology();
+		String[] ontology = (sOntology.substring(1, sOntology.length()-1)).split(", ");
+		graphOntology = new GraphOntology(ontology);
+		if (ontPrevAxioms != null)
+			graphOntology.mergeGraphAxioms(ontPrevAxioms);
+		Pair<Integer, Integer> p = graphOntology.paint(g);
 		// If ontology longer than panel, adjust canvas size
-		CANVAS_WIDTH = Math.max(CANVAS_WIDTH, lineLength+10);
-		// Side line
-		g2d.drawLine(lineLength, 5+fm.getHeight()+10, lineLength, 0);
+		CANVAS_WIDTH = Math.max(CANVAS_WIDTH, p.getFirst()+OUT_MARGIN);
+		// Set width of GraphNode according to max width of axiom in ontology
+		GraphNode.setWidth(p.getSecond());
 		
 		// Get root and create its information holder
 		TreeNode root = tableau.getFirstNode();
@@ -125,6 +172,8 @@ public class Graph extends JPanel {
 			String sAxioms = tableau.getAxioms(tn.getData());
 			String[] axioms = (sAxioms.substring(1, sAxioms.length()-1)).split(", ");
 			GraphNode gn = new GraphNode(tn.getData(), axioms, gnIH.getTopRight().x, gnIH.getTopRight().y);
+			if (mapNodeGA.containsKey(tn.getData()))
+				gn.mergeGraphAxioms(mapNodeGA.get(tn.getData()));
 			if (bold != null && bold.equals(tn.getData())) {
 				gn.setBolded(true);
 			}

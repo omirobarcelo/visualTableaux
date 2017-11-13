@@ -8,6 +8,8 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
 
+import ownapi.OWNAxiom;
+import ownapi.OWNComplement;
 import ver1.Node;
 
 public class GraphNode {
@@ -107,6 +109,40 @@ public class GraphNode {
 	
 	public boolean isBolded() {
 		return bolded;
+	}
+	
+	public GraphAxiom[] getGraphAxioms() {
+		return axioms;
+	}
+	
+	public void mergeGraphAxioms(GraphAxiom[] prevAxioms) {
+		for (int i = 0; i < prevAxioms.length; i++) {
+			for (int j = 0; j < axioms.length; j++) {
+				if (prevAxioms[i].getText().equals(axioms[j].getText()))
+					axioms[j].setHighlight(prevAxioms[i].isHighligthed());
+			}
+		}
+	}
+	
+	public void setHighlight(OWNAxiom ax, boolean state) {
+		for (GraphAxiom ga : axioms) {
+			// If is Complement, then also highlight its literal, since we're highlighting a BOTTOM operation
+			if (ax.isOfType(OWNAxiom.AXIOM_TYPE.COMPLEMENT)) {
+				if (ga.getText().equals(ax.toString()) || ga.getText().equals(((OWNComplement)ax).getOperand().toString())) {
+					ga.setHighlight(state);
+				}
+			} else {
+				if (ga.getText().equals(ax.toString())) {
+					ga.setHighlight(state);
+				}
+			}
+		}
+	}
+	
+	public void clearHighlight() {
+		for (GraphAxiom ga : axioms) {
+			ga.setHighlight(false);
+		}
 	}
 	
 	public void paint(Graphics g) {

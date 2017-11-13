@@ -4,6 +4,8 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -15,7 +17,7 @@ import ver1.Node;
 import ver1.Operation;
 import ver1.util.Pair;
 
-public class Options extends JPanel implements ActionListener {
+public class Options extends JPanel implements ActionListener, MouseListener {
 	private static final int X_SIZE = 300;
 	private static final int Y_SIZE = 600;
 	private static final int BORDER = 10;
@@ -83,23 +85,26 @@ public class Options extends JPanel implements ActionListener {
 		List<Pair<Node, Operation>> ops = new ArrayList<Pair<Node, Operation>>();
 		JLabel jlNode = new JLabel("Node " + n.getId());
 		this.add(jlNode);
-		for (Operation op : options.get(n)) {
-			ops.add(new Pair<Node, Operation>(n, op));
-			//String s = op.fullString(n, nextCreatedNode);
-			//JButton jbOp = new JButton(op.fullString(n, nextCreatedNode));
-			JButton jbOp = new JButton(transformText(op.fullString(n, nextCreatedNode)));
-			// Needed both minimum and maximum size to make the button use all the 
-			// panel space, plus preferredSize because Java layout is a bitch
-			jbOp.setMinimumSize(new Dimension(BUTTON_WIDTH, BUTTON_HEIGHT));
-			// With preferredSize button doesn't adapt to the text,
-			// but the horizontal size now changes a bit,
-			// because Java pretty much ignores min/max without preferred
-			//jbOp.setPreferredSize(new Dimension(BUTTON_WIDTH, BUTTON_HEIGHT));
-			jbOp.setMaximumSize(new Dimension(BUTTON_WIDTH, BUTTON_HEIGHT+30));
-			jbOp.setHorizontalAlignment(SwingConstants.CENTER);
-			jbOp.addActionListener(this);
-			jbList.add(jbOp);
-			this.add(jbOp);
+		if (options.containsKey(n)) {
+			for (Operation op : options.get(n)) {
+				ops.add(new Pair<Node, Operation>(n, op));
+				//String s = op.fullString(n, nextCreatedNode);
+				//JButton jbOp = new JButton(op.fullString(n, nextCreatedNode));
+				OptionButton jbOp = new OptionButton(transformText(op.fullString(n, nextCreatedNode)), op);
+				// Needed both minimum and maximum size to make the button use all the 
+				// panel space, plus preferredSize because Java layout is a bitch
+				jbOp.setMinimumSize(new Dimension(BUTTON_WIDTH, BUTTON_HEIGHT));
+				// With preferredSize button doesn't adapt to the text,
+				// but the horizontal size now changes a bit,
+				// because Java pretty much ignores min/max without preferred
+				//jbOp.setPreferredSize(new Dimension(BUTTON_WIDTH, BUTTON_HEIGHT));
+				jbOp.setMaximumSize(new Dimension(BUTTON_WIDTH, BUTTON_HEIGHT+30));
+				jbOp.setHorizontalAlignment(SwingConstants.CENTER);
+				jbOp.addActionListener(this);
+				jbOp.addMouseListener(this);
+				jbList.add(jbOp);
+				this.add(jbOp);
+			}
 		}
 
 		// To make everything stick to the top
@@ -171,5 +176,35 @@ public class Options extends JPanel implements ActionListener {
 		//GUI.execOption(index);
 		// Get GUI where this component lives and execute option
 		((GUI)SwingUtilities.getWindowAncestor(this)).execOption(index);
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+		((GUI)SwingUtilities.getWindowAncestor(this)).setHighlightAxiom(((OptionButton)e.getSource()).getOperation(), true);
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+		((GUI)SwingUtilities.getWindowAncestor(this)).setHighlightAxiom(((OptionButton)e.getSource()).getOperation(), false);
 	}
 }

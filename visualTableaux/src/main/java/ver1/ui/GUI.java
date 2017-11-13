@@ -27,7 +27,6 @@ import ver1.util.Pair;
 
 public class GUI extends JFrame implements ActionListener, MouseListener {
 	public static class NonCompatibleFileException extends Exception {}
-	private static final String echo = null;
 	
 	private static final int X_SIZE = 1250;
 	private static final int Y_SIZE = 600;
@@ -128,10 +127,12 @@ public class GUI extends JFrame implements ActionListener, MouseListener {
 		
 		// Backtracking automatically applied
 		if (tableau.isFinished()) {
-			// Show dialog, update status, and remove operations
+			// Show dialog, update status, clear highlighting, and remove operations
 			JOptionPane.showMessageDialog(this, "Tableau expansion has finished.\n" +
 					"This ontology is " + (tableau.isSatisfiable() ? "" : "not ") + "satisfiable");
 
+			graph.clearGraphOntologyHighlighting();
+			graph.clearGraphNodesHighlighting();
 			graph.revalidate();
 			graph.repaint();
 			// DEBUG
@@ -139,7 +140,9 @@ public class GUI extends JFrame implements ActionListener, MouseListener {
 			// DEBUG
 			options.clearOptions();
 		} else {
-			// Update status, and set new operations
+			// Update status, and set new operations, and clear highlighting
+			graph.clearGraphOntologyHighlighting();
+			graph.clearGraphNodesHighlighting();
 			graph.revalidate();
 			graph.repaint();
 			// DEBUG
@@ -147,6 +150,12 @@ public class GUI extends JFrame implements ActionListener, MouseListener {
 			// DEBUG
 			operations = options.setOptions(tableau.getOperations(), tableau.checkNextCreatedNode(), selectedNode);
 		}
+	}
+	
+	public void setHighlightAxiom(Operation op, boolean state) {
+		graph.setHighlighting(selectedNode, op, state);
+		graph.revalidate();
+		graph.repaint();
 	}
 
 	public static void main(String[] args) {
