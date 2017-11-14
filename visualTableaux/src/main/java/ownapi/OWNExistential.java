@@ -1,5 +1,7 @@
 package ownapi;
 
+import ver1.util.StringAxiomConstants;
+
 public class OWNExistential extends OWNAxiom{
 	/**
 	 * Assumed that relations will always be literals
@@ -29,7 +31,7 @@ public class OWNExistential extends OWNAxiom{
 
 	@Override
 	public String toString() {
-		return "\u2203" + relation + "." + (operand.isLiteral() ? operand : "("+operand+")");
+		return StringAxiomConstants.OP_EXISTENTIAL + relation + "." + (operand.isLiteral() ? operand : "("+operand+")");
 		//return "OWNExistential [relation=(" + relation + "), operand=(" + operand1 + ")]";
 	}
 	

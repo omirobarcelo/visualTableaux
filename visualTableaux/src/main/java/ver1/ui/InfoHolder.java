@@ -4,10 +4,15 @@ import java.awt.Point;
 
 import ver1.util.Pair;
 
+/**
+ * Stores information of GraphNode
+ * @author Oriol Miro-Barcelo
+ *
+ */
 public class InfoHolder {
-	private Point topRight;
-	private int leaves;
-	private Pair<Integer, Integer> workspace;
+	private Point topRight; // x, y coordinates of the top right corner
+	private int leaves; // number of leaves
+	private Pair<Integer, Integer> workspace; // horizontal workspace; workspace defines the space where the node and its leaves can be painted
 	
 	public InfoHolder() {}
 
@@ -31,6 +36,11 @@ public class InfoHolder {
 		return workspace;
 	}
 
+	/**
+	 * 
+	 * @param wsStart Pixel where workspace starts
+	 * @param wsEnd Pixel where workspace ends
+	 */
 	public void setWorkspace(int wsStart, int wsEnd) {
 		this.workspace = new Pair<Integer, Integer>(wsStart, wsEnd);
 	}

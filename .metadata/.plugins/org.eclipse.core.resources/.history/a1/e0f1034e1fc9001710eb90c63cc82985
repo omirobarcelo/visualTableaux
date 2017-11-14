@@ -1,0 +1,18 @@
+package ver1.util;
+
+/**
+ * Public access to the strings that will be used to represent axioms (i.e.: operators, arrows...)
+ * @author Oriol Miro-Barcelo
+ *
+ */
+public class StringAxiomConstants {
+	public static final String ARROW_RIGHT = "";
+	public static final String ARROW_DOWN = "";
+	
+	public static final String OP_TOP = "";
+	public static final String OP_BOTTOM = "";
+	public static final String OP_UNION = "";
+	public static final String OP_INTERSECTION = "";
+	public static final String OP_EXISTENTIAL = "";
+	public static final String OP_UNIVERSAL = "";
+}

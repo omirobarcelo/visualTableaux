@@ -34,10 +34,6 @@ public class TUI {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		// DEBUG
-		if (concept == null || tbox == null)
-			System.out.println("Something is null");
-		// DEBUG
 		
 		// Get concept and ontology K
 		Pair<OWNAxiom, HashSet<OWNAxiom>> pairCon_K = Interpreter.read(concept, tbox);
@@ -85,7 +81,7 @@ public class TUI {
 	 */
 	private static void showStatus(Tableau tableau) {
 		System.out.println();
-		System.out.println("K : " + tableau.getOntology());
+		System.out.println("K : " + tableau.getOntology().toString());
 		System.out.println();
 		tableau.iterativePreorder(tableau.getFirstNode(), "printNodeStatus");
 		System.out.println();

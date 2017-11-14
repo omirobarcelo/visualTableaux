@@ -2,6 +2,7 @@ package ver1;
 
 import ownapi.OWNAxiom;
 import ver1.Operation.OPERATOR;
+import ver1.util.StringAxiomConstants;
 
 /**
  * A non deterministic operation is characterized by the node on which
@@ -58,13 +59,13 @@ public class NonDeterministicOperation {
 	}
 	
 	/**
-	 * As per right not, toString() returns always OR format
+	 * As per right now, toString() returns always OR format
 	 */
 	@Override
 	public String toString() {
-		return "\u2A06(" + operand + ", " + result + ")" + 
-				" \u27F6 " + 
-				"L(" + n.getId() + ") \u222A {" + result + "}";
+		return StringAxiomConstants.OP_UNION + "(" + operand + ", " + result + ")" + 
+				" " + StringAxiomConstants.ARROW_RIGHT + " " + 
+				"L(" + n.getId() + ") " + StringAxiomConstants.UNION + " {" + result + "}";
 	}
 	
 	@Override

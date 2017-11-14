@@ -1,0 +1,10 @@
+package ver1.util;
+
+/**
+ * Public access to the strings that will be used to represent axioms (i.e.: operators, arrows...)
+ * @author Oriol Miro-Barcelo
+ *
+ */
+public class StringAxiomConstants {
+
+}

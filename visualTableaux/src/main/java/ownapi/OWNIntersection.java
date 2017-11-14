@@ -1,5 +1,7 @@
 package ownapi;
 
+import ver1.util.StringAxiomConstants;
+
 public class OWNIntersection extends OWNAxiom {
 	private OWNAxiom operand1;
 	private OWNAxiom operand2;
@@ -27,7 +29,7 @@ public class OWNIntersection extends OWNAxiom {
 	@Override
 	public String toString() {
 		return (operand1.isLiteral() ? operand1 : "("+operand1+")")
-				+ "\u2A05" + 
+				+ StringAxiomConstants.OP_INTERSECTION + 
 				(operand2.isLiteral() ? operand2 : "("+operand2+")");
 		//return "OWNIntersection [operand1=(" + operand1 + "), operand2=(" + operand2 + ")]";
 	}

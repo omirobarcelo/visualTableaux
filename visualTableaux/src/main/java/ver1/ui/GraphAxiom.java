@@ -1,21 +1,17 @@
 package ver1.ui;
 
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Point;
-
+/**
+ * Only holds the information of the GraphAxiom, does not paint it
+ * @author Oriol Miro-Barcelo
+ *
+ */
 public class GraphAxiom {
 	
 	private String axiom;
-	// TODO which position is this?
-	private Point position;
-	// Highlight color
-	private Color color;
 	private boolean highlighted;
 	
 	public GraphAxiom(String text) {
 		axiom = text;
-		color = Color.YELLOW;
 		highlighted = false;
 	}
 	
@@ -27,15 +23,7 @@ public class GraphAxiom {
 		return highlighted;
 	}
 	
-	public void setPosition(int x, int y) {
-		position = new Point(x, y);
-	}
-	
 	public void setHighlight(boolean state) {
 		highlighted = state;
-	}
-	
-	public void paint(Graphics g) {
-		
 	}
 }

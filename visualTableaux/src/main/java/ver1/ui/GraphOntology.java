@@ -18,7 +18,6 @@ public class GraphOntology {
 	private static final int Y_MARGIN = 5;
 	
 	private GraphAxiom[] axioms;
-	private String highlighted = "";
 	private Color colFont, colLine, colHL;
 	private Font font;
 	
@@ -35,25 +34,18 @@ public class GraphOntology {
 		this.font = FONT;
 	}
 	
-	public void clearHighlight() {
-		for (GraphAxiom ga : axioms) {
-			ga.setHighlight(false);
-		}
-	}
-	
-	public void setHighlight(String axiom, boolean state) {
-		for (GraphAxiom ga : axioms) {
-			if (ga.getText().equals(axiom)) {
-				//highlighted = state ? axiom : "";
-				ga.setHighlight(state);
-			}
-		}
-	}
 	
 	public GraphAxiom[] getGraphAxioms() {
 		return axioms;
 	}
 	
+	/**
+	 * Merges the previous GraphAxiom to the current ones
+	 * Check if a previous GraphAxiom is equal to a current one and copies the state of the previous
+	 * Necessary because while painting Graph, the GraphOntology is renewed, and the previous GraphAxiom
+	 * with the correct highlighting, erased
+	 * @param prevAxioms
+	 */
 	public void mergeGraphAxioms(GraphAxiom[] prevAxioms) {
 		for (int i = 0; i < prevAxioms.length; i++) {
 			for (int j = 0; j < axioms.length; j++) {
@@ -64,7 +56,31 @@ public class GraphOntology {
 	}
 	
 	/**
-	 * Paints ontology and returns a pair with <ontoloogyLength, maxWidthOfAxiom>
+	 * Sets the highlight of all of its GraphAxiom to false
+	 */
+	public void clearHighlight() {
+		for (GraphAxiom ga : axioms) {
+			ga.setHighlight(false);
+		}
+	}
+	
+	/**
+	 * Sets the highlight of the GraphAxiom with text axiom to state
+	 * @param axiom
+	 * @param state
+	 */
+	public void setHighlight(String axiom, boolean state) {
+		for (GraphAxiom ga : axioms) {
+			if (ga.getText().equals(axiom)) {
+				//highlighted = state ? axiom : "";
+				ga.setHighlight(state);
+			}
+		}
+	}
+	
+	
+	/**
+	 * Paints ontology and returns a pair with (ontologyLength, maxWidthOfAxiom)
 	 * @param g
 	 * @return
 	 */
@@ -78,18 +94,8 @@ public class GraphOntology {
 		
 		// Get axioms text and highlighting, if any
 		String text = "";
-		int offsetHL = -1, width = -1; // offset respect the String beginning and the width of highlighted axiom, if any
 		for (int i = 0; i < axioms.length; i++) {
-			// DEBUG
-			//if (i == 0) {
-			// DEBUG
-//			if (axioms[i].isHighligthed()) {
-//				width = fm.stringWidth(axioms[i].getText());
-//				offsetHL = fm.stringWidth(text);
-//			}
-			
 			if (axioms[i].isHighligthed()) {
-			//if (axioms[i].getText().equals(highlighted)) {
 				g2d.setPaint(colHL);
 				g2d.fillRect(X_MARGIN+fm.stringWidth(text), Y_MARGIN, fm.stringWidth(axioms[i].getText()), fm.getHeight());
 			}
@@ -99,17 +105,12 @@ public class GraphOntology {
 			text += axioms[i].getText() + (i+1 < axioms.length ? SEP : "");;
 		}
 		
-//		// If some relation is highlighted
-//		if (offsetHL != -1 && width != -1) {
-//			g2d.setPaint(colHL);
-//			g2d.fillRect(x+offsetHL, y-fm.getHeight(), width, fm.getHeight());
-//		}
-		
 		// Write K
 		g2d.setPaint(colFont);
 		g2d.drawString(text, X_MARGIN, Y_MARGIN+fm.getHeight());
 		
 		// Bottom line
+		g2d.setPaint(colLine);
 		length = X_MARGIN+fm.stringWidth(text)+X_MARGIN;
 		g2d.drawLine(0, Y_MARGIN+fm.getHeight()+Y_MARGIN, length, Y_MARGIN+fm.getHeight()+Y_MARGIN);
 		

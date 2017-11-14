@@ -5,7 +5,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 
@@ -51,29 +50,15 @@ public class GUI extends JFrame implements ActionListener, MouseListener {
 		container.setLayout(new BoxLayout(container, BoxLayout.X_AXIS));
 
 		graph = new Graph(tableau);
-		// TODO maybe mouse could be used to detect the box clicked, and show 
-		// the operations related to said box
-		// If so, clicked box should also be remarked
 		graph.addMouseListener(this);
 		JScrollPane scrollGraph = new JScrollPane(graph);
 		options = new Options();
 		JScrollPane scrollOptions = new JScrollPane(options);
 		
-		// TODO update graph to paint instead of text area
-		// init graph
-		//graph.setText(stringStatus());
-		// DEBUG
-		//System.out.println(stringStatus());
-		// DEBUG
-		//operations = options.setOptions(tableau.getOperations(), tableau.checkNextCreatedNode());
-		
-		//container.add(graph);
 		container.add(scrollGraph);
-		//container.add(options);
 		container.add(scrollOptions);
 		this.getContentPane().add(container);
 		
-        //this.setSize((graph.getWidth() + options.getWidth()), Y_SIZE + JMB_SIZE);
 		this.setSize(X_SIZE, Y_SIZE+JMB_SIZE);
 		
         //this.pack();
@@ -107,20 +92,12 @@ public class GUI extends JFrame implements ActionListener, MouseListener {
 		this.setJMenuBar(jmbarGUI);
 	}
 	
-	// TODO may not be necessary when completed
-	private static String stringStatus() {
-		String status = "\n";
-		status += "K : " + tableau.getOntology() + "\n";
-		status += "\n";
-		tableau.clearStatus();
-		tableau.iterativePreorder(tableau.getFirstNode(), "stringNodeStatus");
-		status += tableau.stringStatus() + "\n";
-		status += "\n";
-		return status;
-	}
-	
+	/**
+	 * Applies to tableau the operation in the index option. Then updates graph and options
+	 * Called from class Options when a button is pressed
+	 * @param option Index of the list of operations
+	 */
 	public void execOption(int option) {
-		// TODO
 		Pair<Node, Operation> pNode_Op = operations.get(option);
 		// Blocking automatically applied
 		tableau.apply(pNode_Op.getFirst(), pNode_Op.getSecond());
@@ -128,6 +105,8 @@ public class GUI extends JFrame implements ActionListener, MouseListener {
 		// Backtracking automatically applied
 		if (tableau.isFinished()) {
 			// Show dialog, update status, clear highlighting, and remove operations
+			// It's necessary to clear highlighting since when a button is pressed and the option
+			// disappears, we haven't exited from it, so the highlighting is not turned off
 			JOptionPane.showMessageDialog(this, "Tableau expansion has finished.\n" +
 					"This ontology is " + (tableau.isSatisfiable() ? "" : "not ") + "satisfiable");
 
@@ -135,23 +114,26 @@ public class GUI extends JFrame implements ActionListener, MouseListener {
 			graph.clearGraphNodesHighlighting();
 			graph.revalidate();
 			graph.repaint();
-			// DEBUG
-			//System.out.println(stringStatus());
-			// DEBUG
 			options.clearOptions();
 		} else {
 			// Update status, and set new operations, and clear highlighting
+			// It's necessary to clear highlighting since when a button is pressed and the option
+			// disappears, we haven't exited from it, so the highlighting is not turned off
 			graph.clearGraphOntologyHighlighting();
 			graph.clearGraphNodesHighlighting();
 			graph.revalidate();
 			graph.repaint();
-			// DEBUG
-			//System.out.println(stringStatus());
-			// DEBUG
 			operations = options.setOptions(tableau.getOperations(), tableau.checkNextCreatedNode(), selectedNode);
 		}
 	}
 	
+	/**
+	 * Sets highlighting of axiom from ontology or graph node according to state
+	 * The operation defines how the highlighting will be applied and to which axioms
+	 * Called from class Options when the mouse hovers over a button
+	 * @param op
+	 * @param state true when button entered, false when button exited
+	 */
 	public void setHighlightAxiom(Operation op, boolean state) {
 		graph.setHighlighting(selectedNode, op, state);
 		graph.revalidate();
@@ -221,9 +203,8 @@ public class GUI extends JFrame implements ActionListener, MouseListener {
 		while (!fileAccepted) {
 			try {
 				JFileChooser fc = new JFileChooser();
-				// TODO uncomment 
 				// Set JFileChooser to working directory
-				//fc.setCurrentDirectory(new File(System.getProperty("user.dir")));
+				fc.setCurrentDirectory(new File(System.getProperty("user.dir")));
 		        fc.setFileFilter(filter);
 		        fc.setDialogTitle(title);
 		        int option = fc.showOpenDialog(null);
@@ -248,21 +229,22 @@ public class GUI extends JFrame implements ActionListener, MouseListener {
 		return path;
 	}
 	
+	/**
+	 * Resets tableau, paints the graph, and clear the options
+	 * Executed on startup, when current tableau is reset, and when another tableau is opened
+	 */
 	private void reset() {
 		tableau = new Tableau(pairCon_K.getSecond(), true);
 		tableau.init(pairCon_K.getFirst());
-		// TODO update to current graph instead of text area
 		// Even though graph shares the above tableau, we need to reset it so it repaints
 		graph.reset(tableau);
 		graph.revalidate();
 		graph.repaint();
-		//operations = options.setOptions(tableau.getOperations(), tableau.checkNextCreatedNode());
 		options.clearOptions();
 	}
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		// TODO Auto-generated method stub
 		selectedNode = graph.boldGraphNode(e.getX(), e.getY());
 		graph.revalidate();
 		graph.repaint();
@@ -301,7 +283,6 @@ public class GUI extends JFrame implements ActionListener, MouseListener {
 			if (openFiles())
 				reset();
 		} else if (item == jmitemReset) {
-			// TODO
 			reset();
 		} else if (item == jmitemClose) {
 			System.exit(0);

@@ -1,5 +1,7 @@
 package ownapi;
 
+import ver1.util.StringAxiomConstants;
+
 public class OWNUnion extends OWNAxiom {
 	private OWNAxiom operand1;
 	private OWNAxiom operand2;
@@ -27,7 +29,7 @@ public class OWNUnion extends OWNAxiom {
 	@Override
 	public String toString() {
 		return (operand1.isLiteral() ? operand1 : "("+operand1+")")
-				+ "\u2A06" + 
+				+ StringAxiomConstants.OP_UNION + 
 				(operand2.isLiteral() ? operand2 : "("+operand2+")");
 		//return "OWNUnion [operand1=(" + operand1 + "), operand2=(" + operand2 + ")]";
 	}

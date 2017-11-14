@@ -12,6 +12,13 @@ import ver1.util.*;
 import uk.ac.manchester.cs.owl.owlapi.OWLSubClassOfAxiomImpl;
 
 public class Interpreter {
+	/**
+	 * Obtains the pair <concept, ontology> in OWNAxiom from a OWLAxiom concept and TBox
+	 * The ontology includes the concept
+	 * @param oConcept
+	 * @param oTbox
+	 * @return
+	 */
 	public static Pair<OWNAxiom, HashSet<OWNAxiom>> read(OWLOntology oConcept, OWLOntology oTbox) {
 		OWNAxiom concept = null;
 		HashSet<OWNAxiom> k = new HashSet<OWNAxiom>();

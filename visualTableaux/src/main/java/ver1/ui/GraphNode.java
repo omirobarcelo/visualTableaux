@@ -15,12 +15,17 @@ import ver1.Node;
 public class GraphNode {
 	
 	private static final String SEP = ", ";
+	private static final Color COL_BG = Color.GRAY;
+	private static final Color COL_FONT = Color.BLACK;
+	private static final Color COL_LINE = Color.BLACK;
+	private static final Color COL_HL = Color.YELLOW;
 	private static final Font FONT_NAME = new Font(Font.MONOSPACED, Font.PLAIN, 16);
 	private static final Font FONT_TEXT = new Font(Font.MONOSPACED, Font.PLAIN, 14);
 	private static final int STD_MARGIN = 5;
 	
 	private static final int MIN_WIDTH = 200;
 	
+	// static because all the GraphNode share the same width
 	private static int width = MIN_WIDTH;
 	
 	private Node node;
@@ -49,10 +54,10 @@ public class GraphNode {
 		this.height = 0;
 		position = new Point(x, y);
 		
-		colBG = Color.GRAY;
-		colFont = Color.BLACK;
-		colLine = Color.BLACK;
-		colHL = Color.YELLOW;
+		colBG = COL_BG;
+		colFont = COL_FONT;
+		colLine = COL_LINE;
+		colHL = COL_HL;
 		
 		nameFont = FONT_NAME;
 		textFont = FONT_TEXT;
@@ -61,12 +66,9 @@ public class GraphNode {
 		bolded = false;
 	}
 	
-	public void toggleBlocked() {
-		blocked = !blocked;
-	}
 	
-	public void setBolded(boolean state) {
-		bolded = state;
+	public Node getNode() {
+		return node;
 	}
 	
 	public static int getWidth() {
@@ -81,6 +83,11 @@ public class GraphNode {
 		GraphNode.width = width < MIN_WIDTH ? MIN_WIDTH : width;
 	}
 	
+	/**
+	 * Returns the height corresponding to a new creathed GraphNode: the borders, the node name, and 1 GraphAxiom
+	 * @param g Necessary to obtain FontMetrics
+	 * @return
+	 */
 	public static int getStdHeight(Graphics g) {
 		int stdHeight = 0;
 		Graphics2D g2d = (Graphics2D)g;
@@ -93,18 +100,20 @@ public class GraphNode {
 		return stdHeight;
 	}
 	
+	/**
+	 * Current height of the GraphNode
+	 * @return
+	 */
 	public int getHeight() {
 		return height;
 	}
 	
-	public Node getNode() {
-		return node;
+	public void toggleBlocked() {
+		blocked = !blocked;
 	}
 	
-	public boolean isGraphNode(int x, int y) {
-		boolean xIn = (x >= position.x) && (x <= position.x + width);
-		boolean yIn = (y >= position.y) && (y <= position.y + height);
-		return xIn && yIn;
+	public void setBolded(boolean state) {
+		bolded = state;
 	}
 	
 	public boolean isBolded() {
@@ -115,6 +124,13 @@ public class GraphNode {
 		return axioms;
 	}
 	
+	/**
+	 * Merges the previous GraphAxiom to the current ones
+	 * Check if a previous GraphAxiom is equal to a current one and copies the state of the previous
+	 * Necessary because while painting Graph, all GreaphNode are renewed, and the previous GraphAxiom
+	 * with the correct highlighting, erased
+	 * @param prevAxioms
+	 */
 	public void mergeGraphAxioms(GraphAxiom[] prevAxioms) {
 		for (int i = 0; i < prevAxioms.length; i++) {
 			for (int j = 0; j < axioms.length; j++) {
@@ -124,6 +140,20 @@ public class GraphNode {
 		}
 	}
 	
+	/**
+	 * Sets the highlight of all of its GraphAxiom to false
+	 */
+	public void clearHighlight() {
+		for (GraphAxiom ga : axioms) {
+			ga.setHighlight(false);
+		}
+	}
+	
+	/**
+	 * Sets the highlight of the GraphAxiom with corresponding to ax to state
+	 * @param ax
+	 * @param state
+	 */
 	public void setHighlight(OWNAxiom ax, boolean state) {
 		for (GraphAxiom ga : axioms) {
 			// If is Complement, then also highlight its literal, since we're highlighting a BOTTOM operation
@@ -139,20 +169,29 @@ public class GraphNode {
 		}
 	}
 	
-	public void clearHighlight() {
-		for (GraphAxiom ga : axioms) {
-			ga.setHighlight(false);
-		}
+	
+	/**
+	 * Checks if coordinates x and y correspond to the GraphNode
+	 * @param x
+	 * @param y
+	 * @return
+	 */
+	public boolean isGraphNode(int x, int y) {
+		boolean xIn = (x >= position.x) && (x <= position.x + width);
+		boolean yIn = (y >= position.y) && (y <= position.y + height);
+		return xIn && yIn;
 	}
+	
 	
 	public void paint(Graphics g) {
 		Graphics2D g2d = (Graphics2D)g;
 		
 		g2d.setStroke(new BasicStroke(bolded ? 5.0f : 3.0f));
-		// If blocked, color background of node name gray
+		
 		g2d.setFont(nameFont);
 		FontMetrics fm = g2d.getFontMetrics();
 		int fontHeight = fm.getHeight();
+		// If blocked, color background of node name
 		if (blocked) {
 			g2d.setPaint(colBG);
 			g2d.fillRect(position.x, position.y, width, fontHeight+STD_MARGIN);
@@ -182,15 +221,14 @@ public class GraphNode {
 				yCursor += fontHeight; // update yCursor
 				xCursor = position.x+STD_MARGIN; // reset xCursor
 			}
-			axioms[i].setPosition(xCursor, yCursor);
-			// DEBUG
-			//if (i == 1) {
-			// DEBUG
+			
 			if (axioms[i].isHighligthed()) {
 				g2d.setPaint(colHL);
 				g2d.fillRect(xCursor, yCursor, fm.stringWidth(axioms[i].getText()), fontHeight);
 			}
+			
 			text += axioms[i].getText() + (i+1 < axioms.length ? SEP : "");
+			
 			xCursor += fm.stringWidth(axioms[i].getText() + SEP); // Even though the last axiom doesn't add ', ', xCursor is not used after it, so it doesn't matter
 		}
 		// Write each line

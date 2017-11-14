@@ -50,9 +50,6 @@ public class GraphEdge {
 		String text = "";
 		int offsetHL = -1, width = -1; // offset respect the String beginning and the width of highlighted axiom, if any
 		for (int i = 0; i < relations.length; i++) {
-			// DEBUG
-			//if (i == 0) {
-			// DEBUG
 			if (relations[i].isHighligthed()) {
 				width = fm.stringWidth(relations[i].getText());
 				offsetHL = fm.stringWidth(text);

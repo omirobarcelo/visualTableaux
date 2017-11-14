@@ -45,6 +45,9 @@ public class Test {
 		System.out.println(stringArray.length);
 		for (String s : stringArray) System.out.println(s);
 		
+		stringArray = test.toArray(new String[0]);
+		for (String s : stringArray) System.out.println(s);
+		
 		int x = 100, y = 100, c = 50;
 		Pair<Integer, Integer> p = new Pair<Integer, Integer>(x, x+=c);
 		System.out.println(p.getFirst() + ", " + p.getSecond() + " - " + x);

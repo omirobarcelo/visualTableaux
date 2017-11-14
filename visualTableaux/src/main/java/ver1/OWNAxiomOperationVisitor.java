@@ -8,6 +8,11 @@ import ownapi.OWNAxiom.AXIOM_TYPE;
 import ver1.Operation.OPERATOR;
 import ver1.util.*;
 
+/**
+ * Generates all the applicable operations of an axiom
+ * @author Oriol Miro-BArcelo
+ *
+ */
 public class OWNAxiomOperationVisitor implements OWNAxiomVisitor {
 	// Contains all the operations possible from axiom
 	private HashSet<Operation> operations;

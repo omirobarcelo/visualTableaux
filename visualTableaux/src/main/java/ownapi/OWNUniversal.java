@@ -1,5 +1,7 @@
 package ownapi;
 
+import ver1.util.StringAxiomConstants;
+
 public class OWNUniversal extends OWNAxiom{
 	/**
 	 * Assumed that relations will always be literals
@@ -29,7 +31,7 @@ public class OWNUniversal extends OWNAxiom{
 	
 	@Override
 	public String toString() {
-		return "\u2200" + relation + "." + (operand.isLiteral() ? operand : "("+operand+")");
+		return StringAxiomConstants.OP_UNIVERSAL + relation + "." + (operand.isLiteral() ? operand : "("+operand+")");
 		//return "OWNUniversal [relation=(" + relation + "), operand=(" + operand1 + ")]";
 	}
 	

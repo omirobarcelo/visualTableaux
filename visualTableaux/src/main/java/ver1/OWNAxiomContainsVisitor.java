@@ -9,6 +9,11 @@ import ownapi.OWNLiteral;
 import ownapi.OWNUnion;
 import ownapi.OWNUniversal;
 
+/**
+ * Checks if an axiom is contained in an another axiom
+ * @author Oriol Miro-Barcelo
+ *
+ */
 public class OWNAxiomContainsVisitor implements OWNAxiomVisitor {
 	// OWNAxiom which is going to be checked if it's contained in axiom
 	private OWNAxiom searched;

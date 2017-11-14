@@ -1,5 +1,7 @@
 package ownapi;
 
+import ver1.util.StringAxiomConstants;
+
 public class OWNComplement extends OWNAxiom{
 	/**
 	 * Assumed that OWNAxioms will always be created from NNF, so a complement only
@@ -23,7 +25,7 @@ public class OWNComplement extends OWNAxiom{
 
 	@Override
 	public String toString() {
-		return "¬" + operand;
+		return StringAxiomConstants.OP_COMPLEMENT + operand;
 		//return "OWNComplement [operand=(" + operand + ")]";
 	}
 	

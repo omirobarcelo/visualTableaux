@@ -3,6 +3,8 @@
  */
 package ownapi;
 
+import ver1.util.StringAxiomConstants;
+
 public class OWNAxiom {
 	public enum AXIOM_TYPE {TOP, BOTTOM, LITERAL, UNION, INTERSECTION, EXISTENTIAL, UNIVERSAL, COMPLEMENT}
 	
@@ -70,9 +72,9 @@ public class OWNAxiom {
 	@Override
 	public String toString() {
 		if (this.isTop())
-			return "\u22A4";
+			return StringAxiomConstants.OP_TOP;
 		else if (this.isBottom())
-			return "\u22A5";
+			return StringAxiomConstants.OP_BOTTOM;
 		return "";
 	}
 }

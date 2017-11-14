@@ -1,6 +1,7 @@
 package ver1;
 
 import ownapi.*;
+import ver1.util.StringAxiomConstants;
 
 public class Operation {
 	public enum OPERATOR {AND, OR, SOME, ONLY, TOP, BOTTOM}
@@ -107,17 +108,17 @@ public class Operation {
 	public String toString() {
 		switch (operator) {
 			case AND: 
-				return "\u2A05(" + operand1 + ")";
+				return StringAxiomConstants.OP_INTERSECTION + "(" + operand1 + ")";
 			case OR:
-				return "\u2A06(" + operand1 + ", " + other + ")";
+				return StringAxiomConstants.OP_UNION + "(" + operand1 + ", " + other + ")";
 			case SOME:
-				return "\u2203(" + operand1 + ")";
+				return StringAxiomConstants.OP_EXISTENTIAL + "(" + operand1 + ")";
 			case ONLY:
-				return "\u2200(" + operand1 + ", " + node.getId() + ")";
+				return StringAxiomConstants.OP_UNIVERSAL + "(" + operand1 + ", " + node.getId() + ")";
 			case TOP:
-				return "\u22A4(" + operand1 + ")";
+				return StringAxiomConstants.OP_TOP + "(" + operand1 + ")";
 			case BOTTOM:
-				return "\u22A5(" + operand1 + ", " + other + ")";
+				return StringAxiomConstants.OP_BOTTOM + "(" + operand1 + ", " + other + ")";
 		}
 		return "";
 	}
@@ -129,29 +130,29 @@ public class Operation {
 	 * @return
 	 */
 	public String fullString(Node x, String nextCreatedNode) {
-		String base = this.toString() + " \u2192 "; // or \u27F6
+		String base = this.toString() + " " + StringAxiomConstants.ARROW_RIGHT + " "; // or \u27F6
 		switch (operator) {
 		case AND: {
 			OWNIntersection axiom = (OWNIntersection)operand1;
-			return base + "L(" + x.getId() + ") \u222A {" + 
+			return base + "L(" + x.getId() + ") " + StringAxiomConstants.UNION + " {" + 
 				axiom.getOperand1() + ", " + axiom.getOperand2() + "}";
 		}
 		case OR:
-			return base + "L(" + x.getId() + ") \u222A {" + other + "}";
+			return base + "L(" + x.getId() + ") " + StringAxiomConstants.UNION + " {" + other + "}";
 		case SOME: {
 			OWNExistential axiom = (OWNExistential)operand1;
-			return base + "L(" + x.getId() + "," + nextCreatedNode + ") \u222A {" + 
-					axiom.getRelation() + "}, L(" + nextCreatedNode + ") \u222A {" +
+			return base + "L(" + x.getId() + "," + nextCreatedNode + ") " + StringAxiomConstants.UNION + " {" + 
+					axiom.getRelation() + "}, L(" + nextCreatedNode + ") " + StringAxiomConstants.UNION + " {" +
 					axiom.getOperand() + "}";
 		}
 		case ONLY: {
 			OWNUniversal axiom = (OWNUniversal)operand1;
-			return base + "L(" + node.getId() + ") \u222A {" + axiom.getOperand() + "}";
+			return base + "L(" + node.getId() + ") " + StringAxiomConstants.UNION + " {" + axiom.getOperand() + "}";
 		}
 		case TOP:
-			return base + "L(" + x.getId() + ") \u222A {" + operand1 + "}";
+			return base + "L(" + x.getId() + ") " + StringAxiomConstants.UNION + " {" + operand1 + "}";
 		case BOTTOM:
-			return base + "L(" + x.getId() + ") \u222A {\u22A5}";
+			return base + "L(" + x.getId() + ") " + StringAxiomConstants.UNION + " {" + StringAxiomConstants.OP_BOTTOM + "}";
 	}
 	return "";
 	}
