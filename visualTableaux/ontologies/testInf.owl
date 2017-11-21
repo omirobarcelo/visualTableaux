@@ -1,0 +1,60 @@
+Prefix(:=<http://www.semanticweb.org/work/ontologies/2017/8/testInf#>)
+Prefix(owl:=<http://www.w3.org/2002/07/owl#>)
+Prefix(rdf:=<http://www.w3.org/1999/02/22-rdf-syntax-ns#>)
+Prefix(xml:=<http://www.w3.org/XML/1998/namespace>)
+Prefix(xsd:=<http://www.w3.org/2001/XMLSchema#>)
+Prefix(rdfs:=<http://www.w3.org/2000/01/rdf-schema#>)
+
+
+Ontology(<http://www.semanticweb.org/work/ontologies/2017/8/testInf>
+
+Declaration(Class(:A))
+Declaration(Class(:B))
+Declaration(Class(:C))
+Declaration(Class(:D))
+Declaration(Class(:E))
+Declaration(Class(:F))
+Declaration(Class(:G))
+Declaration(Class(:H))
+Declaration(Class(:I))
+Declaration(Class(:J))
+Declaration(Class(:K))
+Declaration(ObjectProperty(:R))
+
+############################
+#   Classes
+############################
+
+# Class: owl:Thing (owl:Thing)
+
+SubClassOf(owl:Thing ObjectUnionOf(:A :B))
+SubClassOf(owl:Thing ObjectUnionOf(:A :C))
+SubClassOf(owl:Thing ObjectUnionOf(:A :D))
+SubClassOf(owl:Thing ObjectUnionOf(:A :E))
+SubClassOf(owl:Thing ObjectUnionOf(:A :F))
+SubClassOf(owl:Thing ObjectUnionOf(:A :G))
+SubClassOf(owl:Thing ObjectUnionOf(:A :H))
+SubClassOf(owl:Thing ObjectUnionOf(:A :I))
+SubClassOf(owl:Thing ObjectUnionOf(:A :J))
+SubClassOf(owl:Thing ObjectUnionOf(:A :K))
+SubClassOf(owl:Thing ObjectUnionOf(:B :C))
+SubClassOf(owl:Thing ObjectUnionOf(:B :D))
+SubClassOf(owl:Thing ObjectUnionOf(:B :E))
+SubClassOf(owl:Thing ObjectUnionOf(:B :F))
+SubClassOf(owl:Thing ObjectUnionOf(:B :G))
+SubClassOf(owl:Thing ObjectUnionOf(:B :H))
+SubClassOf(owl:Thing ObjectUnionOf(:B :I))
+SubClassOf(owl:Thing ObjectUnionOf(:B :J))
+SubClassOf(owl:Thing ObjectUnionOf(:B :K))
+SubClassOf(owl:Thing ObjectUnionOf(:C :D))
+SubClassOf(owl:Thing ObjectUnionOf(:C :E))
+SubClassOf(owl:Thing ObjectUnionOf(:C :F))
+SubClassOf(owl:Thing ObjectUnionOf(:C :G))
+SubClassOf(owl:Thing ObjectUnionOf(:C :H))
+SubClassOf(owl:Thing ObjectUnionOf(:C :I))
+SubClassOf(owl:Thing ObjectUnionOf(:C :J))
+SubClassOf(owl:Thing ObjectUnionOf(:C :K))
+SubClassOf(owl:Thing ObjectUnionOf(ObjectSomeValuesFrom(:R ObjectUnionOf(:C :D)) ObjectSomeValuesFrom(:R ObjectUnionOf(ObjectComplementOf(:C) ObjectComplementOf(:D)))))
+
+
+)
