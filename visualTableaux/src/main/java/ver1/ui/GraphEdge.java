@@ -2,10 +2,13 @@ package ver1.ui;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.FontFormatException;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.io.File;
+import java.io.IOException;
 
 public class GraphEdge {
 	private static final Color COL_LINE = Color.BLUE;
@@ -13,6 +16,7 @@ public class GraphEdge {
 	private static final Color COL_HL = Color.YELLOW;
 	private static final String SEP = ", ";
 	private static final Font FONT = new Font(Font.MONOSPACED, Font.PLAIN, 16);
+	private static final String PATH_DEF_FONT = "fonts/unifont.ttf";
 	private static final int STD_MARGIN = 5;
 	private static final int PROPORTION = 25;
 	
@@ -34,7 +38,20 @@ public class GraphEdge {
 		this.colFont = COL_FONT;
 		this.colHL = COL_HL;
 		
-		this.font = FONT;
+		Font f = null;
+		try {
+			f = Font.createFont(Font.TRUETYPE_FONT, new File(PATH_DEF_FONT));
+		} catch (FontFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		if (System.getProperty("os.name").toLowerCase().contains("mac"))
+			this.font = FONT;
+		else
+			this.font = f.deriveFont(16F);
 	}
 	
 	public void paint(Graphics g) {

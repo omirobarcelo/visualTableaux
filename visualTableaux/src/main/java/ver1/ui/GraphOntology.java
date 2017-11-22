@@ -2,9 +2,12 @@ package ver1.ui;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.FontFormatException;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.io.File;
+import java.io.IOException;
 
 import ver1.util.Pair;
 
@@ -14,6 +17,7 @@ public class GraphOntology {
 	private static final Color COL_HL = Color.YELLOW;
 	private static final String SEP = ", ";
 	private static final Font FONT = new Font(Font.MONOSPACED, Font.PLAIN, 18);
+	private static final String PATH_DEF_FONT = "fonts/unifont.ttf";
 	private static final int X_MARGIN = 10;
 	private static final int Y_MARGIN = 5;
 	
@@ -31,7 +35,20 @@ public class GraphOntology {
 		this.colLine = COL_LINE;
 		this.colHL = COL_HL;
 		
-		this.font = FONT;
+		Font f = null;
+		try {
+			f = Font.createFont(Font.TRUETYPE_FONT, new File(PATH_DEF_FONT));
+		} catch (FontFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		if (System.getProperty("os.name").toLowerCase().contains("mac"))
+			this.font = FONT;
+		else
+			this.font = f.deriveFont(18F);
 	}
 	
 	

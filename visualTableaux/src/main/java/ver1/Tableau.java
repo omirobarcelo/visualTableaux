@@ -177,7 +177,8 @@ public class Tableau {
 			}
 		}
 		
-		checkBlocking(updatedNode);
+		iterativePreorder(TreeNode.getTreeNode(firstNode, updatedNode), "checkBlocking");
+		//checkBlocking(updatedNode);
 		
 		updateAllOperations();
 	}
@@ -270,6 +271,9 @@ public class Tableau {
 				case "markAsBlocked":
 					markAsBlocked(n);
 					break;
+				case "checkBlocking":
+					checkBlocking(n.getData());
+					break;
 				case "checkFinished":
 					checkFinished(n);
 					break;
@@ -347,7 +351,9 @@ public class Tableau {
 		// Reset operations set
 		operations.get(n).clear();
 		// If n hasn't clashed and it's not blocked
-		if (!Ln.get(n).contains(OWNAxiom.BOTTOM) && !blockedNodes.contains(n)) {
+		//if (!Ln.get(n).contains(OWNAxiom.BOTTOM) && !blockedNodes.contains(n)) {
+		// OR if n hasn't clashed (can keep operating even if it's blocked)
+		if (!Ln.get(n).contains(OWNAxiom.BOTTOM)) {
 			// Add all applicable TOP rules
 			for (OWNAxiom axiom : K) {
 				if (!Ln.get(n).contains(axiom))
@@ -377,20 +383,63 @@ public class Tableau {
 	private void checkBlocking(Node updatedNode) {
 		if (updatedNode == null)
 			return;
-		Node parent = predecessor.get(updatedNode);
-		if (parent != null) {
-			// If L(updatedNode) is a subset of L(parent)
-			if (Ln.get(parent).containsAll(Ln.get(updatedNode))) {
-				// TODO if GUI mode, dialog informing of blocking
-				if (modeGUI) {
+		// TODO check all predecessors
+		// TODO unblock if necessary
+		Node pred = predecessor.get(updatedNode);
+		boolean blocked = false;
+		// Check until there are no more predecessors or the updated node is blocked
+		while (pred != null && !blocked) {
+			// If L(updatedNode) is a subset of L(parent) or the predecessor is blocked
+			if (Ln.get(pred).containsAll(Ln.get(updatedNode)) || blockedNodes.contains(pred)) {
+				// If GUI mode, dialog informing of blocking if node wasn't blocked before
+				if (modeGUI && !blockedNodes.contains(updatedNode)) {
 					JOptionPane.showMessageDialog(null, "Node " + updatedNode.getId() + 
-							" and all its children have become blocked.");
+							" has become blocked.");
 				}
-				// Mark updated node and all its subtree as blocked
-				TreeNode tn = TreeNode.getTreeNode(firstNode, updatedNode);
-				iterativePreorder(tn, "markAsBlocked");
+				blockedNodes.add(updatedNode);
+				blocked = true;
+			} else {
+				pred = predecessor.get(pred);
 			}
 		}
+		// If the updated node was previously blocked and it's not blocked anymore
+		if (!blocked && blockedNodes.contains(updatedNode)) {
+			blockedNodes.remove(updatedNode);
+			if (modeGUI) {
+				JOptionPane.showMessageDialog(null, "Node " + updatedNode.getId() + 
+						" has become unblocked.");
+			}
+		}
+//		// Mark updated node as blocked and check all its successors
+//		TreeNode tn = TreeNode.getTreeNode(firstNode, updatedNode);
+//		iterativePreorder(tn, "checkBlocking");
+//		
+//		
+//		
+//		
+//		Node parent = predecessor.get(updatedNode);
+//		if (parent != null) {
+//			// If L(updatedNode) is a subset of L(parent)
+//			if (Ln.get(parent).containsAll(Ln.get(updatedNode))) {
+//				// If GUI mode, dialog informing of blocking if node wasn't blocked before
+//				if (modeGUI && !blockedNodes.contains(updatedNode)) {
+//					JOptionPane.showMessageDialog(null, "Node " + updatedNode.getId() + 
+//							" and all its children have become blocked.");
+//				}
+//				// Mark updated node and all its subtree as blocked
+//				TreeNode tn = TreeNode.getTreeNode(firstNode, updatedNode);
+//				iterativePreorder(tn, "markAsBlocked");
+//			} else {
+//				// If the updated node was previously blocked
+//				if (blockedNodes.contains(updatedNode)) {
+//					blockedNodes.remove(updatedNode);
+//					if (modeGUI) {
+//						JOptionPane.showMessageDialog(null, "Node " + updatedNode.getId() + 
+//								" has become unblocked.");
+//					}
+//				}
+//			}
+//		}
 	}
 	
 	private void recoverFromLastSnapshot() {

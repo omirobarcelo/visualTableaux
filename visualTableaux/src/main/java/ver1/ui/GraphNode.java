@@ -3,10 +3,13 @@ package ver1.ui;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.FontFormatException;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.io.File;
+import java.io.IOException;
 
 import ownapi.OWNAxiom;
 import ownapi.OWNComplement;
@@ -21,6 +24,7 @@ public class GraphNode {
 	private static final Color COL_HL = Color.YELLOW;
 	private static final Font FONT_NAME = new Font(Font.MONOSPACED, Font.PLAIN, 16);
 	private static final Font FONT_TEXT = new Font(Font.MONOSPACED, Font.PLAIN, 14);
+	private static final String PATH_DEF_FONT = "fonts/unifont.ttf";
 	private static final int STD_MARGIN = 5;
 	
 	private static final int MIN_WIDTH = 200;
@@ -59,8 +63,23 @@ public class GraphNode {
 		colLine = COL_LINE;
 		colHL = COL_HL;
 		
-		nameFont = FONT_NAME;
-		textFont = FONT_TEXT;
+		Font f = null;
+		try {
+			f = Font.createFont(Font.TRUETYPE_FONT, new File(PATH_DEF_FONT));
+		} catch (FontFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		if (System.getProperty("os.name").toLowerCase().contains("mac")) {
+			nameFont = FONT_NAME;
+			textFont = FONT_TEXT;
+		} else {
+			nameFont = f.deriveFont(16F);
+			textFont = f.deriveFont(14F);
+		}
 		
 		blocked = false;
 		bolded = false;

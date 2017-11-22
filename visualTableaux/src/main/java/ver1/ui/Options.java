@@ -1,10 +1,14 @@
 package ver1.ui;
 
 import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.FontFormatException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -23,6 +27,8 @@ public class Options extends JPanel implements ActionListener, MouseListener {
 	private static final int BUTTON_WIDTH = 270;
 	private static final int BUTTON_HEIGHT = 60;
 	private static final int MAX_STRING_SIZE = 25;
+	
+	private static final String PATH_DEF_FONT = "fonts/unifont.ttf";
 	
 	private List<JButton> jbList;
 	
@@ -91,24 +97,40 @@ public class Options extends JPanel implements ActionListener, MouseListener {
 		this.removeAll();
 
 		List<Pair<Node, Operation>> ops = new ArrayList<Pair<Node, Operation>>();
-		JLabel jlNode = new JLabel("Node " + n.getId());
-		this.add(jlNode);
-		if (options.containsKey(n)) {
-			for (Operation op : options.get(n)) {
-				ops.add(new Pair<Node, Operation>(n, op));
-				OptionButton jbOp = new OptionButton(transformText(op.fullString(n, nextCreatedNode)), op);
-				// Needed both minimum and maximum size to make the button use all the 
-				// panel space, plus preferredSize because Java layout is a bitch
-				jbOp.setMinimumSize(new Dimension(BUTTON_WIDTH, BUTTON_HEIGHT));
-				// With preferredSize button doesn't adapt to the text,
-				// but the horizontal size now changes a bit,
-				// because Java pretty much ignores min/max without preferred
-				jbOp.setMaximumSize(new Dimension(BUTTON_WIDTH, BUTTON_HEIGHT+30));
-				jbOp.setHorizontalAlignment(SwingConstants.CENTER);
-				jbOp.addActionListener(this);
-				jbOp.addMouseListener(this);
-				jbList.add(jbOp);
-				this.add(jbOp);
+		// If a node has been selected
+		if (n != null) {
+			JLabel jlNode = new JLabel("Node " + n.getId());
+			this.add(jlNode);
+			if (options.containsKey(n)) {
+				for (Operation op : options.get(n)) {
+					ops.add(new Pair<Node, Operation>(n, op));
+					OptionButton jbOp = new OptionButton(transformText(op.fullString(n, nextCreatedNode)), op);
+					// Set font if not Mac OS system
+					if (!System.getProperty("os.name").toLowerCase().contains("mac")) {
+						try {
+							Font f  = Font.createFont(Font.TRUETYPE_FONT, new File(PATH_DEF_FONT));
+							jbOp.setFont(f.deriveFont(13F));
+						} catch (FontFormatException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}	
+					}
+					// Needed both minimum and maximum size to make the button use all the 
+					// panel space, plus preferredSize because Java layout is a bitch
+					jbOp.setMinimumSize(new Dimension(BUTTON_WIDTH, BUTTON_HEIGHT));
+					// With preferredSize button doesn't adapt to the text,
+					// but the horizontal size now changes a bit,
+					// because Java pretty much ignores min/max without preferred
+					jbOp.setMaximumSize(new Dimension(BUTTON_WIDTH, BUTTON_HEIGHT+30));
+					jbOp.setHorizontalAlignment(SwingConstants.CENTER);
+					jbOp.addActionListener(this);
+					jbOp.addMouseListener(this);
+					jbList.add(jbOp);
+					this.add(jbOp);
+				}
 			}
 		}
 
