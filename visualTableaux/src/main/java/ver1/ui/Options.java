@@ -132,7 +132,7 @@ public class Options extends JPanel implements ActionListener, MouseListener {
 					//jbOp.revalidate();
 					jbList.add(jbOp);
 					this.add(jbOp);
-					System.out.println(jbOp.getFont().getFontName() + ", " + jbOp.getFont().getSize());
+					//System.out.println(jbOp.getFont().getFontName() + ", " + jbOp.getFont().getSize());
 				}
 			}
 		}

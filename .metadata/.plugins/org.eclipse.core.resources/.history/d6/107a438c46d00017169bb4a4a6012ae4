@@ -1,0 +1,10 @@
+package ver1;
+
+/**
+ * Manages the saving of user states
+ * @author Oriol Miro-Barcelo
+ *
+ */
+public class UserSaveState {
+
+}

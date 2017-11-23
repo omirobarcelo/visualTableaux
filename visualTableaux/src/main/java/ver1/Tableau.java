@@ -7,7 +7,6 @@ import java.util.Stack;
 import javax.swing.JOptionPane;
 
 import ownapi.*;
-import ver1.Backtracker.Snapshot;
 import ver1.Operation.OPERATOR;
 import ver1.util.*;
 
@@ -24,6 +23,7 @@ public class Tableau {
 	private HashMap<Node, Node> predecessor;
 	private boolean clashed, clashConsequenceNDO, finished;
 	private Backtracker backtracker;
+	private UserSaveState uss; // Starts with all the states as the initial state
 	private boolean modeGUI;
 	
 	// Auxiliary string with the status
@@ -50,6 +50,7 @@ public class Tableau {
 		clashConsequenceNDO = false;
 		finished = false;
 		backtracker = new Backtracker();
+		uss = new UserSaveState();
 		this.modeGUI = modeGUI;
 	}
 	
@@ -62,6 +63,10 @@ public class Tableau {
 		// Get operations for firstNode
 		operations.put(firstNode.getData(), new HashSet<Operation>());
 		updateOperations(firstNode);
+		// Save initial state to all user saved states to avoid loading a null state
+		for (int i = 0; i < UserSaveState.NUM_STATES; i++) {
+			uss.saveState(this, i);
+		}
 	}
 	
 	///////////////////////
@@ -198,7 +203,6 @@ public class Tableau {
 							"Recovering last state.");
 				}
 				recoverFromLastSnapshot();
-				updateAllOperations();
 			}
 		}
 		// Traverse all nodes and check if finished still true after traversal
@@ -209,6 +213,14 @@ public class Tableau {
 	
 	public boolean isSatisfiable() {
 		return finished && !clashed;
+	}
+	
+	public void saveState(int state) {
+		uss.saveState(this, state);
+	}
+	
+	public void loadState(int state) {
+		recoverFromSnapshot(uss.loadState(state));
 	}
 	
 	
@@ -383,8 +395,7 @@ public class Tableau {
 	private void checkBlocking(Node updatedNode) {
 		if (updatedNode == null)
 			return;
-		// TODO check all predecessors
-		// TODO unblock if necessary
+		// Check all predecessors for indirect blocking
 		Node pred = predecessor.get(updatedNode);
 		boolean blocked = false;
 		// Check until there are no more predecessors or the updated node is blocked
@@ -410,50 +421,27 @@ public class Tableau {
 						" has become unblocked.");
 			}
 		}
-//		// Mark updated node as blocked and check all its successors
-//		TreeNode tn = TreeNode.getTreeNode(firstNode, updatedNode);
-//		iterativePreorder(tn, "checkBlocking");
-//		
-//		
-//		
-//		
-//		Node parent = predecessor.get(updatedNode);
-//		if (parent != null) {
-//			// If L(updatedNode) is a subset of L(parent)
-//			if (Ln.get(parent).containsAll(Ln.get(updatedNode))) {
-//				// If GUI mode, dialog informing of blocking if node wasn't blocked before
-//				if (modeGUI && !blockedNodes.contains(updatedNode)) {
-//					JOptionPane.showMessageDialog(null, "Node " + updatedNode.getId() + 
-//							" and all its children have become blocked.");
-//				}
-//				// Mark updated node and all its subtree as blocked
-//				TreeNode tn = TreeNode.getTreeNode(firstNode, updatedNode);
-//				iterativePreorder(tn, "markAsBlocked");
-//			} else {
-//				// If the updated node was previously blocked
-//				if (blockedNodes.contains(updatedNode)) {
-//					blockedNodes.remove(updatedNode);
-//					if (modeGUI) {
-//						JOptionPane.showMessageDialog(null, "Node " + updatedNode.getId() + 
-//								" has become unblocked.");
-//					}
-//				}
-//			}
-//		}
 	}
 	
 	private void recoverFromLastSnapshot() {
 		Pair<NonDeterministicOperation, Snapshot> p = backtracker.getLastSnapshot();
 		conflictingOperations.add(p.getFirst());
 		// Recover
-		nodeCode = p.getSecond().getNodeCode();
-		firstNode = p.getSecond().getFirstNode();
-		Ln = p.getSecond().getLn();
-		Lr = p.getSecond().getLr();
-		operations = p.getSecond().getOperations();
-		blockedNodes = p.getSecond().getBlockedNodes();
-		predecessor = p.getSecond().getPredecessor();
-		clashed = p.getSecond().getClashed();
-		finished = p.getSecond().getFinished();
+		recoverFromSnapshot(p.getSecond());
+	}
+	
+	private void recoverFromSnapshot(Snapshot snapshot) {
+		// Recover
+		nodeCode = snapshot.getNodeCode();
+		firstNode = snapshot.getFirstNode().copy();
+		Ln = DeepClone.deepClone(snapshot.getLn());
+		Lr = DeepClone.deepClone(snapshot.getLr());
+		operations = DeepClone.deepClone(snapshot.getOperations());
+		blockedNodes = DeepClone.deepClone(snapshot.getBlockedNodes());
+		predecessor = DeepClone.deepClone(snapshot.getPredecessor());
+		clashed = snapshot.getClashed();
+		finished = snapshot.getFinished();
+		// Reload operations
+		updateAllOperations();
 	}
 }

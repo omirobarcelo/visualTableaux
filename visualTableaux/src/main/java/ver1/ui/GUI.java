@@ -2,6 +2,7 @@ package ver1.ui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
@@ -34,8 +35,10 @@ public class GUI extends JFrame implements ActionListener, MouseListener {
 	private Graph graph;
 	private Options options;
 	private JMenuBar jmbarGUI;
-	private JMenu jmFile;
+	private JMenu jmFile, jmState;
 	private JMenuItem jmitemOpen, jmitemReset, jmitemClose;
+	private JMenuItem jmitemSS1, jmitemSS2, jmitemSS3;
+	private JMenuItem jmitemLS1, jmitemLS2, jmitemLS3;
 	
 	private static Pair<OWNAxiom, HashSet<OWNAxiom>> pairCon_K;
 	private static Tableau tableau;
@@ -70,10 +73,19 @@ public class GUI extends JFrame implements ActionListener, MouseListener {
 	
 	private void initComponents() {
 		jmbarGUI = new JMenuBar();
+		
 		jmFile = new JMenu();
 		jmitemOpen = new JMenuItem();
 		jmitemReset = new JMenuItem();
 		jmitemClose = new JMenuItem();
+		
+		jmState = new JMenu();
+		jmitemSS1 = new JMenuItem();
+		jmitemSS2 = new JMenuItem();
+		jmitemSS3 = new JMenuItem();
+		jmitemLS1 = new JMenuItem();
+		jmitemLS2 = new JMenuItem();
+		jmitemLS3 = new JMenuItem();
 		
 		// TODO set accelerators
 		jmitemOpen.setText("Open");
@@ -87,8 +99,38 @@ public class GUI extends JFrame implements ActionListener, MouseListener {
 		jmFile.add(jmitemOpen);
 		jmFile.add(jmitemReset);
 		jmFile.add(jmitemClose);
-		
 		jmbarGUI.add(jmFile);
+		
+		jmitemSS1.setText("Save State 1");
+		jmitemSS1.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_1, ActionEvent.ALT_MASK));
+		jmitemSS1.addActionListener(this);
+		jmitemSS2.setText("Save State 2");
+		jmitemSS2.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_2, ActionEvent.ALT_MASK));
+		jmitemSS2.addActionListener(this);
+		jmitemSS3.setText("Save State 3");
+		jmitemSS3.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_3, ActionEvent.ALT_MASK));
+		jmitemSS3.addActionListener(this);
+		
+		jmitemLS1.setText("Load State 1");
+		jmitemLS1.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_1, ActionEvent.CTRL_MASK));
+		jmitemLS1.addActionListener(this);
+		jmitemLS2.setText("Load State 2");
+		jmitemLS2.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_2, ActionEvent.CTRL_MASK));
+		jmitemLS2.addActionListener(this);
+		jmitemLS3.setText("Load State 3");
+		jmitemLS3.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_3, ActionEvent.CTRL_MASK));
+		jmitemLS3.addActionListener(this);
+		
+		jmState.setText("User state");
+		jmState.add(jmitemSS1);
+		jmState.add(jmitemSS2);
+		jmState.add(jmitemSS3);
+		jmState.addSeparator();
+		jmState.add(jmitemLS1);
+		jmState.add(jmitemLS2);
+		jmState.add(jmitemLS3);
+		jmbarGUI.add(jmState);
+		
 		this.setJMenuBar(jmbarGUI);
 	}
 	
@@ -110,20 +152,22 @@ public class GUI extends JFrame implements ActionListener, MouseListener {
 			JOptionPane.showMessageDialog(this, "Tableau expansion has finished.\n" +
 					"This ontology is " + (tableau.isSatisfiable() ? "" : "not ") + "satisfiable");
 
-			graph.clearGraphOntologyHighlighting();
-			graph.clearGraphNodesHighlighting();
-			graph.revalidate();
-			graph.repaint();
-			options.clearOptions();
+//			graph.clearGraphOntologyHighlighting();
+//			graph.clearGraphNodesHighlighting();
+//			graph.revalidate();
+//			graph.repaint();
+//			options.clearOptions();
+			repaint(true, true, true);
 		} else {
 			// Update status, and set new operations, and clear highlighting
 			// It's necessary to clear highlighting since when a button is pressed and the option
 			// disappears, we haven't exited from it, so the highlighting is not turned off
-			graph.clearGraphOntologyHighlighting();
-			graph.clearGraphNodesHighlighting();
-			graph.revalidate();
-			graph.repaint();
-			operations = options.setOptions(tableau.getOperations(), tableau.checkNextCreatedNode(), selectedNode);
+//			graph.clearGraphOntologyHighlighting();
+//			graph.clearGraphNodesHighlighting();
+//			graph.revalidate();
+//			graph.repaint();
+//			operations = options.setOptions(tableau.getOperations(), tableau.checkNextCreatedNode(), selectedNode);
+			repaint(false, true, false);
 		}
 	}
 	
@@ -238,17 +282,41 @@ public class GUI extends JFrame implements ActionListener, MouseListener {
 		tableau.init(pairCon_K.getFirst());
 		// Even though graph shares the above tableau, we need to reset it so it repaints
 		graph.reset(tableau);
+//		graph.revalidate();
+//		graph.repaint();
+//		options.clearOptions();
+		repaint(true, false, true);
+	}
+	
+	/**
+	 * Revalidates and repaints graph, and loads operations according to indicated state
+	 * @param clearOperations
+	 * @param clearHighlighting
+	 */
+	private void repaint(boolean clearOperations, boolean clearHighlighting, boolean nullifySelectedNode) {
+		if (nullifySelectedNode) {
+			selectedNode = null;
+			graph.clearBolding();
+		}
+		if (clearHighlighting) {
+			graph.clearGraphOntologyHighlighting();
+			graph.clearGraphNodesHighlighting();
+		}
 		graph.revalidate();
 		graph.repaint();
-		options.clearOptions();
+		if (clearOperations)
+			options.clearOptions();
+		else
+			operations = options.setOptions(tableau.getOperations(), tableau.checkNextCreatedNode(), selectedNode);
 	}
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		selectedNode = graph.boldGraphNode(e.getX(), e.getY());
-		graph.revalidate();
-		graph.repaint();
-		operations = options.setOptions(tableau.getOperations(), tableau.checkNextCreatedNode(), selectedNode);
+//		graph.revalidate();
+//		graph.repaint();
+//		operations = options.setOptions(tableau.getOperations(), tableau.checkNextCreatedNode(), selectedNode);
+		repaint(false, false, false);
 	}
 
 	@Override
@@ -286,6 +354,21 @@ public class GUI extends JFrame implements ActionListener, MouseListener {
 			reset();
 		} else if (item == jmitemClose) {
 			System.exit(0);
+		} else if (item == jmitemSS1) {
+			tableau.saveState(1);
+		} else if (item == jmitemSS2) {
+			tableau.saveState(2);
+		} else if (item == jmitemSS3) {
+			tableau.saveState(3);
+		} else if (item == jmitemLS1) {
+			tableau.loadState(1);
+			repaint(false, false, true);
+		} else if (item == jmitemLS2) {
+			tableau.loadState(2);
+			repaint(false, false, true);
+		} else if (item == jmitemLS3) {
+			tableau.loadState(3);
+			repaint(false, false, true);
 		}
 	}
 

@@ -88,6 +88,11 @@ public class Graph extends JPanel {
 				return gn.getNode();
 		return null;
 	}
+	
+	public void clearBolding() {
+		for (GraphNode gn : graphNodes)
+			gn.setBolded(false);
+	}
 
 	// Necessary because after pressing the option, there's no Exited state, so the highlighting it's not cleared
 	public void clearGraphOntologyHighlighting() {
