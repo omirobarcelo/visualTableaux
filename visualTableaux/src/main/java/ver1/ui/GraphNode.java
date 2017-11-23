@@ -24,7 +24,7 @@ public class GraphNode {
 	private static final Color COL_HL = Color.YELLOW;
 	private static final Font FONT_NAME = new Font(Font.MONOSPACED, Font.PLAIN, 16);
 	private static final Font FONT_TEXT = new Font(Font.MONOSPACED, Font.PLAIN, 14);
-	private static final String PATH_DEF_FONT = "fonts/unifont.ttf";
+	private static final String PATH_DEF_FONT = "fonts"+File.separator+"unifont.ttf";
 	private static final int STD_MARGIN = 5;
 	
 	private static final int MIN_WIDTH = 200;

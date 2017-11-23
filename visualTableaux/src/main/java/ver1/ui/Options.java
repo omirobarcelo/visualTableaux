@@ -28,7 +28,7 @@ public class Options extends JPanel implements ActionListener, MouseListener {
 	private static final int BUTTON_HEIGHT = 60;
 	private static final int MAX_STRING_SIZE = 25;
 	
-	private static final String PATH_DEF_FONT = "fonts/unifont.ttf";
+	private static final String PATH_DEF_FONT = "fonts"+File.separator+"unifont.ttf";
 	
 	private List<JButton> jbList;
 	
@@ -110,6 +110,7 @@ public class Options extends JPanel implements ActionListener, MouseListener {
 						try {
 							Font f  = Font.createFont(Font.TRUETYPE_FONT, new File(PATH_DEF_FONT));
 							jbOp.setFont(f.deriveFont(13F));
+							jbOp.revalidate();
 						} catch (FontFormatException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
@@ -128,8 +129,10 @@ public class Options extends JPanel implements ActionListener, MouseListener {
 					jbOp.setHorizontalAlignment(SwingConstants.CENTER);
 					jbOp.addActionListener(this);
 					jbOp.addMouseListener(this);
+					//jbOp.revalidate();
 					jbList.add(jbOp);
 					this.add(jbOp);
+					System.out.println(jbOp.getFont().getFontName() + ", " + jbOp.getFont().getSize());
 				}
 			}
 		}

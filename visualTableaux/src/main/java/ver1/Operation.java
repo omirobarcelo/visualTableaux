@@ -8,7 +8,7 @@ public class Operation {
 	
 	private OPERATOR operator;
 	private OWNAxiom operand1;
-	private OWNAxiom other; //operand2 for BOTTOM and result for OR
+	private OWNAxiom other; //complement for BOTTOM and result for OR
 	private Node node; // Can be null, when first 2 constructors used
 	
 	/**
@@ -25,6 +25,7 @@ public class Operation {
 	
 	/**
 	 * Only for BOTTOM and OR operation
+	 * other represents the complement for BOTTOM and the result for OR
 	 * Not null arguments assumed
 	 * @param operator
 	 * @param operand1

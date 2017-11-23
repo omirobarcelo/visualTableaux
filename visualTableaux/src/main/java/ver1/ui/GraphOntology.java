@@ -17,7 +17,7 @@ public class GraphOntology {
 	private static final Color COL_HL = Color.YELLOW;
 	private static final String SEP = ", ";
 	private static final Font FONT = new Font(Font.MONOSPACED, Font.PLAIN, 18);
-	private static final String PATH_DEF_FONT = "fonts/unifont.ttf";
+	private static final String PATH_DEF_FONT = "fonts"+File.separator+"unifont.ttf";
 	private static final int X_MARGIN = 10;
 	private static final int Y_MARGIN = 5;
 	
