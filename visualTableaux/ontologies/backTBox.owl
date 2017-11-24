@@ -17,7 +17,6 @@ Declaration(Class(:D))
 # Class: owl:Thing (owl:Thing)
 
 SubClassOf(owl:Thing :C)
-SubClassOf(owl:Thing ObjectIntersectionOf(:D ObjectComplementOf(:D)))
 
 
 )
