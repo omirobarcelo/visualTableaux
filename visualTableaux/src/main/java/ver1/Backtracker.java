@@ -153,6 +153,14 @@ public class Backtracker {
 		return !backtracker.isEmpty();
 	}
 	
+	public Backtracker copy() {
+		Backtracker copy = new Backtracker();
+		copy.backtracker = DeepClone.deepClone(this.backtracker);
+		copy.executedNDO = DeepClone.deepClone(this.executedNDO);
+		copy.clashCause = this.clashCause;
+		return copy;
+	}
+	
 //	/**
 //	 * Peek at which non deterministic operation created the last snapshot
 //	 * @return

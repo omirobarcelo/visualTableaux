@@ -20,9 +20,11 @@ public class Snapshot {
 	private HashMap<Node, HashSet<Operation>> operations;
 	private HashSet<Node> blockedNodes;
 	private HashMap<Node, Node> predecessor;
+	private Backtracker backtracker;
 	private boolean clashed, finished;
 	
 	/**
+	 * NOT UPDATED
 	 * Since we want to save the current state, and not be modified externally
 	 * because of pointers, copy and deep clone all the elements upon creation
 	 * @param nodeCode
@@ -63,6 +65,7 @@ public class Snapshot {
 		// and the elements won't be modified
 		this.blockedNodes = new HashSet<Node>(tableau.getBlockedNodes());
 		this.predecessor = new HashMap<Node, Node>(tableau.getPredecessor());
+		this.backtracker = tableau.getBacktracker().copy();
 		this.clashed = tableau.getClashed();
 		this.finished = tableau.getFinished();
 	}
@@ -93,6 +96,10 @@ public class Snapshot {
 
 	public HashMap<Node, Node> getPredecessor() {
 		return predecessor;
+	}
+	
+	public Backtracker getBacktracker() {
+		return backtracker;
 	}
 
 	public boolean getClashed() {

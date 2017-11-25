@@ -243,7 +243,7 @@ public class Tableau {
 //				// TODO change
 //				recoverFromLastSnapshot();
 				// Recover
-				recoverFromSnapshot(p.getSecond());
+				recoverFromSnapshot(p.getSecond(), true);
 			}
 		}
 		// Traverse all nodes and check if finished still true after traversal
@@ -261,7 +261,7 @@ public class Tableau {
 	}
 	
 	public void loadState(int state) {
-		recoverFromSnapshot(uss.loadState(state));
+		recoverFromSnapshot(uss.loadState(state), false);
 	}
 	
 	
@@ -286,6 +286,10 @@ public class Tableau {
 	
 	protected HashMap<Node, Node> getPredecessor() {
 		return predecessor;
+	}
+	
+	protected Backtracker getBacktracker() {
+		return backtracker;
 	}
 	
 	protected boolean getClashed() {
@@ -470,11 +474,11 @@ public class Tableau {
 		Pair<NonDeterministicOperation, Snapshot> p = backtracker.getCauseOfClash();
 		conflictingOperations.add(p.getFirst());
 		// Recover
-		recoverFromSnapshot(p.getSecond());
+		recoverFromSnapshot(p.getSecond(), true);
 		
 	}
 	
-	private void recoverFromSnapshot(Snapshot snapshot) {
+	private void recoverFromSnapshot(Snapshot snapshot, boolean backtracking) {
 		// Recover
 		nodeCode = snapshot.getNodeCode();
 		firstNode = snapshot.getFirstNode().copy();
@@ -483,6 +487,8 @@ public class Tableau {
 		operations = DeepClone.deepClone(snapshot.getOperations());
 		blockedNodes = DeepClone.deepClone(snapshot.getBlockedNodes());
 		predecessor = DeepClone.deepClone(snapshot.getPredecessor());
+		if (!backtracking)
+			backtracker = snapshot.getBacktracker().copy();
 		clashed = snapshot.getClashed();
 		finished = snapshot.getFinished();
 		// Reload operations
