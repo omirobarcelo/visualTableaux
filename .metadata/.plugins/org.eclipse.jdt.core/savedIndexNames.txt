@@ -1,5 +1,4 @@
 INDEX VERSION 1.129+/Users/work/Documents/CogSys/SemanticWebTechnologies/visualTableaux/.metadata/.plugins/org.eclipse.jdt.core
-1689139713.index
 1090050431.index
 2653387433.index
 252793901.index
@@ -35,8 +34,8 @@ INDEX VERSION 1.129+/Users/work/Documents/CogSys/SemanticWebTechnologies/visualT
 13199128.index
 1028345747.index
 3760478441.index
-1035192082.index
 1833386460.index
+1035192082.index
 4158903250.index
 2257443342.index
 1914631711.index

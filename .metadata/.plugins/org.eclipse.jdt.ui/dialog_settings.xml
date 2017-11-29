@@ -91,6 +91,7 @@
 			<item value="visualTableaux/GUI.jar"/>
 		</list>
 		<list key="FatJarPackageWizardPage.ANTSCRIPT_LOCATION_HISTORY">
+			<item value="/Users/work/Documents/CogSys/SemanticWebTechnologies/visualTableaux.xml"/>
 			<item value=".xml"/>
 		</list>
 	</section>

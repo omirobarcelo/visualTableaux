@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="ownapi.OWNIntersection"/>
-<fullyQualifiedTypeName name="ownapi.OWNUniversal"/>
 <fullyQualifiedTypeName name="java.util.Scanner"/>
 <fullyQualifiedTypeName name="java.lang.reflect.Method"/>
 <fullyQualifiedTypeName name="java.util.Map"/>
@@ -60,4 +58,6 @@
 <fullyQualifiedTypeName name="ver1.Backtracker.BTElement.Tracker"/>
 <fullyQualifiedTypeName name="ver1.NonDeterministicOperation"/>
 <fullyQualifiedTypeName name="ver1.Snapshot"/>
+<fullyQualifiedTypeName name="ver1.util.DeepClone"/>
+<fullyQualifiedTypeName name="ver1.Backtracker"/>
 </qualifiedTypeNameHistroy>

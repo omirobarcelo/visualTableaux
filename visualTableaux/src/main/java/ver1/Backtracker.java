@@ -117,7 +117,8 @@ public class Backtracker {
 	public boolean isAxiomTracked(Node n, OWNAxiom axiom) {
 		// TODO
 		for (BTElement elem : backtracker) {
-			return elem.containsTracker(n, axiom);
+			if (elem.containsTracker(n, axiom))
+				return true;
 		}
 		return false;
 	}
