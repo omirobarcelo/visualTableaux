@@ -206,7 +206,6 @@ public class Tableau {
 			}
 		}
 		
-		// Check blocking of updatedNode and all its successors 
 		iterativePreorder(TreeNode.getTreeNode(firstNode, updatedNode), "checkBlocking");
 		//checkBlocking(updatedNode);
 		

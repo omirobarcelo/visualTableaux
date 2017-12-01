@@ -206,7 +206,6 @@ public class Tableau {
 			}
 		}
 		
-		// Check blocking of updatedNode and all its successors 
 		iterativePreorder(TreeNode.getTreeNode(firstNode, updatedNode), "checkBlocking");
 		//checkBlocking(updatedNode);
 		
@@ -374,14 +373,7 @@ public class Tableau {
 		blockedNodes.add(n.getData());
 	}
 	
-	/**
-	 * Checks if n is finished. Then ands it to global finished
-	 * Global finished starts true and it will become false, and will remain as it,
-	 * as soon as some n is not finished
-	 * @param n
-	 */
 	private void checkFinished(TreeNode n) {
-		// clashed OR (n has no more operations OR is blocked) OR n contains Bottom
 		boolean tmpFinished = clashed ||
 				(operations.get(n.getData()).isEmpty() || 
 						blockedNodes.contains(n.getData()) || 
@@ -441,7 +433,8 @@ public class Tableau {
 	}
 	
 	/**
-	 * Check if updatedNode becomes directly or indirectly blocked by some predecessor
+	 * Check if updatedNode becomes blocked by its parent
+	 * and mark all the updatedNode children as blocked if so
 	 * @param updatedNode
 	 */
 	private void checkBlocking(Node updatedNode) {
@@ -457,7 +450,7 @@ public class Tableau {
 				// If GUI mode, dialog informing of blocking if node wasn't blocked before
 				if (modeGUI && !blockedNodes.contains(updatedNode)) {
 					JOptionPane.showMessageDialog(null, "Node " + updatedNode.getId() + 
-							" has become blocked by node " + pred.getId() + ".");
+							" has become blocked.");
 				}
 				blockedNodes.add(updatedNode);
 				blocked = true;

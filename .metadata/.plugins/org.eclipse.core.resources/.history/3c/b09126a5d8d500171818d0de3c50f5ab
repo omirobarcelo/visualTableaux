@@ -206,7 +206,6 @@ public class Tableau {
 			}
 		}
 		
-		// Check blocking of updatedNode and all its successors 
 		iterativePreorder(TreeNode.getTreeNode(firstNode, updatedNode), "checkBlocking");
 		//checkBlocking(updatedNode);
 		
@@ -441,7 +440,8 @@ public class Tableau {
 	}
 	
 	/**
-	 * Check if updatedNode becomes directly or indirectly blocked by some predecessor
+	 * Check if updatedNode becomes blocked by its parent
+	 * and mark all the updatedNode children as blocked if so
 	 * @param updatedNode
 	 */
 	private void checkBlocking(Node updatedNode) {
@@ -457,7 +457,7 @@ public class Tableau {
 				// If GUI mode, dialog informing of blocking if node wasn't blocked before
 				if (modeGUI && !blockedNodes.contains(updatedNode)) {
 					JOptionPane.showMessageDialog(null, "Node " + updatedNode.getId() + 
-							" has become blocked by node " + pred.getId() + ".");
+							" has become blocked.");
 				}
 				blockedNodes.add(updatedNode);
 				blocked = true;
