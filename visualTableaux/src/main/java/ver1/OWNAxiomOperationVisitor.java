@@ -1,6 +1,5 @@
 package ver1;
 
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Map;
@@ -21,17 +20,17 @@ public class OWNAxiomOperationVisitor implements OWNAxiomVisitor {
 	private Set<Operation> operations;
 	private TreeNode tn;
 	private Map<Node, LinkedHashSet<OWNAxiom>> Ln;
-	private Map<Pair<Node, Node>, LinkedHashSet<OWNLiteral>> Lr;
-	private Set<NonDeterministicOperation> conflictingOperations;
+	private Map<Pair<Node, Node>, HashSet<OWNLiteral>> Lr;
+	private Set<NonDeterministicOperation> appliedOperations;
 	
 	public OWNAxiomOperationVisitor(TreeNode tn, Map<Node, LinkedHashSet<OWNAxiom>> Ln, 
-			Map<Pair<Node, Node>, LinkedHashSet<OWNLiteral>> Lr, 
-			Set<NonDeterministicOperation> conflictingOperations) {
+			Map<Pair<Node, Node>, HashSet<OWNLiteral>> Lr, 
+			Set<NonDeterministicOperation> appliedOperations) {
 		operations = new HashSet<Operation>();
 		this.tn = tn;
 		this.Ln = Ln;
 		this.Lr = Lr;
-		this.conflictingOperations = conflictingOperations;
+		this.appliedOperations = appliedOperations;
 	}
 	
 	public Set<Operation> getOperations() {
@@ -76,10 +75,10 @@ public class OWNAxiomOperationVisitor implements OWNAxiomVisitor {
 		if (!(((HashSet<OWNAxiom>)Ln.get(tn.getData())).contains(axiom.getOperand1()) || 
 				((HashSet<OWNAxiom>)Ln.get(tn.getData())).contains(axiom.getOperand2()))) {
 			// Only add operation if not branded as conflicting operation
-			if (!conflictingOperations.contains(new NonDeterministicOperation
+			if (!appliedOperations.contains(new NonDeterministicOperation
 					(tn.getData(), OPERATOR.OR, axiom, axiom.getOperand1())))
 				operations.add(new Operation(OPERATOR.OR, axiom, axiom.getOperand1()));
-			if (!conflictingOperations.contains(new NonDeterministicOperation
+			if (!appliedOperations.contains(new NonDeterministicOperation
 					(tn.getData(), OPERATOR.OR, axiom, axiom.getOperand2())))
 				operations.add(new Operation(OPERATOR.OR, axiom, axiom.getOperand2()));
 		}

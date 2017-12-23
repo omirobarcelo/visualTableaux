@@ -19,7 +19,7 @@ public class Snapshot {
 	private byte nodeCode;
 	private TreeNode firstNode;
 	private Map<Node, LinkedHashSet<OWNAxiom>> Ln;
-	private Map<Pair<Node, Node>, LinkedHashSet<OWNLiteral>> Lr;
+	private Map<Pair<Node, Node>, HashSet<OWNLiteral>> Lr;
 	private Map<Node, HashSet<Operation>> operations;
 	private Set<Node> blockedNodes;
 	private Map<Node, Node> predecessor;
@@ -41,7 +41,7 @@ public class Snapshot {
 	 * @param finished
 	 */
 	public Snapshot(byte nodeCode, TreeNode firstNode, Map<Node, LinkedHashSet<OWNAxiom>> ln,
-			Map<Pair<Node, Node>, LinkedHashSet<OWNLiteral>> lr, Map<Node, HashSet<Operation>> operations,
+			Map<Pair<Node, Node>, HashSet<OWNLiteral>> lr, Map<Node, HashSet<Operation>> operations,
 			Set<Node> blockedNodes, Map<Node, Node> predecessor, boolean clashed, boolean finished) {
 		this.nodeCode = nodeCode;
 		this.firstNode = firstNode.copy();
@@ -85,7 +85,7 @@ public class Snapshot {
 		return Ln;
 	}
 
-	public Map<Pair<Node, Node>, LinkedHashSet<OWNLiteral>> getLr() {
+	public Map<Pair<Node, Node>, HashSet<OWNLiteral>> getLr() {
 		return Lr;
 	}
 

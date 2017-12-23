@@ -3,6 +3,9 @@ package ownapi;
 import ver1.util.StringAxiomConstants;
 
 public class OWNUnion extends OWNAxiom {
+	// To know how many applicable operands have NDOs
+	private static final int NUM_OPERANDS = 2;
+	
 	private OWNAxiom operand1;
 	private OWNAxiom operand2;
 
@@ -24,6 +27,10 @@ public class OWNUnion extends OWNAxiom {
 
 	public OWNAxiom getOperand2() {
 		return operand2;
+	}
+	
+	public int getNumOperands() {
+		return NUM_OPERANDS;
 	}
 	
 	@Override

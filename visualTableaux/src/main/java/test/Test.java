@@ -34,16 +34,24 @@ import ownapi.OWNAxiom.AXIOM_TYPE;
 public class Test {
 
 	public static void main(String[] args) {
+		ArrayList<String> tst1 = new ArrayList<String>();
+		tst1.add("Hi");
+		ArrayList<String> tst2 = new ArrayList<String>();
+		tst2.add("He");
+		tst2.add("Ha");
+		System.out.println("------");
+		System.out.println(java.util.Collections.disjoint(tst1, tst2));
+		System.out.println("------");
 		
-		HashSet<OWNAxiom> test = new HashSet<OWNAxiom>();
-		test.add(new OWNUnion(new OWNLiteral("test#a"), new OWNLiteral("test#b")));
-		test.add(new OWNIntersection(new OWNLiteral("test#a"), new OWNLiteral("test#b")));
-		test.add(new OWNExistential(new OWNLiteral("test#R"), new OWNLiteral("test#b")));
-		HashSet<OWNAxiom> test2 = new HashSet<OWNAxiom>();
-		test2.add(new OWNUnion(new OWNLiteral("test#a"), new OWNLiteral("test#b")));
-		test2.add(new OWNIntersection(new OWNLiteral("test#a"), new OWNLiteral("test#b")));
-		test2.add(new OWNExistential(new OWNLiteral("test#R"), new OWNLiteral("test#b")));
-		System.out.println(test.equals(test2));
+//		HashSet<OWNAxiom> test = new HashSet<OWNAxiom>();
+//		test.add(new OWNUnion(new OWNLiteral("test#a"), new OWNLiteral("test#b")));
+//		test.add(new OWNIntersection(new OWNLiteral("test#a"), new OWNLiteral("test#b")));
+//		test.add(new OWNExistential(new OWNLiteral("test#R"), new OWNLiteral("test#b")));
+//		HashSet<OWNAxiom> test2 = new HashSet<OWNAxiom>();
+//		test2.add(new OWNUnion(new OWNLiteral("test#a"), new OWNLiteral("test#b")));
+//		test2.add(new OWNIntersection(new OWNLiteral("test#a"), new OWNLiteral("test#b")));
+//		test2.add(new OWNExistential(new OWNLiteral("test#R"), new OWNLiteral("test#b")));
+//		System.out.println(test.equals(test2));
 		
 //		System.out.println(test.toString());
 //		String sTest = test.toString();

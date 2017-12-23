@@ -1,7 +1,11 @@
 package ver1;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 import ownapi.*;
 import ver1.util.*;
@@ -46,8 +50,9 @@ public class Backtracker {
 		}
 		
 		
-		private NonDeterministicOperation NDO;
+		private Pair<Node, OWNAxiom> NDO;
 		private Snapshot snapshot;
+		private List<OWNAxiom> operandsApplied;
 		private List<Tracker> trackers;
 		
 		/**
@@ -56,10 +61,25 @@ public class Backtracker {
 		 * @param snapshot
 		 */
 		public BTElement(NonDeterministicOperation NDO, Snapshot snapshot) {
-			this.NDO = NDO;
+			this.NDO = new Pair<Node, OWNAxiom>(NDO.getNode(), NDO.getOperand());
 			this.snapshot = snapshot;
+			this.operandsApplied = new ArrayList<OWNAxiom>();
+			this.operandsApplied.add(NDO.getResult());
 			this.trackers = new ArrayList<Tracker>();
 			this.trackers.add(new Tracker(NDO.getNode(), NDO.getResult()));
+		}
+		
+		/**
+		 * Updates the BTElement with the new applied result, the current state,
+		 * and resets the trackers
+		 * @param result
+		 * @param snapshot
+		 */
+		public void updateBTElement(OWNAxiom result, Snapshot snapshot) {
+			this.snapshot = snapshot;
+			this.operandsApplied.add(result);
+			this.trackers.clear();
+			this.trackers.add(new Tracker(NDO.getFirst(), result));
 		}
 		
 		/**
@@ -86,24 +106,43 @@ public class Backtracker {
 		public boolean containsTracker(Node n, OWNAxiom axiom) {
 			return trackers.contains(new Tracker(n, axiom));
 		}
+		
+		public boolean containsAnyTracker(Node n, List<OWNAxiom> axioms) {
+			for (OWNAxiom axiom : axioms)
+				if (trackers.contains(new Tracker(n, axiom)))
+					return true;
+			return false;
+		}
+		
+		public boolean backtracksNDO(Node n, OWNAxiom axiom) {
+			return n.equals(NDO.getFirst()) && axiom.equals(NDO.getSecond());
+		}
+		
+		public boolean allResultsApplied() {
+			OWNAxiom axiom = NDO.getSecond();
+			// Cast to appropriate type
+			// In this case, only OWNUnion possible
+			OWNUnion op = (OWNUnion)axiom;
+			return operandsApplied.contains(op.getOperand1()) && operandsApplied.contains(op.getOperand2());
+		}
 	}
 	
 	
 	private List<BTElement> backtracker;
-	private List<Pair<Node, OWNAxiom>> executedNDO; //Keeps track of the executed NDO, because they have to be executed at least once 
-	// to apply all the operations
 	private int clashCause; //Position of the causing BTElement in backtracker
 
 	public Backtracker() {
 		this.backtracker = new ArrayList<BTElement>();
-		this.executedNDO = new ArrayList<Pair<Node, OWNAxiom>>();
 		clashCause = -1;
 	}
 	
 	public void takeSnapshot(NonDeterministicOperation ndo, Tableau tableau) {
 		Snapshot snapshot = new Snapshot(tableau);
-		backtracker.add(new BTElement(ndo, snapshot));
-		executedNDO.add(new Pair<Node, OWNAxiom>(ndo.getNode(), ndo.getOperand()));
+		BTElement elem = null;
+		if ((elem = NDOInBacktracker(ndo.getNode(), ndo.getOperand())) != null)
+			elem.updateBTElement(ndo.getResult(), snapshot);
+		else
+			backtracker.add(new BTElement(ndo, snapshot));
 	}
 	
 	public void updateTrackers(Node n, OWNAxiom axiom, Node updatedNode, OWNAxiom... results) {
@@ -122,30 +161,42 @@ public class Backtracker {
 		return false;
 	}
 	
-	public boolean hasNDOBeenExecuted(Node n, OWNAxiom operand) {
-		return executedNDO.contains(new Pair<Node, OWNAxiom>(n, operand));
-	}
-	
-	public void selectCauseOfClash(Node n, OWNAxiom axiom) {
-		// TODO get clashCause
-		for (int i = 0; i < backtracker.size(); i++) {
-			if (backtracker.get(i).containsTracker(n, axiom)) {
+	/**
+	 * Saves the index with the BTElement to which the tableau backtracks, 
+	 * and updated the backtracker
+	 * @param n
+	 * @param lit
+	 * @param compl
+	 */
+	public void selectCauseOfClash(Node n, OWNAxiom lit, OWNAxiom compl) {
+		List<OWNAxiom> tmp = Arrays.asList(new OWNAxiom[]{lit, compl});
+		for (int i = backtracker.size()-1; i >= 0; i--) {
+			if (backtracker.get(i).containsAnyTracker(n, tmp)) {
 				clashCause = i;
+				// If the causing element has all the results applied, go back until
+				// an element with still applicable results is found
+				while (clashCause >= 0 && backtracker.get(clashCause).allResultsApplied())
+					clashCause--;
+				break;
 			}
 		}
+		// Remove elements after cause of clash
+		if (clashCause+1 < backtracker.size())
+			backtracker.subList(clashCause+1, backtracker.size()).clear();
 	}
-	
+		
 	/**
 	 * Returns clashCause which has been selected through selectCauseOfClash
-	 * It also removes all the elements after the cause of clash, including the cause (includes backtracker and executedNDO)
 	 * @return
 	 */
 	public Pair<NonDeterministicOperation, Snapshot> getCauseOfClash() {
+		BTElement cause = backtracker.get(clashCause);
+		NonDeterministicOperation ndo = 
+				new NonDeterministicOperation(cause.NDO.getFirst(), 
+						new Operation(Operation.OPERATOR.OR, cause.NDO.getSecond(), 
+								cause.operandsApplied.get(cause.operandsApplied.size()-1)));
 		Pair<NonDeterministicOperation, Snapshot> p = 
-				new Pair<NonDeterministicOperation, Snapshot>(backtracker.get(clashCause).NDO, backtracker.get(clashCause).snapshot);
-		int numNDOToRemove = backtracker.size()-clashCause-1; //We have to leave the NDO that caused the clash
-		backtracker.subList(clashCause, backtracker.size()).clear();
-		executedNDO.subList(executedNDO.size()-numNDOToRemove, executedNDO.size()).clear(); 
+				new Pair<NonDeterministicOperation, Snapshot>(ndo, cause.snapshot);		
 		return p;
 	}
 	
@@ -156,9 +207,34 @@ public class Backtracker {
 	public Backtracker copy() {
 		Backtracker copy = new Backtracker();
 		copy.backtracker = DeepClone.deepClone(this.backtracker);
-		copy.executedNDO = DeepClone.deepClone(this.executedNDO);
 		copy.clashCause = this.clashCause;
 		return copy;
+	}
+	
+	public Set<NonDeterministicOperation> getAppliedNDOs() {
+		HashSet<NonDeterministicOperation> set = new HashSet<NonDeterministicOperation>();
+		for (BTElement elem : backtracker) {
+			for (OWNAxiom result : elem.operandsApplied) {
+				set.add(new NonDeterministicOperation(elem.NDO.getFirst(), 
+						new Operation(Operation.OPERATOR.OR, elem.NDO.getSecond(), result)));
+			}
+		}
+		return set;
+	}
+	
+	/**
+	 * Returns the BTElement if the NDO is in the backtracker. 
+	 * Else returns null (as in false)
+	 * @param n
+	 * @param axiom
+	 * @return
+	 */
+	private BTElement NDOInBacktracker(Node n, OWNAxiom axiom) {
+		for (BTElement elem : backtracker) {
+			if (elem.backtracksNDO(n, axiom))
+				return elem;
+		}
+		return null;
 	}
 	
 //	/**

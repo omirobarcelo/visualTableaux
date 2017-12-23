@@ -18,9 +18,8 @@ public class Tableau {
 	private byte nodeCode;
 	private TreeNode firstNode;
 	private Map<Node, LinkedHashSet<OWNAxiom>> Ln;
-	private Map<Pair<Node, Node>, LinkedHashSet<OWNLiteral>> Lr;
+	private Map<Pair<Node, Node>, HashSet<OWNLiteral>> Lr;
 	private Map<Node, HashSet<Operation>> operations;
-	private Set<NonDeterministicOperation> conflictingOperations;
 	private Set<Node> blockedNodes;
 	private Map<Node, Node> predecessor;
 	private boolean clashed, clashConsequenceNDO, finished;
@@ -42,9 +41,8 @@ public class Tableau {
 		nodeCode = 109; // ASCII m
 		this.firstNode = new TreeNode(new Node(Character.toString((char)nodeCode++)));
 		Ln = new HashMap<Node, LinkedHashSet<OWNAxiom>>();
-		Lr = new HashMap<Pair<Node, Node>, LinkedHashSet<OWNLiteral>>();
+		Lr = new HashMap<Pair<Node, Node>, HashSet<OWNLiteral>>();
 		operations = new HashMap<Node, HashSet<Operation>>();
-		conflictingOperations = new HashSet<NonDeterministicOperation>();
 		blockedNodes = new HashSet<Node>();
 		predecessor = new HashMap<Node, Node>();
 		clashed = false;
@@ -94,7 +92,7 @@ public class Tableau {
 	}
 	
 	public Set<OWNAxiom> getAxioms(Node n) {
-		return Ln.get(n);
+		return ((HashSet<OWNAxiom>)Ln.get(n));
 	}
 	
 	public Set<OWNLiteral> getRelations(Node pred, Node succ) {
@@ -113,12 +111,12 @@ public class Tableau {
 		// do not come from a NDO
 		switch (op.getOperator()) {
 			case TOP: {
-				Ln.get(n).add(op.getOperand1());
+				((HashSet<OWNAxiom>)Ln.get(n)).add(op.getOperand1());
 				updatedNode = n;
 				break;
 			}
 			case BOTTOM: {
-				Ln.get(n).add(OWNAxiom.BOTTOM);
+				((HashSet<OWNAxiom>)Ln.get(n)).add(OWNAxiom.BOTTOM);
 				// If there aren't snapshots to backtrack to, and BOTTOM operation
 				// is applied, then the tableau expansion clashed
 				// If there are snapshots, check if the clash is a consequence from
@@ -132,7 +130,7 @@ public class Tableau {
 					// If the literal or the complement are tracked, then the clash
 					// is consequence of a NDO, which is selected
 					if (clashConsequenceNDO = literalTracked || complementTracked)
-						backtracker.selectCauseOfClash(n, literalTracked ? op.getOperand1() : op.getOperand2());
+						backtracker.selectCauseOfClash(n, op.getOperand1(), op.getOperand2());
 					
 //					// Check if last NDO's operand contains literal
 //					OWNAxiomContainsVisitor visitor1 = new OWNAxiomContainsVisitor(op.getOperand1());
@@ -150,8 +148,8 @@ public class Tableau {
 			}
 			case AND: {
 				OWNIntersection intersection = (OWNIntersection)op.getOperand1();
-				boolean op1Added = Ln.get(n).add(intersection.getOperand1());
-				boolean op2Added = Ln.get(n).add(intersection.getOperand2());
+				boolean op1Added = ((HashSet<OWNAxiom>)Ln.get(n)).add(intersection.getOperand1());
+				boolean op2Added = ((HashSet<OWNAxiom>)Ln.get(n)).add(intersection.getOperand2());
 				updatedNode = n;
 				// Update trackers
 				if (op1Added && !op2Added)
@@ -163,15 +161,9 @@ public class Tableau {
 				break;
 			}
 			case OR: {
-				// All operations have to be applied to fully expand the tableau
-				// NDO can have more than one application (assumed 2 in this implementation)
-				// In executedNDO stored the NDO applied. If an NDO was already applied once, 
-				// then a snapshot is not taken since last application resulted in a clash,
-				// and operation has to be applied at least once
-				if (!backtracker.hasNDOBeenExecuted(n, op.getOperand1())) {
-					backtracker.takeSnapshot(new NonDeterministicOperation(n, op), this);
-				}
-				boolean opAdded = Ln.get(n).add(op.getResult());
+				// Save current state
+				backtracker.takeSnapshot(new NonDeterministicOperation(n, op), this);
+				boolean opAdded = ((HashSet<OWNAxiom>)Ln.get(n)).add(op.getResult());
 				updatedNode = n;
 				// Update trackers
 				if (opAdded)
@@ -225,7 +217,6 @@ public class Tableau {
 			if (backtracker.thereAreSnapshots()) {
 				// TODO if GUI mode, inform of backtracking effects
 				Pair<NonDeterministicOperation, Snapshot> p = backtracker.getCauseOfClash();
-				conflictingOperations.add(p.getFirst());
 				if (modeGUI) {
 					// Get differences from snapshot and current state
 					String nodesRemoved = "- Nodes removed: ";
@@ -235,7 +226,7 @@ public class Tableau {
 						// If snapshot contains node, check for modifications; else, mark it as removed
 						if (p.getSecond().getLn().containsKey(key)) {
 							// Check if L(key) has changed
-							if (!Ln.get(key).equals(p.getSecond().getLn().get(key)))
+							if (!((HashSet<OWNAxiom>)Ln.get(key)).equals(((HashSet<OWNAxiom>)p.getSecond().getLn().get(key))))
 								msg += "- L(" + key.getId() + ") changes to " + p.getSecond().getLn().get(key) +".\n";
 						} else {
 							nodesRemoved += key.getId() + ", ";
@@ -280,7 +271,7 @@ public class Tableau {
 		return Ln;
 	}
 	
-	protected Map<Pair<Node, Node>, LinkedHashSet<OWNLiteral>> getLr() {
+	protected Map<Pair<Node, Node>, HashSet<OWNLiteral>> getLr() {
 		return Lr;
 	}
 	
@@ -419,21 +410,21 @@ public class Tableau {
 		// Reset operations set
 		operations.get(n).clear();
 		// If n hasn't clashed and it's not blocked
-		//if (!Ln.get(n).contains(OWNAxiom.BOTTOM) && !blockedNodes.contains(n)) {
+		//if (!((HashSet<OWNAxiom>)Ln.get(n)).contains(OWNAxiom.BOTTOM) && !blockedNodes.contains(n)) {
 		// OR if n hasn't clashed (can keep operating even if it's blocked)
-		// Ln.get(n) cannot be directly applied because it throws 
+		// ((HashSet<OWNAxiom>)Ln.get(n)) cannot be directly applied because it throws 
 		// java.lang.ClassCastException: java.util.HashSet cannot be cast to java.util.LinkedHashSet
-		if (!((HashSet<OWNAxiom>)Ln.get(n)).contains(OWNAxiom.BOTTOM)) {
+		if (!((HashSet<OWNAxiom>)((HashSet<OWNAxiom>)Ln.get(n))).contains(OWNAxiom.BOTTOM)) {
 			// Add all applicable TOP rules
 			for (OWNAxiom axiom : K) {
-				if (!((HashSet<OWNAxiom>)Ln.get(n)).contains(axiom))
+				if (!((HashSet<OWNAxiom>)((HashSet<OWNAxiom>)Ln.get(n))).contains(axiom))
 					operations.get(n).add(new Operation(OPERATOR.TOP, axiom));
 			}
 
 			// Iterate over all axioms in node
-			for (OWNAxiom axiom : (HashSet<OWNAxiom>)Ln.get(n)) {
+			for (OWNAxiom axiom : (HashSet<OWNAxiom>)((HashSet<OWNAxiom>)Ln.get(n))) {
 				OWNAxiomOperationVisitor visitor = 
-						new OWNAxiomOperationVisitor(tn, Ln, Lr, conflictingOperations);
+						new OWNAxiomOperationVisitor(tn, Ln, Lr, backtracker.getAppliedNDOs());
 				axiom.accept(visitor);
 				operations.get(n).addAll(visitor.getOperations());
 			}
@@ -480,11 +471,11 @@ public class Tableau {
 		}
 	}
 	
+	// TODO DEPRECATED
 	private void recoverFromLastSnapshot() {
 		// TODO
 		//Pair<NonDeterministicOperation, Snapshot> p = backtracker.getLastSnapshot();
 		Pair<NonDeterministicOperation, Snapshot> p = backtracker.getCauseOfClash();
-		conflictingOperations.add(p.getFirst());
 		// Recover
 		recoverFromSnapshot(p.getSecond(), true);
 		
