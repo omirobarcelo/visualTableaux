@@ -43,9 +43,7 @@ public class OWNIntersection extends OWNAxiom {
 	public boolean equals(Object other) {
 		if (other instanceof OWNIntersection) {
 			OWNIntersection intersection = (OWNIntersection)other;
-			boolean same = (operand1.equals(intersection.operand1) && operand2.equals(intersection.operand2)) 
-					|| (operand2.equals(intersection.operand1) && operand1.equals(intersection.operand2));
-			return type == intersection.type && same;
+			return type == intersection.type && operand1.equals(intersection.operand1) && operand2.equals(intersection.operand2);
 		}
 		return false;
 	}

@@ -43,7 +43,9 @@ public class OWNUnion extends OWNAxiom {
 	public boolean equals(Object other) {
 		if (other instanceof OWNUnion) {
 			OWNUnion union = (OWNUnion)other;
-			return type == union.type && operand1.equals(union.operand1) && operand2.equals(union.operand2);
+			boolean same = (operand1.equals(union.operand1) && operand2.equals(union.operand2)) 
+					|| (operand2.equals(union.operand1) && operand1.equals(union.operand2));
+			return type == union.type && same;
 		}
 		return false;
 	}
