@@ -4,7 +4,9 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Map;
 
 import org.semanticweb.owlapi.apibinding.OWLManager;
 import org.semanticweb.owlapi.model.IRI;
@@ -95,7 +97,7 @@ public class TUI {
 	 */
 	private static List<Pair<Node, Operation>> showOperations(Tableau tableau) {
 		List<Pair<Node, Operation>> ops = new ArrayList<Pair<Node, Operation>>();
-		HashMap<Node, HashSet<Operation>> operations = tableau.getOperations();
+		Map<Node, HashSet<Operation>> operations = tableau.getOperations();
 		System.out.println();
 		int option = 1;
 		for (Node n : operations.keySet()) {

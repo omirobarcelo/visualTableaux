@@ -2,6 +2,9 @@ package ver1;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.Map;
+import java.util.Set;
 import java.util.Stack;
 
 import javax.swing.JOptionPane;
@@ -11,15 +14,15 @@ import ver1.Operation.OPERATOR;
 import ver1.util.*;
 
 public class Tableau {
-	private HashSet<OWNAxiom> K;
+	private Set<OWNAxiom> K;
 	private byte nodeCode;
 	private TreeNode firstNode;
-	private HashMap<Node, HashSet<OWNAxiom>> Ln;
-	private HashMap<Pair<Node, Node>, HashSet<OWNLiteral>> Lr;
-	private HashMap<Node, HashSet<Operation>> operations;
-	private HashSet<NonDeterministicOperation> conflictingOperations;
-	private HashSet<Node> blockedNodes;
-	private HashMap<Node, Node> predecessor;
+	private Map<Node, LinkedHashSet<OWNAxiom>> Ln;
+	private Map<Pair<Node, Node>, LinkedHashSet<OWNLiteral>> Lr;
+	private Map<Node, HashSet<Operation>> operations;
+	private Set<NonDeterministicOperation> conflictingOperations;
+	private Set<Node> blockedNodes;
+	private Map<Node, Node> predecessor;
 	private boolean clashed, clashConsequenceNDO, finished;
 	private Backtracker backtracker;
 	private UserSaveState uss; // Starts with all the states as the initial state
@@ -38,8 +41,8 @@ public class Tableau {
 		this.K = K;
 		nodeCode = 109; // ASCII m
 		this.firstNode = new TreeNode(new Node(Character.toString((char)nodeCode++)));
-		Ln = new HashMap<Node, HashSet<OWNAxiom>>();
-		Lr = new HashMap<Pair<Node, Node>, HashSet<OWNLiteral>>();
+		Ln = new HashMap<Node, LinkedHashSet<OWNAxiom>>();
+		Lr = new HashMap<Pair<Node, Node>, LinkedHashSet<OWNLiteral>>();
 		operations = new HashMap<Node, HashSet<Operation>>();
 		conflictingOperations = new HashSet<NonDeterministicOperation>();
 		blockedNodes = new HashSet<Node>();
@@ -54,7 +57,7 @@ public class Tableau {
 	
 	public void init(OWNAxiom concept) {
 		// Add first node with initial concept to L
-		Ln.put(firstNode.getData(), new HashSet<OWNAxiom>());
+		Ln.put(firstNode.getData(), new LinkedHashSet<OWNAxiom>());
 		Ln.get(firstNode.getData()).add(concept);
 		// Add null predecessor
 		predecessor.put(firstNode.getData(), null);
@@ -70,7 +73,7 @@ public class Tableau {
 	///////////////////////
 	/////   GETTERS   /////
 	///////////////////////
-	public HashSet<OWNAxiom> getOntology() {
+	public Set<OWNAxiom> getOntology() {
 		return K;
 	}
 	
@@ -86,15 +89,15 @@ public class Tableau {
 		return Character.toString((char)nodeCode);
 	}
 	
-	public HashMap<Node, HashSet<Operation>> getOperations() {
+	public Map<Node, HashSet<Operation>> getOperations() {
 		return operations;
 	}
 	
-	public HashSet<OWNAxiom> getAxioms(Node n) {
+	public Set<OWNAxiom> getAxioms(Node n) {
 		return Ln.get(n);
 	}
 	
-	public HashSet<OWNLiteral> getRelations(Node pred, Node succ) {
+	public Set<OWNLiteral> getRelations(Node pred, Node succ) {
 		return Lr.get(new Pair<Node, Node>(pred, succ));
 	}
 	
@@ -182,9 +185,9 @@ public class Tableau {
 				Node newNode = new Node(Character.toString((char)nodeCode++));
 				tn.addChild(newNode);
 				predecessor.put(newNode, n);
-				Ln.put(newNode, new HashSet<OWNAxiom>());
+				Ln.put(newNode, new LinkedHashSet<OWNAxiom>());
 				Pair<Node, Node> p = new Pair<Node, Node>(n, newNode);
-				Lr.put(p, new HashSet<OWNLiteral>());
+				Lr.put(p, new LinkedHashSet<OWNLiteral>());
 				operations.put(newNode, new HashSet<Operation>());
 				// Apply operation
 				Lr.get(p).add(existential.getRelation());
@@ -273,19 +276,19 @@ public class Tableau {
 		return nodeCode;
 	}
 	
-	protected HashMap<Node, HashSet<OWNAxiom>> getLn() {
+	protected Map<Node, LinkedHashSet<OWNAxiom>> getLn() {
 		return Ln;
 	}
 	
-	protected HashMap<Pair<Node, Node>, HashSet<OWNLiteral>> getLr() {
+	protected Map<Pair<Node, Node>, LinkedHashSet<OWNLiteral>> getLr() {
 		return Lr;
 	}
 	
-	protected HashSet<Node> getBlockedNodes() {
+	protected Set<Node> getBlockedNodes() {
 		return blockedNodes;
 	}
 	
-	protected HashMap<Node, Node> getPredecessor() {
+	protected Map<Node, Node> getPredecessor() {
 		return predecessor;
 	}
 	
@@ -385,7 +388,7 @@ public class Tableau {
 		boolean tmpFinished = clashed ||
 				(operations.get(n.getData()).isEmpty() || 
 						blockedNodes.contains(n.getData()) || 
-						Ln.get(n.getData()).contains(OWNAxiom.BOTTOM));
+						((HashSet<OWNAxiom>)Ln.get(n.getData())).contains(OWNAxiom.BOTTOM));
 		finished &= tmpFinished;		
 	}
 	
@@ -418,15 +421,17 @@ public class Tableau {
 		// If n hasn't clashed and it's not blocked
 		//if (!Ln.get(n).contains(OWNAxiom.BOTTOM) && !blockedNodes.contains(n)) {
 		// OR if n hasn't clashed (can keep operating even if it's blocked)
-		if (!Ln.get(n).contains(OWNAxiom.BOTTOM)) {
+		// Ln.get(n) cannot be directly applied because it throws 
+		// java.lang.ClassCastException: java.util.HashSet cannot be cast to java.util.LinkedHashSet
+		if (!((HashSet<OWNAxiom>)Ln.get(n)).contains(OWNAxiom.BOTTOM)) {
 			// Add all applicable TOP rules
 			for (OWNAxiom axiom : K) {
-				if (!Ln.get(n).contains(axiom))
+				if (!((HashSet<OWNAxiom>)Ln.get(n)).contains(axiom))
 					operations.get(n).add(new Operation(OPERATOR.TOP, axiom));
 			}
 
 			// Iterate over all axioms in node
-			for (OWNAxiom axiom : Ln.get(n)) {
+			for (OWNAxiom axiom : (HashSet<OWNAxiom>)Ln.get(n)) {
 				OWNAxiomOperationVisitor visitor = 
 						new OWNAxiomOperationVisitor(tn, Ln, Lr, conflictingOperations);
 				axiom.accept(visitor);
@@ -453,7 +458,7 @@ public class Tableau {
 		// Check until there are no more predecessors or the updated node is blocked
 		while (pred != null && !blocked) {
 			// If L(updatedNode) is a subset of L(parent) or the predecessor is blocked
-			if (Ln.get(pred).containsAll(Ln.get(updatedNode)) || blockedNodes.contains(pred)) {
+			if (((HashSet<OWNAxiom>)Ln.get(pred)).containsAll((HashSet<OWNAxiom>)Ln.get(updatedNode)) || blockedNodes.contains(pred)) {
 				// If GUI mode, dialog informing of blocking if node wasn't blocked before
 				if (modeGUI && !blockedNodes.contains(updatedNode)) {
 					JOptionPane.showMessageDialog(null, "Node " + updatedNode.getId() + 

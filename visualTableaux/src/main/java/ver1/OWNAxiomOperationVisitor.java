@@ -2,6 +2,9 @@ package ver1;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.Map;
+import java.util.Set;
 
 import ownapi.*;
 import ownapi.OWNAxiom.AXIOM_TYPE;
@@ -15,15 +18,15 @@ import ver1.util.*;
  */
 public class OWNAxiomOperationVisitor implements OWNAxiomVisitor {
 	// Contains all the operations possible from axiom
-	private HashSet<Operation> operations;
+	private Set<Operation> operations;
 	private TreeNode tn;
-	private HashMap<Node, HashSet<OWNAxiom>> Ln;
-	private HashMap<Pair<Node, Node>, HashSet<OWNLiteral>> Lr;
-	private HashSet<NonDeterministicOperation> conflictingOperations;
+	private Map<Node, LinkedHashSet<OWNAxiom>> Ln;
+	private Map<Pair<Node, Node>, LinkedHashSet<OWNLiteral>> Lr;
+	private Set<NonDeterministicOperation> conflictingOperations;
 	
-	public OWNAxiomOperationVisitor(TreeNode tn, HashMap<Node, HashSet<OWNAxiom>> Ln, 
-			HashMap<Pair<Node, Node>, HashSet<OWNLiteral>> Lr, 
-			HashSet<NonDeterministicOperation> conflictingOperations) {
+	public OWNAxiomOperationVisitor(TreeNode tn, Map<Node, LinkedHashSet<OWNAxiom>> Ln, 
+			Map<Pair<Node, Node>, LinkedHashSet<OWNLiteral>> Lr, 
+			Set<NonDeterministicOperation> conflictingOperations) {
 		operations = new HashSet<Operation>();
 		this.tn = tn;
 		this.Ln = Ln;
@@ -31,7 +34,7 @@ public class OWNAxiomOperationVisitor implements OWNAxiomVisitor {
 		this.conflictingOperations = conflictingOperations;
 	}
 	
-	public HashSet<Operation> getOperations() {
+	public Set<Operation> getOperations() {
 		return operations;
 	}
 	
@@ -50,9 +53,9 @@ public class OWNAxiomOperationVisitor implements OWNAxiomVisitor {
 	 */
 	public void visit(OWNComplement axiom) {
 		// If BOTTOM not in L(n)
-		if (!Ln.get(tn.getData()).contains(OWNAxiom.BOTTOM)) {
+		if (!((HashSet<OWNAxiom>)Ln.get(tn.getData())).contains(OWNAxiom.BOTTOM)) {
 			// If L(n) includes ¬axiom
-			for (OWNAxiom other : Ln.get(tn.getData())) {
+			for (OWNAxiom other : (HashSet<OWNAxiom>)Ln.get(tn.getData())) {
 				if (other.isOfType(AXIOM_TYPE.LITERAL) && other.equals(axiom.getOperand())) {
 					operations.add(new Operation(OPERATOR.BOTTOM, other, axiom));
 					break;
@@ -63,15 +66,15 @@ public class OWNAxiomOperationVisitor implements OWNAxiomVisitor {
 
 	public void visit(OWNIntersection axiom) {
 		// If {op1,op2} not included in L(n)
-		if (!(Ln.get(tn.getData()).contains(axiom.getOperand1()) && 
-				Ln.get(tn.getData()).contains(axiom.getOperand2())))
+		if (!(((HashSet<OWNAxiom>)Ln.get(tn.getData())).contains(axiom.getOperand1()) && 
+				((HashSet<OWNAxiom>)Ln.get(tn.getData())).contains(axiom.getOperand2())))
 			operations.add(new Operation(OPERATOR.AND, axiom));
 	}
 
 	public void visit(OWNUnion axiom) {
 		// If {op1,op2} disjunct with L(n)
-		if (!(Ln.get(tn.getData()).contains(axiom.getOperand1()) || 
-				Ln.get(tn.getData()).contains(axiom.getOperand2()))) {
+		if (!(((HashSet<OWNAxiom>)Ln.get(tn.getData())).contains(axiom.getOperand1()) || 
+				((HashSet<OWNAxiom>)Ln.get(tn.getData())).contains(axiom.getOperand2()))) {
 			// Only add operation if not branded as conflicting operation
 			if (!conflictingOperations.contains(new NonDeterministicOperation
 					(tn.getData(), OPERATOR.OR, axiom, axiom.getOperand1())))
@@ -95,7 +98,7 @@ public class OWNAxiomOperationVisitor implements OWNAxiomVisitor {
 			}
 			// Check if some contain the axiom operand
 			for (Node y : Ys) {
-				axiomInL |= Ln.get(y).contains(axiom.getOperand());
+				axiomInL |= ((HashSet<OWNAxiom>)Ln.get(y)).contains(axiom.getOperand());
 			}
 		}
 		// If op isn't in any L(y), for all y that L(n,y) contain rel
@@ -115,7 +118,7 @@ public class OWNAxiomOperationVisitor implements OWNAxiomVisitor {
 			}
 			// If op isn't in some L(y), add all operations to y
 			for (Node y : Ys) {
-				if (!Ln.get(y).contains(axiom.getOperand())) {
+				if (!((HashSet<OWNAxiom>)Ln.get(y)).contains(axiom.getOperand())) {
 					operations.add(new Operation(OPERATOR.ONLY, axiom, y));
 				}
 			}

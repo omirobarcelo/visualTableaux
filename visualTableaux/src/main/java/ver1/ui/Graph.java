@@ -2,6 +2,7 @@ package ver1.ui;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
@@ -11,6 +12,7 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
+import java.util.Set;
 
 import javax.swing.*;
 
@@ -133,7 +135,7 @@ public class Graph extends JPanel {
 		return map;
 	}
 	
-	private String[] getStringArrayFromOWNAxiomSet(HashSet<ownapi.OWNAxiom> set) {
+	private String[] getStringArrayFromOWNAxiomSet(Set<ownapi.OWNAxiom> set) {
 		String[] array = new String[set.size()];
 		int i = 0;
 		for (ownapi.OWNAxiom ax : set)
@@ -147,7 +149,7 @@ public class Graph extends JPanel {
 	 * @param alwaysTrue
 	 * @return
 	 */
-	private String[] getStringArrayFromOWNAxiomSet(HashSet<ownapi.OWNLiteral> set, boolean alwaysTrue) {
+	private String[] getStringArrayFromOWNAxiomSet(Set<ownapi.OWNLiteral> set, boolean alwaysTrue) {
 		String[] array = new String[set.size()];
 		int i = 0;
 		for (ownapi.OWNAxiom ax : set)

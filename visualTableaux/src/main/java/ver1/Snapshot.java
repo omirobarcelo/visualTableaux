@@ -2,6 +2,9 @@ package ver1;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.Map;
+import java.util.Set;
 
 import ownapi.OWNAxiom;
 import ownapi.OWNLiteral;
@@ -15,11 +18,11 @@ import ver1.util.Pair;
 public class Snapshot {
 	private byte nodeCode;
 	private TreeNode firstNode;
-	private HashMap<Node, HashSet<OWNAxiom>> Ln;
-	private HashMap<Pair<Node, Node>, HashSet<OWNLiteral>> Lr;
-	private HashMap<Node, HashSet<Operation>> operations;
-	private HashSet<Node> blockedNodes;
-	private HashMap<Node, Node> predecessor;
+	private Map<Node, LinkedHashSet<OWNAxiom>> Ln;
+	private Map<Pair<Node, Node>, LinkedHashSet<OWNLiteral>> Lr;
+	private Map<Node, HashSet<Operation>> operations;
+	private Set<Node> blockedNodes;
+	private Map<Node, Node> predecessor;
 	private Backtracker backtracker;
 	private boolean clashed, finished;
 	
@@ -37,9 +40,9 @@ public class Snapshot {
 	 * @param clashed
 	 * @param finished
 	 */
-	public Snapshot(byte nodeCode, TreeNode firstNode, HashMap<Node, HashSet<OWNAxiom>> ln,
-			HashMap<Pair<Node, Node>, HashSet<OWNLiteral>> lr, HashMap<Node, HashSet<Operation>> operations,
-			HashSet<Node> blockedNodes, HashMap<Node, Node> predecessor, boolean clashed, boolean finished) {
+	public Snapshot(byte nodeCode, TreeNode firstNode, Map<Node, LinkedHashSet<OWNAxiom>> ln,
+			Map<Pair<Node, Node>, LinkedHashSet<OWNLiteral>> lr, Map<Node, HashSet<Operation>> operations,
+			Set<Node> blockedNodes, Map<Node, Node> predecessor, boolean clashed, boolean finished) {
 		this.nodeCode = nodeCode;
 		this.firstNode = firstNode.copy();
 		Ln = DeepClone.deepClone(ln);
@@ -78,23 +81,23 @@ public class Snapshot {
 		return firstNode;
 	}
 
-	public HashMap<Node, HashSet<OWNAxiom>> getLn() {
+	public Map<Node, LinkedHashSet<OWNAxiom>> getLn() {
 		return Ln;
 	}
 
-	public HashMap<Pair<Node, Node>, HashSet<OWNLiteral>> getLr() {
+	public Map<Pair<Node, Node>, LinkedHashSet<OWNLiteral>> getLr() {
 		return Lr;
 	}
 
-	public HashMap<Node, HashSet<Operation>> getOperations() {
+	public Map<Node, HashSet<Operation>> getOperations() {
 		return operations;
 	}
 
-	public HashSet<Node> getBlockedNodes() {
+	public Set<Node> getBlockedNodes() {
 		return blockedNodes;
 	}
 
-	public HashMap<Node, Node> getPredecessor() {
+	public Map<Node, Node> getPredecessor() {
 		return predecessor;
 	}
 	

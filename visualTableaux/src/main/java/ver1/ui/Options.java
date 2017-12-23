@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 
 import javax.swing.*;
 
@@ -48,7 +49,7 @@ public class Options extends JPanel implements ActionListener, MouseListener {
 	 * @param nextCreatedNode The id of the node that would be created next, necessary for Existential operations
 	 * @return
 	 */
-	public List<Pair<Node, Operation>> setOptions(HashMap<Node, HashSet<Operation>> options, 
+	public List<Pair<Node, Operation>> setOptions(Map<Node, HashSet<Operation>> options, 
 												  String nextCreatedNode) {
 		jbList.clear();
 		this.removeAll();
@@ -91,7 +92,7 @@ public class Options extends JPanel implements ActionListener, MouseListener {
 	 * @param n
 	 * @return
 	 */
-	public List<Pair<Node, Operation>> setOptions(HashMap<Node, HashSet<Operation>> options, 
+	public List<Pair<Node, Operation>> setOptions(Map<Node, HashSet<Operation>> options, 
 			String nextCreatedNode, Node n) {
 		jbList.clear();
 		this.removeAll();

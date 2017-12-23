@@ -44,10 +44,8 @@
 <fullyQualifiedTypeName name="ver1.Operation.OPERATOR"/>
 <fullyQualifiedTypeName name="ownapi.OWNComplement"/>
 <fullyQualifiedTypeName name="java.util.HashMap"/>
-<fullyQualifiedTypeName name="ver1.util.StringAxiomConstants"/>
 <fullyQualifiedTypeName name="java.util.HashSet"/>
 <fullyQualifiedTypeName name="ownapi.OWNAxiom"/>
-<fullyQualifiedTypeName name="java.awt.Font"/>
 <fullyQualifiedTypeName name="java.io.File"/>
 <fullyQualifiedTypeName name="java.awt.event.KeyEvent"/>
 <fullyQualifiedTypeName name="java.awt.event.ActionEvent"/>
@@ -60,4 +58,6 @@
 <fullyQualifiedTypeName name="ver1.Snapshot"/>
 <fullyQualifiedTypeName name="ver1.util.DeepClone"/>
 <fullyQualifiedTypeName name="ver1.Backtracker"/>
+<fullyQualifiedTypeName name="ver1.util.StringAxiomConstants"/>
+<fullyQualifiedTypeName name="java.awt.Font"/>
 </qualifiedTypeNameHistroy>
