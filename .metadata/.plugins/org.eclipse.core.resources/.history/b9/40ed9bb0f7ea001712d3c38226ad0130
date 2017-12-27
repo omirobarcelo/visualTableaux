@@ -183,8 +183,6 @@ public class Backtracker {
 		// Remove elements after cause of clash
 		if (clashCause+1 < backtracker.size())
 			backtracker.subList(clashCause+1, backtracker.size()).clear();
-		// Clear trackers from selected element
-		backtracker.get(clashCause).trackers.clear();
 	}
 		
 	/**
