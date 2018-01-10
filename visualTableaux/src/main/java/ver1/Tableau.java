@@ -1,3 +1,22 @@
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+ */
+
 package ver1;
 
 import java.util.HashMap;
@@ -18,7 +37,7 @@ public class Tableau {
 	private byte nodeCode;
 	private TreeNode firstNode;
 	private Map<Node, LinkedHashSet<OWNAxiom>> Ln;
-	private Map<Pair<Node, Node>, HashSet<OWNLiteral>> Lr;
+	private Map<Pair<Node, Node>, HashSet<OWNAtom>> Lr;
 	private Map<Node, HashSet<Operation>> operations;
 	private Set<Node> blockedNodes;
 	private Map<Node, Node> predecessor;
@@ -41,7 +60,7 @@ public class Tableau {
 		nodeCode = 109; // ASCII m
 		this.firstNode = new TreeNode(new Node(Character.toString((char)nodeCode++)));
 		Ln = new HashMap<Node, LinkedHashSet<OWNAxiom>>();
-		Lr = new HashMap<Pair<Node, Node>, HashSet<OWNLiteral>>();
+		Lr = new HashMap<Pair<Node, Node>, HashSet<OWNAtom>>();
 		operations = new HashMap<Node, HashSet<Operation>>();
 		blockedNodes = new HashSet<Node>();
 		predecessor = new HashMap<Node, Node>();
@@ -95,7 +114,7 @@ public class Tableau {
 		return ((HashSet<OWNAxiom>)Ln.get(n));
 	}
 	
-	public Set<OWNLiteral> getRelations(Node pred, Node succ) {
+	public Set<OWNAtom> getRelations(Node pred, Node succ) {
 		return Lr.get(new Pair<Node, Node>(pred, succ));
 	}
 	
@@ -122,42 +141,31 @@ public class Tableau {
 				// If there are snapshots, check if the clash is a consequence from
 				// the last non deterministic operation applied
 				if (backtracker.thereAreSnapshots()) {
-					// TODO
-					// Check if the literal is tracked
-					boolean literalTracked = backtracker.isAxiomTracked(n, op.getOperand1());
+					// Check if the atom is tracked
+					boolean atomTracked = backtracker.isAxiomTracked(n, op.getOperand1());
 					// Check if the complement is tracked
 					boolean complementTracked = backtracker.isAxiomTracked(n, op.getOperand2());
-					// If the literal or the complement are tracked, then the clash
+					// If the atom or the complement are tracked, then the clash
 					// is consequence of a NDO, which is selected
-					if (clashConsequenceNDO = literalTracked || complementTracked)
+					if (clashConsequenceNDO = atomTracked || complementTracked)
 						backtracker.selectCauseOfClash(n, op.getOperand1(), op.getOperand2());
-					
-//					// Check if last NDO's operand contains literal
-//					OWNAxiomContainsVisitor visitor1 = new OWNAxiomContainsVisitor(op.getOperand1());
-//					backtracker.checkLastNDOAxiom().accept(visitor1);
-//					// Check if last NDO's operand contains complement
-//					OWNAxiomContainsVisitor visitor2 = new OWNAxiomContainsVisitor(op.getOperand2());
-//					backtracker.checkLastNDOAxiom().accept(visitor2);
-//					// If the literal or the complement is contained, the clash is a consequence of 
-//					// the last NDO
-//					clashConsequenceNDO = visitor1.isContained() || visitor2.isContained();
 				}
 				updatedNode = n;
 				clashed = true;
 				break;
 			}
 			case AND: {
-				OWNIntersection intersection = (OWNIntersection)op.getOperand1();
-				boolean op1Added = ((HashSet<OWNAxiom>)Ln.get(n)).add(intersection.getOperand1());
-				boolean op2Added = ((HashSet<OWNAxiom>)Ln.get(n)).add(intersection.getOperand2());
+				OWNConjunction conjunction = (OWNConjunction)op.getOperand1();
+				boolean op1Added = ((HashSet<OWNAxiom>)Ln.get(n)).add(conjunction.getOperand1());
+				boolean op2Added = ((HashSet<OWNAxiom>)Ln.get(n)).add(conjunction.getOperand2());
 				updatedNode = n;
 				// Update trackers
 				if (op1Added && !op2Added)
-					backtracker.updateTrackers(n, intersection, updatedNode, intersection.getOperand1());
+					backtracker.updateTrackers(n, conjunction, updatedNode, conjunction.getOperand1());
 				else if (!op1Added && op2Added)
-					backtracker.updateTrackers(n, intersection, updatedNode, intersection.getOperand2());
+					backtracker.updateTrackers(n, conjunction, updatedNode, conjunction.getOperand2());
 				else if (op1Added && op2Added)
-					backtracker.updateTrackers(n, intersection, updatedNode, intersection.getOperand1(), intersection.getOperand2());
+					backtracker.updateTrackers(n, conjunction, updatedNode, conjunction.getOperand1(), conjunction.getOperand2());
 				break;
 			}
 			case OR: {
@@ -179,7 +187,7 @@ public class Tableau {
 				predecessor.put(newNode, n);
 				Ln.put(newNode, new LinkedHashSet<OWNAxiom>());
 				Pair<Node, Node> p = new Pair<Node, Node>(n, newNode);
-				Lr.put(p, new LinkedHashSet<OWNLiteral>());
+				Lr.put(p, new LinkedHashSet<OWNAtom>());
 				operations.put(newNode, new HashSet<Operation>());
 				// Apply operation
 				Lr.get(p).add(existential.getRelation());
@@ -215,7 +223,7 @@ public class Tableau {
 	public boolean isFinished() {
 		if (clashed && clashConsequenceNDO) {
 			if (backtracker.thereAreSnapshots()) {
-				// TODO if GUI mode, inform of backtracking effects
+				// If GUI mode, inform of backtracking effects
 				Pair<NonDeterministicOperation, Snapshot> p = backtracker.getCauseOfClash();
 				if (modeGUI) {
 					// Get differences from snapshot and current state
@@ -235,8 +243,6 @@ public class Tableau {
 					msg += nodesRemoved.substring(0, nodesRemoved.length()-2);
 					JOptionPane.showMessageDialog(null, msg);
 				}
-//				// TODO change
-//				recoverFromLastSnapshot();
 				// Recover
 				recoverFromSnapshot(p.getSecond(), true);
 			}
@@ -271,7 +277,7 @@ public class Tableau {
 		return Ln;
 	}
 	
-	protected Map<Pair<Node, Node>, HashSet<OWNLiteral>> getLr() {
+	protected Map<Pair<Node, Node>, HashSet<OWNAtom>> getLr() {
 		return Lr;
 	}
 	
@@ -469,16 +475,6 @@ public class Tableau {
 						" has become unblocked.");
 			}
 		}
-	}
-	
-	// TODO DEPRECATED
-	private void recoverFromLastSnapshot() {
-		// TODO
-		//Pair<NonDeterministicOperation, Snapshot> p = backtracker.getLastSnapshot();
-		Pair<NonDeterministicOperation, Snapshot> p = backtracker.getCauseOfClash();
-		// Recover
-		recoverFromSnapshot(p.getSecond(), true);
-		
 	}
 	
 	private void recoverFromSnapshot(Snapshot snapshot, boolean backtracking) {

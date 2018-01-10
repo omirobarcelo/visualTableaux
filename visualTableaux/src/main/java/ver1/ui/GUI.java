@@ -1,3 +1,22 @@
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+ */
+
 package ver1.ui;
 
 import java.awt.event.ActionEvent;
@@ -152,21 +171,11 @@ public class GUI extends JFrame implements ActionListener, MouseListener {
 			JOptionPane.showMessageDialog(this, "Tableau expansion has finished.\n" +
 					"This ontology is " + (tableau.isSatisfiable() ? "" : "not ") + "satisfiable");
 
-//			graph.clearGraphOntologyHighlighting();
-//			graph.clearGraphNodesHighlighting();
-//			graph.revalidate();
-//			graph.repaint();
-//			options.clearOptions();
 			repaint(true, true, true);
 		} else {
 			// Update status, and set new operations, and clear highlighting
 			// It's necessary to clear highlighting since when a button is pressed and the option
 			// disappears, we haven't exited from it, so the highlighting is not turned off
-//			graph.clearGraphOntologyHighlighting();
-//			graph.clearGraphNodesHighlighting();
-//			graph.revalidate();
-//			graph.repaint();
-//			operations = options.setOptions(tableau.getOperations(), tableau.checkNextCreatedNode(), selectedNode);
 			repaint(false, true, false);
 		}
 	}
@@ -282,9 +291,6 @@ public class GUI extends JFrame implements ActionListener, MouseListener {
 		tableau.init(pairCon_K.getFirst());
 		// Even though graph shares the above tableau, we need to reset it so it repaints
 		graph.reset(tableau);
-//		graph.revalidate();
-//		graph.repaint();
-//		options.clearOptions();
 		repaint(true, false, true);
 	}
 	
@@ -313,9 +319,6 @@ public class GUI extends JFrame implements ActionListener, MouseListener {
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		selectedNode = graph.boldGraphNode(e.getX(), e.getY());
-//		graph.revalidate();
-//		graph.repaint();
-//		operations = options.setOptions(tableau.getOperations(), tableau.checkNextCreatedNode(), selectedNode);
 		repaint(false, false, false);
 	}
 

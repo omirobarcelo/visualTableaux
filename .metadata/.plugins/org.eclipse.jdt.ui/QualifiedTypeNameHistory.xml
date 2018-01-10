@@ -1,13 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="java.util.Scanner"/>
-<fullyQualifiedTypeName name="java.lang.reflect.Method"/>
-<fullyQualifiedTypeName name="java.util.Map"/>
-<fullyQualifiedTypeName name="java.util.Collection"/>
 <fullyQualifiedTypeName name="java.lang.reflect.Array"/>
 <fullyQualifiedTypeName name="java.util.SortedSet"/>
 <fullyQualifiedTypeName name="java.util.TreeSet"/>
-<fullyQualifiedTypeName name="java.util.Set"/>
 <fullyQualifiedTypeName name="java.util.LinkedHashMap"/>
 <fullyQualifiedTypeName name="java.util.TreeMap"/>
 <fullyQualifiedTypeName name="com.google.common.collect.Multiset.Entry"/>
@@ -25,7 +20,6 @@
 <fullyQualifiedTypeName name="java.awt.geom.Line2D"/>
 <fullyQualifiedTypeName name="java.awt.geom.Line2D.Double"/>
 <fullyQualifiedTypeName name="java.awt.Color"/>
-<fullyQualifiedTypeName name="java.util.Arrays"/>
 <fullyQualifiedTypeName name="java.awt.BasicStroke"/>
 <fullyQualifiedTypeName name="javax.swing.JFileChooser"/>
 <fullyQualifiedTypeName name="ver1.TreeNode"/>
@@ -40,11 +34,8 @@
 <fullyQualifiedTypeName name="ver1.util.Pair"/>
 <fullyQualifiedTypeName name="java.awt.Graphics2D"/>
 <fullyQualifiedTypeName name="java.awt.event.MouseListener"/>
-<fullyQualifiedTypeName name="ver1.Operation"/>
-<fullyQualifiedTypeName name="ver1.Operation.OPERATOR"/>
 <fullyQualifiedTypeName name="ownapi.OWNComplement"/>
 <fullyQualifiedTypeName name="java.util.HashMap"/>
-<fullyQualifiedTypeName name="java.util.HashSet"/>
 <fullyQualifiedTypeName name="ownapi.OWNAxiom"/>
 <fullyQualifiedTypeName name="java.io.File"/>
 <fullyQualifiedTypeName name="java.awt.event.KeyEvent"/>
@@ -54,10 +45,19 @@
 <fullyQualifiedTypeName name="java.util.ArrayList"/>
 <fullyQualifiedTypeName name="ownapi.OWNAxiom.AXIOM_TYPE"/>
 <fullyQualifiedTypeName name="ver1.Backtracker.BTElement.Tracker"/>
-<fullyQualifiedTypeName name="ver1.NonDeterministicOperation"/>
 <fullyQualifiedTypeName name="ver1.Snapshot"/>
 <fullyQualifiedTypeName name="ver1.util.DeepClone"/>
 <fullyQualifiedTypeName name="ver1.Backtracker"/>
 <fullyQualifiedTypeName name="ver1.util.StringAxiomConstants"/>
 <fullyQualifiedTypeName name="java.awt.Font"/>
+<fullyQualifiedTypeName name="java.util.Map"/>
+<fullyQualifiedTypeName name="java.util.Set"/>
+<fullyQualifiedTypeName name="java.util.Collections"/>
+<fullyQualifiedTypeName name="java.util.HashSet"/>
+<fullyQualifiedTypeName name="ver1.Backtracker.BTElement"/>
+<fullyQualifiedTypeName name="java.util.Arrays"/>
+<fullyQualifiedTypeName name="java.util.LinkedHashSet"/>
+<fullyQualifiedTypeName name="ver1.Operation"/>
+<fullyQualifiedTypeName name="ver1.NonDeterministicOperation"/>
+<fullyQualifiedTypeName name="ver1.Operation.OPERATOR"/>
 </qualifiedTypeNameHistroy>

@@ -1,3 +1,22 @@
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+ */
+
 package ver1;
 
 import java.util.ArrayList;
@@ -91,10 +110,6 @@ public class Backtracker {
 		 */
 		public void updateTrackers(Node n, OWNAxiom axiom, Node updatedNode, OWNAxiom... results) {
 			Tracker t = new Tracker(n, axiom);
-//			for (Tracker tr : trackers) {
-//				boolean equal = tr.isEqual(t);
-//				System.out.println(equal);
-//			}
 			if (trackers.contains(t)) {
 				trackers.remove(t);
 				for (OWNAxiom ax : results) {
@@ -121,8 +136,8 @@ public class Backtracker {
 		public boolean allResultsApplied() {
 			OWNAxiom axiom = NDO.getSecond();
 			// Cast to appropriate type
-			// In this case, only OWNUnion possible
-			OWNUnion op = (OWNUnion)axiom;
+			// In this case, only OWNDisjunction possible
+			OWNDisjunction op = (OWNDisjunction)axiom;
 			return operandsApplied.contains(op.getOperand1()) && operandsApplied.contains(op.getOperand2());
 		}
 	}
@@ -146,14 +161,12 @@ public class Backtracker {
 	}
 	
 	public void updateTrackers(Node n, OWNAxiom axiom, Node updatedNode, OWNAxiom... results) {
-		// TODO
 		for (BTElement elem : backtracker) {
 			elem.updateTrackers(n, axiom, updatedNode, results);
 		}
 	}
 	
 	public boolean isAxiomTracked(Node n, OWNAxiom axiom) {
-		// TODO
 		for (BTElement elem : backtracker) {
 			if (elem.containsTracker(n, axiom))
 				return true;
@@ -238,22 +251,5 @@ public class Backtracker {
 		}
 		return null;
 	}
-	
-//	/**
-//	 * Peek at which non deterministic operation created the last snapshot
-//	 * @return
-//	 */
-//	public OWNAxiom checkLastNDOAxiom() {
-//		Pair<NonDeterministicOperation, Snapshot> p = timeline.peek();
-//		return p.getFirst().getOperand();
-//	}
-//	
-//	public Pair<NonDeterministicOperation, Snapshot> getLastSnapshot() {
-//		return timeline.pop();
-//	}
-//		
-//	public boolean thereAreSnapshots() {
-//		return !timeline.isEmpty();
-//	}
 	
 }

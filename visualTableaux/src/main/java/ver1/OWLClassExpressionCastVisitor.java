@@ -1,3 +1,22 @@
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+ */
+
 package ver1;
 
 import org.semanticweb.owlapi.model.OWLClass;
@@ -37,8 +56,8 @@ public class OWLClassExpressionCastVisitor implements OWLClassExpressionVisitor 
 	}
 
 	public void visit(OWLClass arg0) {
-		String litIRI = arg0.toString();
-		axiom = new OWNLiteral(litIRI.substring(1, litIRI.length()-1));
+		String atomIRI = arg0.toString();
+		axiom = new OWNAtom(atomIRI.substring(1, atomIRI.length()-1));
 	}
 
 	public void visit(OWLObjectIntersectionOf arg0) {
@@ -47,7 +66,7 @@ public class OWLClassExpressionCastVisitor implements OWLClassExpressionVisitor 
 		operands[0].accept(visitor1);
 		OWLClassExpressionCastVisitor visitor2 = new OWLClassExpressionCastVisitor();
 		operands[1].accept(visitor2);
-		axiom = new OWNIntersection(visitor1.axiom, visitor2.axiom);
+		axiom = new OWNConjunction(visitor1.axiom, visitor2.axiom);
 	}
 
 	public void visit(OWLObjectUnionOf arg0) {
@@ -56,18 +75,18 @@ public class OWLClassExpressionCastVisitor implements OWLClassExpressionVisitor 
 		operands[0].accept(visitor1);
 		OWLClassExpressionCastVisitor visitor2 = new OWLClassExpressionCastVisitor();
 		operands[1].accept(visitor2);
-		axiom = new OWNUnion(visitor1.axiom, visitor2.axiom);
+		axiom = new OWNDisjunction(visitor1.axiom, visitor2.axiom);
 	}
 
 	public void visit(OWLObjectComplementOf arg0) {
 		String compIRI = arg0.getComplementNNF().toString();
-		OWNLiteral lit = new OWNLiteral(compIRI.substring(1, compIRI.length()-1));
+		OWNAtom lit = new OWNAtom(compIRI.substring(1, compIRI.length()-1));
 		axiom = new OWNComplement(lit);
 	}
 
 	public void visit(OWLObjectSomeValuesFrom arg0) {
 		String relIRI = arg0.getProperty().toString();
-		OWNLiteral relation = new OWNLiteral(relIRI.substring(1, relIRI.length()-1));
+		OWNAtom relation = new OWNAtom(relIRI.substring(1, relIRI.length()-1));
 		OWLClassExpressionCastVisitor visitor = new OWLClassExpressionCastVisitor();
 		(arg0.getFiller()).accept(visitor);
 		axiom = new OWNExistential(relation, visitor.axiom);
@@ -75,7 +94,7 @@ public class OWLClassExpressionCastVisitor implements OWLClassExpressionVisitor 
 
 	public void visit(OWLObjectAllValuesFrom arg0) {
 		String relIRI = arg0.getProperty().toString();
-		OWNLiteral relation = new OWNLiteral(relIRI.substring(1, relIRI.length()-1));
+		OWNAtom relation = new OWNAtom(relIRI.substring(1, relIRI.length()-1));
 		OWLClassExpressionCastVisitor visitor = new OWLClassExpressionCastVisitor();
 		(arg0.getFiller()).accept(visitor);
 		axiom = new OWNUniversal(relation, visitor.axiom);

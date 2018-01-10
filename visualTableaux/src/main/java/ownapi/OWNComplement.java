@@ -1,3 +1,22 @@
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+ */
+
 package ownapi;
 
 import ver1.util.StringAxiomConstants;
@@ -5,21 +24,21 @@ import ver1.util.StringAxiomConstants;
 public class OWNComplement extends OWNAxiom{
 	/**
 	 * Assumed that OWNAxioms will always be created from NNF, so a complement only
-	 * complements a literal, not a whole axiom
+	 * complements an atom, not a whole axiom
 	 */
-	private OWNLiteral operand;
+	private OWNAtom operand;
 	
 	/**
 	 * Not null arguments assumed
 	 * @param op
 	 */
-	public OWNComplement(OWNLiteral op) {
+	public OWNComplement(OWNAtom op) {
 		super();
 		this.operand = op;
 		this.type = AXIOM_TYPE.COMPLEMENT;
 	}
 	
-	public OWNLiteral getOperand() {
+	public OWNAtom getOperand() {
 		return this.operand;
 	}
 
