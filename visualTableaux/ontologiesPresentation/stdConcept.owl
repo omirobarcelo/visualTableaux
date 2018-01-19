@@ -1,0 +1,24 @@
+Prefix(:=<http://www.semanticweb.org/work/ontologies/2018/0/stdTBox#>)
+Prefix(owl:=<http://www.w3.org/2002/07/owl#>)
+Prefix(rdf:=<http://www.w3.org/1999/02/22-rdf-syntax-ns#>)
+Prefix(xml:=<http://www.w3.org/XML/1998/namespace>)
+Prefix(xsd:=<http://www.w3.org/2001/XMLSchema#>)
+Prefix(rdfs:=<http://www.w3.org/2000/01/rdf-schema#>)
+
+
+Ontology(<http://www.semanticweb.org/work/ontologies/2018/0/stdConcept>
+
+Declaration(Class(<http://www.semanticweb.org/work/ontologies/2018/0/stdConcept#C>))
+Declaration(Class(<http://www.semanticweb.org/work/ontologies/2018/0/stdConcept#D>))
+Declaration(ObjectProperty(<http://www.semanticweb.org/work/ontologies/2018/0/stdConcept#R>))
+
+############################
+#   Classes
+############################
+
+# Class: owl:Thing (owl:Thing)
+
+SubClassOf(owl:Thing ObjectUnionOf(<http://www.semanticweb.org/work/ontologies/2018/0/stdConcept#D> ObjectIntersectionOf(<http://www.semanticweb.org/work/ontologies/2018/0/stdConcept#C> ObjectAllValuesFrom(<http://www.semanticweb.org/work/ontologies/2018/0/stdConcept#R> <http://www.semanticweb.org/work/ontologies/2018/0/stdConcept#D>))))
+
+
+)

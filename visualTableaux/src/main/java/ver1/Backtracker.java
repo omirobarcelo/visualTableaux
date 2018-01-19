@@ -89,6 +89,17 @@ public class Backtracker {
 		}
 		
 		/**
+		 * New BTElement copy of elem
+		 * @param elem
+		 */
+		public BTElement(BTElement elem) {
+			this.NDO = new Pair<Node, OWNAxiom>(elem.NDO.getFirst(), elem.NDO.getSecond());
+			this.snapshot = elem.snapshot;
+			this.operandsApplied = DeepClone.deepClone(elem.operandsApplied);
+			this.trackers = DeepClone.deepClone(elem.trackers);
+		}
+		
+		/**
 		 * Updates the BTElement with the new applied result, the current state,
 		 * and resets the trackers
 		 * @param result
@@ -139,6 +150,11 @@ public class Backtracker {
 			// In this case, only OWNDisjunction possible
 			OWNDisjunction op = (OWNDisjunction)axiom;
 			return operandsApplied.contains(op.getOperand1()) && operandsApplied.contains(op.getOperand2());
+		}
+		
+		public BTElement copy() {
+			BTElement copy = new BTElement(this);
+			return copy;
 		}
 	}
 	
@@ -221,7 +237,9 @@ public class Backtracker {
 	
 	public Backtracker copy() {
 		Backtracker copy = new Backtracker();
-		copy.backtracker = DeepClone.deepClone(this.backtracker);
+		//copy.backtracker = DeepClone.deepClone(this.backtracker);
+		for (BTElement elem : this.backtracker)
+			copy.backtracker.add(elem.copy());
 		copy.clashCause = this.clashCause;
 		return copy;
 	}

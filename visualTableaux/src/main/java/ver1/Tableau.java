@@ -192,6 +192,7 @@ public class Tableau {
 				// Apply operation
 				Lr.get(p).add(existential.getRelation());
 				boolean opAdded = Ln.get(newNode).add(existential.getOperand());
+				System.out.println("Hi");
 				updatedNode = newNode;
 				// Update trackers
 				if (opAdded)
@@ -200,7 +201,7 @@ public class Tableau {
 			}
 			case ONLY: {
 				OWNUniversal universal = (OWNUniversal)op.getOperand1();
-				boolean opAdded = Ln.get(op.getNode()).add(universal.getOperand());
+				boolean opAdded = ((HashSet<OWNAxiom>)Ln.get(op.getNode())).add(universal.getOperand());
 				updatedNode = op.getNode();
 				// Update trackers
 				if (opAdded)

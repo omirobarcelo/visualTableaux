@@ -54,10 +54,10 @@
 <fullyQualifiedTypeName name="java.util.Set"/>
 <fullyQualifiedTypeName name="java.util.Collections"/>
 <fullyQualifiedTypeName name="java.util.HashSet"/>
-<fullyQualifiedTypeName name="ver1.Backtracker.BTElement"/>
 <fullyQualifiedTypeName name="java.util.Arrays"/>
 <fullyQualifiedTypeName name="java.util.LinkedHashSet"/>
 <fullyQualifiedTypeName name="ver1.Operation"/>
 <fullyQualifiedTypeName name="ver1.NonDeterministicOperation"/>
 <fullyQualifiedTypeName name="ver1.Operation.OPERATOR"/>
+<fullyQualifiedTypeName name="ver1.Backtracker.BTElement"/>
 </qualifiedTypeNameHistroy>

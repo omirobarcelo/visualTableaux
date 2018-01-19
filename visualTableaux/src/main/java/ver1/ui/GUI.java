@@ -169,7 +169,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener {
 			// It's necessary to clear highlighting since when a button is pressed and the option
 			// disappears, we haven't exited from it, so the highlighting is not turned off
 			JOptionPane.showMessageDialog(this, "Tableau expansion has finished.\n" +
-					"This ontology is " + (tableau.isSatisfiable() ? "" : "not ") + "satisfiable");
+					"This ontology is " + (tableau.isSatisfiable() ? "" : "not ") + "satisfiable.");
 
 			repaint(true, true, true);
 		} else {
